@@ -1,41 +1,31 @@
 
-<p id="header">
-  <mat-toolbar>
-    <img src="../../assets/book.png" alt="ChattingIcon">
-    <span id="app-name">$Dollar$</span> <span class="subscript-text">a chat</span>
-  </mat-toolbar>
-</p>
-<mat-sidenav-container>
-  <mat-sidenav mode="side" opened></mat-sidenav>
-  <mat-sidenav position="end" mode="side" opened></mat-sidenav>
-  <section id="main-content" class="mat-typography">
-    <mat-card id="chat-container">
-      <mat-card-title>Chat</mat-card-title>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <app-messages [messages]="messages" [cookie]="cookie" [renderMessages]='renderMessages'
-        (messagesStateUpdateEvent)="updateStateFromMesssages($event)">
-        </app-messages>
-      </mat-card-content>
-    </mat-card>
-    
-
-    <mat-card id="chat-input-container">
-      <app-chat-input [cookie]="cookie"></app-chat-input>
-    </mat-card>
+<section id="main-content" class="mat-typography">
+  <mat-card *ngIf="!_hideChat" [ngClass]="{'chat-container': !_hideUsers, 'full-size-chat-container': _hideUsers}" id="chat-container">
+    <mat-card-title>Chat</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <app-messages [messages]="messages" [cookie]="cookie" [renderMessages]='renderMessages'
+      (messagesStateUpdateEvent)="updateStateFromMesssages($event)">
+      </app-messages>
+    </mat-card-content>
+  </mat-card>
   
-    <mat-card id="chat-users">
-      <mat-card-title>Users</mat-card-title>
-      <mat-card-subtitle>Online</mat-card-subtitle>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <app-users [cookie]="cookie" [onlineUsers]="onlineUsers"
-        (usersStateUpdateEvent)="updateStateFromUsers($event)" (usersUpdateEvent)="updateUsers($event)">
-        </app-users>
-      </mat-card-content>
-    </mat-card>
-  </section>
-</mat-sidenav-container>
+  
+  <mat-card *ngIf="!_hideChat" [ngClass]="{'chat-input-container': !_hideUsers, 'full-size-chat-input-container': _hideUsers}" id="chat-input-container">
+    <app-chat-input [cookie]="cookie"></app-chat-input>
+  </mat-card>
+  
+  <mat-card *ngIf="!_hideChat" [hidden]="_hideUsers" id="chat-users">
+    <mat-card-title>Users</mat-card-title>
+    <mat-card-subtitle>Online</mat-card-subtitle>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <app-users [cookie]="cookie" [onlineUsers]="onlineUsers"
+      (usersStateUpdateEvent)="updateStateFromUsers($event)" (usersUpdateEvent)="updateUsers($event)">
+      </app-users>
+    </mat-card-content>
+  </mat-card>
+</section>
 
 
 <router-outlet></router-outlet>

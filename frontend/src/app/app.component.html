@@ -1,4 +1,15 @@
-
-<chat-root></chat-root>
+<p id="header">
+    <mat-toolbar>
+      <img src="../../assets/book.png" alt="ChattingIcon">
+      <span id="app-name">$Dollar$</span> <span class="subscript-text">a chat</span>
+    </mat-toolbar>
+  </p>
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened></mat-sidenav>
+    <mat-sidenav position="end" mode="side" opened></mat-sidenav>
+    <section class="mat-typography">
+        <chat-root [hideUsers]="true" [hideChat]="false"></chat-root>
+    </section>
+</mat-sidenav-container>
 
 <router-outlet></router-outlet>
