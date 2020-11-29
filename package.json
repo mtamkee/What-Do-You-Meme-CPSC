@@ -1,0 +1,8 @@
+{
+    "name": "what-do-you-meme-cpsc",
+    "version": "0.0.1",
+    "description": "what do you meme web application",
+    "dependencies": {
+        "express": "^4.15.2"
+    }
+}
