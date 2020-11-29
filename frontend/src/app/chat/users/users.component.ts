@@ -40,13 +40,6 @@ export class UsersComponent implements OnInit {
     this.retrieveOnlineUsers();
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes.cookie) {
-  //     console.log("Users: Cookie change detected.")
-  //     this.myCookie = changes.cookie.currentValue;
-  //   }
-  // }
-
   public retrieveOnlineUsers() {
     this.messagingService.joinUser()
         .subscribe((socketObject: SocketReturnObject) => {
@@ -82,23 +75,23 @@ export class UsersComponent implements OnInit {
 
     this.messagingService.userRejoin()
         .subscribe((users: User[]) => {
-          console.log("User rejoin confirmation. Online users:");
+          console.log("User rejoin confirmation.");
           console.log(users);
           this.updateUsers(users);
         });
     
-    this.messagingService.userPoll()
-        .subscribe((usernameToCheck: string) => {
-          console.log("Got user poll.");
-          if (this._cookie.getUsernameFromCookie() === usernameToCheck) {
-            console.log("It was me.");
-            this.messagingService.respondToUserPoll(true, usernameToCheck);
-          }
-          else {
-            console.log("Not me.");
-            this.messagingService.respondToUserPoll(false, usernameToCheck);
-          }
-        });
+    // this.messagingService.userPoll()
+    //     .subscribe((usernameToCheck: string) => {
+    //       console.log("Got user poll.");
+    //       if (this._cookie.getUsernameFromCookie() === usernameToCheck) {
+    //         console.log("It was me.");
+    //         this.messagingService.respondToUserPoll(true, usernameToCheck);
+    //       }
+    //       else {
+    //         console.log("Not me.");
+    //         this.messagingService.respondToUserPoll(false, usernameToCheck);
+    //       }
+    //     });
     
     this.messagingService.usersUpdate()
         .subscribe((users: User[]) => {
