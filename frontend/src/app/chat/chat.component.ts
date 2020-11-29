@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, HostListener } from '@angular/core';
+import { Component, AfterViewInit, Input, HostListener } from '@angular/core';
 import { Message } from "./message";
 import { User } from "./user";
 import { SocketReturnObject } from './socket-return-object';
@@ -15,6 +15,24 @@ import { Cookie } from './cookie';
 export class ChatComponent implements AfterViewInit {
   title = 'DollarsChatClient';
 
+  @Input()
+  public get hideUsers(): boolean {
+    return this._hideUsers;
+  }
+  public set hideUsers(value: boolean) {
+    this._hideUsers = value;
+  }
+
+  @Input()
+  public get hideChat(): boolean {
+    return this._hideChat;
+  }
+  public set hideChat(value: boolean) {
+    this._hideChat = value;
+  }
+
+  public _hideUsers = false;
+  public _hideChat = false;
   public onlineUsers: User[];
   public messages: Message[];
   public renderMessages: boolean = false;

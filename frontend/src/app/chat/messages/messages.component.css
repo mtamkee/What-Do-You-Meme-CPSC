@@ -6,3 +6,9 @@
     height: 100%;
     overflow: auto;
 }
+
+.subscript-text {
+    font-size: 0.8rem;
+    height: 0.8rem;
+    color: #757575;
+}
