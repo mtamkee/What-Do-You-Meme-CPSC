@@ -18,6 +18,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { ScrollTrackerDirective } from './scroll-tracker.directive';
 import { MessagesComponent } from './messages/messages.component';
 import { UsersComponent } from './users/users.component';
@@ -50,7 +51,8 @@ const config: SocketIoConfig = { url: 'http://localhost:8988', options: {} };
     BrowserModule,
     SocketIoModule.forRoot(config),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule
   ],
   exports: [
     ChatComponent,
