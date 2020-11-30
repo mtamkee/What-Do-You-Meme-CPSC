@@ -62,6 +62,10 @@ mat-sidenav {
     position: absolute;
     top: 22px;
     bottom: 0;
-    left: 48%;
+    left: 52%;
     right: 0;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    background-color: #303030;
 }

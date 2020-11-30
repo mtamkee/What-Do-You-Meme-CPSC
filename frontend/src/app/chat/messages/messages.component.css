@@ -12,3 +12,7 @@
     height: 0.8rem;
     color: #757575;
 }
+
+::ng-deep .mat-list-item-content {
+    padding: 0 !important;
+}
