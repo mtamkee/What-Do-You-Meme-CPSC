@@ -1,0 +1,38 @@
+
+<section id="main-content" class="mat-typography">
+  <mat-card [hidden]="_hideChat" [ngClass]="{'chat-container': !_hideUsers, 'full-size-chat-container': _hideUsers}" id="chat-container">
+    <mat-card-title>Chat</mat-card-title>
+    <br>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <app-messages [messages]="messages" [cookie]="cookie" [renderMessages]='renderMessages'
+      (messagesStateUpdateEvent)="updateStateFromMesssages($event)">
+      </app-messages>
+    </mat-card-content>
+  </mat-card>
+  
+  
+  <mat-card [hidden]="_hideChat" [ngClass]="{'chat-input-container': !_hideUsers, 'full-size-chat-input-container': _hideUsers}" id="chat-input-container">
+    <app-chat-input [cookie]="cookie"></app-chat-input>
+  </mat-card>
+  
+  <mat-expansion-panel id="users-list-expansion-panel" (opened)="_hideUsers = false" (closed)="_hideUsers = true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Users
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-card [hidden]="_hideChat" [hidden]="_hideUsers" id="chat-users">
+      <mat-card-content>
+        <app-users [cookie]="cookie" [onlineUsers]="onlineUsers"
+        (usersStateUpdateEvent)="updateStateFromUsers($event)" (usersUpdateEvent)="updateUsers($event)">
+        </app-users>
+      </mat-card-content>
+    </mat-card>
+  </mat-expansion-panel>
+
+  
+</section>
+
+
+<router-outlet></router-outlet>
