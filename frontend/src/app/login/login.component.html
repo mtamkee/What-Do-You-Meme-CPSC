@@ -1,0 +1,40 @@
+<div *ngIf="!showSignIn">
+    <h1>Hello {{ userName }}!</h1>
+    <button (click)="logout()">Logout</button>
+</div>
+<div *ngIf="showSignIn">
+    <form *ngIf="!showSignUp">
+        <p>Please login.</p>
+        <button (click)="loginWithGoogle()"  mat-raised-button color="primary">Login with Google</button>
+        <br>
+        <button (click)="enableSignUp()"  mat-raised-button color="primary">Sign Up with Email</button>
+        <br>
+        <button (click)="enableSignInForm()"  mat-raised-button color="primary">Login with Email</button>
+    </form>
+    <form *ngIf="showSignUp">
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input [(ngModel)]="emailInput" name="email" matInput type="text" placeholder="memer@gmail.com">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input [(ngModel)]="passwordInput" name="password" matInput type="password">
+        </mat-form-field>
+        <button id="submit-button" (click)="signUpWithEmail()" mat-raised-button color="primary">Sign Up</button>
+    </form>
+    <form *ngIf="showSignInForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input [(ngModel)]="emailInput" name="email" matInput type="text" placeholder="memer@gmail.com">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input [(ngModel)]="passwordInput" name="password" matInput type="password">
+        </mat-form-field>
+        <button id="submit-button" (click)="loginWithEmail()" mat-raised-button color="primary">Sign In</button>
+    </form>
+    <div id="error-message">
+        <p>{{errorMessageText}}</p>
+    </div>
+</div>
+

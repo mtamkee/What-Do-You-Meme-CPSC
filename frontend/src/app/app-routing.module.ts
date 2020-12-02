@@ -8,9 +8,10 @@ import { GameComponent } from './game/game.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'lobby', component: LobbyComponent, data :{ code: String }},
-  { path: 'game', component: GameComponent },
-  { path: '', component: HomeComponent}
+  { path: '', component: HomeComponent},
+  {path: "login-page", component: LoginComponent}
 ];
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient } from'@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
 
  
 @Component({
