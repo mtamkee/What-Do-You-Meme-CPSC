@@ -1,14 +1,23 @@
 import { Component } from '@angular/core';
+import { HttpClient } from'@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
+ 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-  
-  title = 'What Do You Meme CPSC';
 
+  constructor(private http: HttpClient, private router: Router) { 
+
+
+  }
+
+  
+  title = "What Do You Meme? CPSC"
   public toolbarToggleValue;
   public hideUsers = true;
   public hideChat = true;
