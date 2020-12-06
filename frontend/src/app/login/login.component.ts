@@ -12,6 +12,7 @@ export class LoginComponent {
   public showSignUp = false;
   public showSignIn;
   public showSignInForm = false;
+  public showSignInButtons = true;
   public emailInput: string;
   public passwordInput: string;
   public errorMessageText: string;
@@ -29,14 +30,16 @@ export class LoginComponent {
     });
   }
 
-  enableSignUp() {
-    this.showSignUp = true;
+  toggleSignUp() {
+    this.showSignUp = !this.showSignUp;
+    this.showSignInButtons = true;
   }
 
-  enableSignInForm() {
-    this.showSignInForm = true;
+  toggleSignInForm() {
+    this.showSignInForm = !this.showSignInForm;
+    this.showSignInButtons = true;
   }
-
+S
   loginWithGoogle() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
@@ -52,7 +55,7 @@ export class LoginComponent {
         var errorCode = error.code;
         var errorMessage = error.message;
         this.showErrorMessage(errorMessage);
-        this.enableSignInForm();
+        this.toggleSignInForm();
       });
       this.showSignInForm = false;
   }
@@ -68,10 +71,10 @@ export class LoginComponent {
         var errorCode = error.code;
         var errorMessage = error.message;
         this.showErrorMessage(errorMessage);
-        this.enableSignUp();
+        this.toggleSignUp();
       });
 
-      this.showSignUp = false;
+      this.toggleSignUp();
   }
   
   logout() {

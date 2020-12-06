@@ -1,0 +1,65 @@
+
+#login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 80%;
+    position: relative;
+    top: 2rem;
+    left: 37%;
+    right: 0;
+    bottom: 0;
+}
+
+#user-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 2rem;
+    position: absolute;
+    top: 20px;
+    left: 45%;
+    right: 0rem;
+    bottom: 0;
+}
+
+#username {
+    color: #B9F6CA;
+    padding: 0 1em;
+}
+
+h1 {
+    position: relative;
+    right: 2%;
+    color: #43A047;
+}
+
+mat-form-field {
+    margin: 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-group button {
+    width: 15em;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+fieldset {
+    border-color: #757575;
+    width: 16rem;
+    padding: 2rem 1rem;
+}
