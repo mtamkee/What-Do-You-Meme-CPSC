@@ -1,8 +1,8 @@
 <mat-sidenav-container>
-    <mat-sidenav mode="side" opened></mat-sidenav>
-    <mat-sidenav position="end" mode="side" opened>
-    </mat-sidenav>
-    <section class="mat-typography">
+  <mat-sidenav mode="side" opened></mat-sidenav>
+  <mat-sidenav position="end" mode="side" opened>
+  </mat-sidenav>
+  <section class="mat-typography">
       <p id="header">
         <mat-toolbar>
           <img src="../assets/wdym-cpsc.jpg" alt="App Icon">
@@ -15,23 +15,11 @@
                 Chat
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <chat-root [hideUsers]="hideUsers" [hideChat]="hideChat"></chat-root>
+            
           </mat-expansion-panel>
         </mat-toolbar>
       </p>
-    </section>
-    <section> 
-        <h1>Game Lobby</h1> 
-        <h1> Code: {{code}} </h1> 
-        <h1><button (click)="startGame()">Start Game!</button></h1>
-    </section>
-    <div id = "userbox"> 
-      <ul id="users">
-        
-      </ul>  
-    </div>
-  </mat-sidenav-container>
-
-  <router-outlet></router-outlet>
-
-
+      <app-login (loginEvent)="loginUser($event)"></app-login>
+      <router-outlet></router-outlet>
+  </section>
+</mat-sidenav-container>

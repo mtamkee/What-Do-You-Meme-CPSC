@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 
@@ -17,6 +17,8 @@ export class LoginComponent {
   public passwordInput: string;
   public errorMessageText: string;
   public userName: string;
+
+  @Output() loginEvent = new EventEmitter<string>();
 
   constructor(public auth: AngularFireAuth) {
     this.auth.onAuthStateChanged((user) => {
@@ -41,7 +43,14 @@ export class LoginComponent {
   }
 S
   loginWithGoogle() {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then((user) => {
+        this.loginEvent.emit(user.user.uid);
+      })
+      .catch((error) => {
+        var errorMessage = error.message;
+        this.showErrorMessage(errorMessage);
+      });
   }
 
   loginWithEmail() {
@@ -50,6 +59,7 @@ S
         // Signed in 
         // ...
         this.clearErrorMessage();
+        this.loginEvent.emit(user.user.uid)
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -66,6 +76,7 @@ S
         // Signed in 
         // ...
         this.clearErrorMessage();
+        this.loginEvent.emit(user.user.uid)
       })
       .catch((error) => {
         var errorCode = error.code;

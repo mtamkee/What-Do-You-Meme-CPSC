@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
         "code": result
       }
     };
-    this.router.navigate(['/lobby'], navigationExtras);
+    this.router.navigate(['/game/lobby'], navigationExtras);
 
     return result;
   }

@@ -6,14 +6,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChatModule } from './chat/chat.module';
+import { LayoutModule } from './layout/layout.module';
+
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { LobbyComponent } from './lobby/lobby.component';
-import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './login/login.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
@@ -23,20 +22,16 @@ import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LobbyComponent,
-    HomeComponent,
-<<<<<<< HEAD
-    GameComponent
-=======
-    LoginComponent
->>>>>>> 559a799 (Login and signup with Firebase - initial integration with home and lobby)
-  ],
+    AppComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+
     ChatModule,
+    LayoutModule,
+    
     MatSidenavModule,
     MatToolbarModule,
     FormsModule,

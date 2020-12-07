@@ -1,23 +1,19 @@
-import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-import firebase from 'firebase/app';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
- 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.css']
 })
-export class AppComponent{
+export class LayoutComponent {
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private route: ActivatedRoute) { 
   }
 
   loginUser(userId: string) {
     console.log("User logged in: " + userId);
-    this.router.navigate(['home']);
+    this.router.navigate(['home'], {relativeTo: this.route});
   }
 
   
@@ -36,4 +32,5 @@ export class AppComponent{
       this.hideChat = !this.hideChat;
     }
   }
+
 }
