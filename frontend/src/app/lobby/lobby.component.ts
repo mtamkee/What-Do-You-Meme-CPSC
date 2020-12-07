@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, NavigationExtras} from '@angular/router';
+import { HttpClient } from'@angular/common/http';
+
 
 
 @Component({
@@ -15,7 +17,7 @@ export class LobbyComponent implements OnInit {
   public users; //array of users in Lobby
   code: String;  
   
-  constructor(private route: ActivatedRoute) { 
+  constructor(private route: ActivatedRoute, private router: Router) { 
 
   }
 
@@ -37,4 +39,13 @@ export class LobbyComponent implements OnInit {
     }
 
   } 
+
+  startGame() {
+    let navigationExtras: NavigationExtras = {
+  
+    };
+    
+    this.router.navigate(['/game'], navigationExtras);
+  }
+
 }

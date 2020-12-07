@@ -13,12 +13,14 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { LobbyComponent } from './lobby/lobby.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LobbyComponent,
-    HomeComponent
+    HomeComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,

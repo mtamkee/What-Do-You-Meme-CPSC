@@ -23,12 +23,15 @@
     <section> 
         <h1>Game Lobby</h1> 
         <h1> Code: {{code}} </h1> 
-        <h1><button>Start Game!</button></h1>
+        <h1><button (click)="startGame()">Start Game!</button></h1>
     </section>
-   
-    
+    <div id = "userbox"> 
+      <ul id="users">
+        
+      </ul>  
+    </div>
   </mat-sidenav-container>
-  
+
   <router-outlet></router-outlet>
 
 
