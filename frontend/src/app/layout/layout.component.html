@@ -1,5 +1,8 @@
 <mat-sidenav-container>
-  <!--mat-sidenav mode="side" opened></mat-sidenav-->
+  <mat-sidenav *ngIf="isLoggedIn" mode="side" opened>
+    <button mat-raised-button color="primary" routerLink="/game/home">Home</button>
+    <button mat-raised-button color="primary" routerLink="/game/lobby">Lobby</button>
+  </mat-sidenav>
   <!--mat-sidenav position="end" mode="side" closed>
     <mat-expansion-panel (opened)="hideChat = false" (closed)="hideChat = true"
             [ngClass]="{'expension-panel-align-opened': !hideChat}">
@@ -12,30 +15,31 @@
           </mat-expansion-panel>
   </mat-sidenav>
   <section class="mat-typography"-->
-      <p id="header">
-        <mat-toolbar>
-          <img src="../assets/wdym-cpsc.jpg" alt="App Icon">
-          <span id="app-name">What Do You Meme?</span> <span class="subscript-text">CPSC</span>
-          <span id="header-filler"></span>
-          <div id="user-info" *ngIf="isLoggedIn">
-            <h3 id="username">{{username}}</h3>
-            <button (click)="logout()" mat-raised-button color="secondary">Logout</button>
+
+  <mat-sidenav-content>
+    <p id="header">
+      <mat-toolbar>
+        <img src="../assets/wdym-cpsc.jpg" alt="App Icon">
+        <span id="app-name">What Do You Meme?</span> <span class="subscript-text">CPSC</span>
+        <span id="header-filler"></span>
+        <div id="user-info" *ngIf="isLoggedIn">
+          <h3 id="username">{{username}}</h3>
+          <button (click)="logout()" mat-raised-button color="secondary">Logout</button>
+      </div>
+        <button mat-fab color="accent" (click)="toggleDrawer()"><mat-icon>chat</mat-icon></button>
+      </mat-toolbar>
+    </p>
+    <mat-drawer-container>
+      <mat-drawer #drawer (openedChange)="onToggleChange('chat')" position="end" mode="over" disableClose="false" closed>
+        <router-outlet name="drawer" (activate)="chatRouterActive()"></router-outlet>
+      </mat-drawer>
+      <mat-drawer-content>
+        <div *ngIf="!isLoggedIn">
+          <app-login [logout]="doLogout" (loginEvent)="loginUser($event)"></app-login>
         </div>
-          <button mat-fab color="accent" (click)="toggleDrawer()"><mat-icon>chat</mat-icon></button>
-        </mat-toolbar>
-      </p>
-      <mat-drawer-container>
-        <mat-drawer #drawer (openedChange)="onToggleChange('chat')" position="end" mode="over" disableClose="false" closed>
-          <router-outlet name="drawer" (activate)="chatRouterActive()"></router-outlet>
-          <!--chat-root [hideUsers]="hideUsers" [hideChat]="hideChat"></chat-root-->
-        </mat-drawer>
-        <mat-drawer-content>
-          <div *ngIf="!isLoggedIn">
-            <app-login [logout]="doLogout" (loginEvent)="loginUser($event)"></app-login>
-          </div>
-          <router-outlet id="main-router-outlet" (activate)="mainRouterActive()"></router-outlet>
-        </mat-drawer-content>
-      </mat-drawer-container>
-      
-  <!--/section-->
+        <router-outlet id="main-router-outlet" (activate)="mainRouterActive()"></router-outlet>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </mat-sidenav-content>
+
 </mat-sidenav-container>
