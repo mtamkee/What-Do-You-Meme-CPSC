@@ -22,7 +22,15 @@ export class LobbyComponent implements OnInit {
     this.route.queryParams.subscribe(params => { 
       this.code = params['code'];
     })
+  }
 
-  } 
+  startGame() {
+    let navigationExtras: NavigationExtras = {
+  
+    };
+    
+    this.router.navigate(['/game/wdym'], navigationExtras);
+  }
+
 
 }
