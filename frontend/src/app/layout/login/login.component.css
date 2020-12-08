@@ -13,27 +13,11 @@
     bottom: 0;
 }
 
-#user-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    height: 2rem;
-    position: absolute;
-    top: 20px;
-    left: 45%;
-    right: 0rem;
-    bottom: 0;
-}
-
-#username {
-    color: #B9F6CA;
-    padding: 0 1em;
-}
 
 h1 {
     position: relative;
     right: 2%;
-    color: #43A047;
+    color: #69F0AE;
 }
 
 mat-form-field {

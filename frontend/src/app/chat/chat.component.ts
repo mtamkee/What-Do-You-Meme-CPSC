@@ -15,23 +15,23 @@ import { Cookie } from './cookie';
 export class ChatComponent implements AfterViewInit {
   title = 'DollarsChatClient';
 
-  @Input()
-  public get hideUsers(): boolean {
-    return this._hideUsers;
-  }
-  public set hideUsers(value: boolean) {
-    this._hideUsers = value;
-  }
+  // @Input()
+  // public get hideUsers(): boolean {
+  //   return this._hideUsers;
+  // }
+  // public set hideUsers(value: boolean) {
+  //   this._hideUsers = value;
+  // }
 
-  @Input()
-  public get hideChat(): boolean {
-    return this._hideChat;
-  }
-  public set hideChat(value: boolean) {
-    this._hideChat = value;
-  }
+  // @Input()
+  // public get hideChat(): boolean {
+  //   return this._hideChat;
+  // }
+  // public set hideChat(value: boolean) {
+  //   this._hideChat = value;
+  // }
 
-  public _hideUsers = false;
+  public _hideUsers = true;
   public _hideChat = false;
   public onlineUsers: User[];
   public messages: Message[];

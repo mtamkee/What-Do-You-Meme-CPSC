@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ChatModule } from './chat/chat.module';
 import { LayoutModule } from './layout/layout.module';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -19,6 +18,9 @@ import { environment } from '../environments/environment';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+//import {MatCardModule} from '@angular/material/card';
+
+//import { ChatContainerComponent } from './chat-container/chat-container.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,7 @@ import {MatButtonModule} from '@angular/material/button';
     AppRoutingModule,
     BrowserAnimationsModule,
 
-    ChatModule,
+   // ChatModule,
     LayoutModule,
     
     MatSidenavModule,
@@ -41,7 +43,8 @@ import {MatButtonModule} from '@angular/material/button';
     AngularFirestoreModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    //MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

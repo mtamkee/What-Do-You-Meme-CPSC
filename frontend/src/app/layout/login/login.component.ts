@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 
@@ -10,26 +10,38 @@ import firebase from 'firebase/app';
 export class LoginComponent {
 
   public showSignUp = false;
-  public showSignIn;
+  private _logout: boolean;
   public showSignInForm = false;
   public showSignInButtons = true;
   public emailInput: string;
   public passwordInput: string;
   public errorMessageText: string;
-  public userName: string;
+ 
+  @Input()
+  public get logout(): boolean {
+    return this._logout;
+  }
+  public set logout(value: boolean) {
+    console.log("Login component: logout value changed to " + value);
+    this._logout = value;
+    if (this._logout === true) {
+      this.callSignOut();
+    }
+  }
 
-  @Output() loginEvent = new EventEmitter<string>();
+  @Output() loginEvent = new EventEmitter<{id: string, username: string}>(true);
 
   constructor(public auth: AngularFireAuth) {
-    this.auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.userName = user.displayName || user.email;
-        this.showSignIn = false;
-      } else {
-        this.userName = null;
-        this.showSignIn = true;
-      }
-    });
+    // this.auth.onAuthStateChanged((user) => {
+    //   if (user !== null) {
+    //     this.userName = user.displayName || user.email;
+    //     //this.loginEvent.emit({id: user.uid, username: this.userName});
+    //     //this._showSignIn = false;
+    //   } else {
+    //     this.userName = null;
+    //     //this._showSignIn = true;
+    //   }
+    // });
   }
 
   toggleSignUp() {
@@ -41,11 +53,11 @@ export class LoginComponent {
     this.showSignInForm = !this.showSignInForm;
     this.showSignInButtons = true;
   }
-S
+
   loginWithGoogle() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then((user) => {
-        this.loginEvent.emit(user.user.uid);
+        this.loginEvent.emit({id: user.user.uid, username: user.user.displayName});
       })
       .catch((error) => {
         var errorMessage = error.message;
@@ -59,7 +71,7 @@ S
         // Signed in 
         // ...
         this.clearErrorMessage();
-        this.loginEvent.emit(user.user.uid)
+        this.loginEvent.emit({id: user.user.uid, username: user.user.email})
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -76,7 +88,7 @@ S
         // Signed in 
         // ...
         this.clearErrorMessage();
-        this.loginEvent.emit(user.user.uid)
+        this.loginEvent.emit({id: user.user.uid, username: user.user.email})
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -88,9 +100,8 @@ S
       this.toggleSignUp();
   }
   
-  logout() {
+  callSignOut() {
     this.auth.signOut();
-    this.showSignIn = true;
   }
 
   showErrorMessage(message: string) {

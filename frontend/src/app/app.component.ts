@@ -14,26 +14,11 @@ export class AppComponent{
 
   constructor(private router: Router) { 
   }
-
-  loginUser(userId: string) {
-    console.log("User logged in: " + userId);
-    this.router.navigate(['home']);
-  }
-
   
-  title = "What Do You Meme? CPSC"
-  public toolbarToggleValue;
-  public hideUsers = true;
-  public hideChat = true;
+  title = "What Do You Meme? CPSC";
 
-  onToggleChange(event) {
-    if (event === "users") {
-      console.log("Toggling users");
-      this.hideUsers = !this.hideUsers;
-    }
-    if (event === "chat") {
-      console.log("Toggling chat");
-      this.hideChat = !this.hideChat;
-    }
+  appRouterActive() {
+    console.log("App router outlet was activated.")
   }
+  
 }

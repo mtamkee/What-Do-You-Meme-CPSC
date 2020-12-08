@@ -1,8 +1,4 @@
-<div id="user-info" *ngIf="!showSignIn" >
-    <h3 id="username">{{userName}}</h3>
-    <button (click)="logout()" mat-raised-button color="secondary">Logout</button>
-</div>
-<div id="login-container" *ngIf="showSignIn">
+<div id="login-container">
     <h1 > Please log in</h1>
     <form>
         <fieldset class="button-group" *ngIf="showSignInButtons">

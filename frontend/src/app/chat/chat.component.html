@@ -22,13 +22,11 @@
         Users
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <mat-card [hidden]="_hideChat" [hidden]="_hideUsers" id="chat-users">
-      <mat-card-content>
-        <app-users [cookie]="cookie" [onlineUsers]="onlineUsers"
-        (usersStateUpdateEvent)="updateStateFromUsers($event)" (usersUpdateEvent)="updateUsers($event)">
-        </app-users>
-      </mat-card-content>
-    </mat-card>
+    <div [hidden]="_hideChat" [hidden]="_hideUsers" id="chat-users">
+      <app-users [cookie]="cookie" [onlineUsers]="onlineUsers"
+      (usersStateUpdateEvent)="updateStateFromUsers($event)" (usersUpdateEvent)="updateUsers($event)">
+      </app-users>
+    </div>
   </mat-expansion-panel>
 
   

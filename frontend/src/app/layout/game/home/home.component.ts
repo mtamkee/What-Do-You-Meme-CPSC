@@ -9,13 +9,11 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
  
-
-
-  public toolbarToggleValue;
-  public hideUsers = true;
-  public hideChat = true;
-
   constructor(private http: HttpClient, private router: Router) { }
+
+  ngOnInit(): void {
+    console.log('here');
+  }
 
   goToLobby(): String { 
 
@@ -38,19 +36,5 @@ export class HomeComponent implements OnInit {
     return result;
   }
 
-
-  onToggleChange(event) {
-    if (event === "users") {
-      console.log("Toggling users");
-      this.hideUsers = !this.hideUsers;
-    }
-    if (event === "chat") {
-      console.log("Toggling chat");
-      this.hideChat = !this.hideChat;
-    }
-  }
-  ngOnInit(): void {
-    console.log('here');
-  }
 
 }

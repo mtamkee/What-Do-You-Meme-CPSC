@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-//import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
-import { GameModule } from './game/game.module';
+import { ChatModule } from '../chat/chat.module';
 
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
@@ -15,12 +14,17 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+
 
 @NgModule({
   declarations: [LayoutComponent, LoginComponent],
   imports: [
     CommonModule,
-    //BrowserModule,
+
+    ChatModule,
+    
     LayoutRoutingModule,
     MatSidenavModule,
     MatToolbarModule,
@@ -28,7 +32,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
   ]
 })
 export class LayoutModule { }
