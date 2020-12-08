@@ -26,10 +26,6 @@ mat-toolbar {
     font-weight: 590;
 }
 
-.mat-expansion-panel-header-title {
-    flex-basis: 0;
-}
-
 #header img {
     height: 74px;
     width: auto;
@@ -53,25 +49,7 @@ mat-sidenav {
     min-width: 42%;
 }
 
-.mat-expansion-panel {
-    background-color: #303030;
-    width: 100px;
-}
-
-.expension-panel-align-opened {
-    width: fit-content;
-    position: absolute;
-    top: 22px;
-    bottom: 0;
-    left: 52%;
-    right: 0;
-}
-
 mat-drawer {
-    background-color: #303030;
-}
-
-::ng-deep .mat-expansion-panel-body {
     background-color: #303030;
 }
 

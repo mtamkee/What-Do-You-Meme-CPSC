@@ -35,6 +35,8 @@ export class LoginComponent {
     // this.auth.onAuthStateChanged((user) => {
     //   if (user !== null) {
     //     this.userName = user.displayName || user.email;
+    //      // This gets called on logout for some reason... 
+    //      // Guess Firebase is passing in a usser object when it should be null...
     //     //this.loginEvent.emit({id: user.uid, username: this.userName});
     //     //this._showSignIn = false;
     //   } else {

@@ -16,14 +16,6 @@ export class ChatComponent implements AfterViewInit {
   title = 'DollarsChatClient';
 
   // @Input()
-  // public get hideUsers(): boolean {
-  //   return this._hideUsers;
-  // }
-  // public set hideUsers(value: boolean) {
-  //   this._hideUsers = value;
-  // }
-
-  // @Input()
   // public get hideChat(): boolean {
   //   return this._hideChat;
   // }
@@ -32,7 +24,7 @@ export class ChatComponent implements AfterViewInit {
   // }
 
   public _hideUsers = true;
-  public _hideChat = false;
+  //public _hideChat = false;
   public onlineUsers: User[];
   public messages: Message[];
   public renderMessages: boolean = false;

@@ -15,7 +15,7 @@ export class LayoutComponent implements OnInit {
   public isLoggedIn: boolean = false;
   public doLogout: boolean = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private cdRef:ChangeDetectorRef) { 
+  constructor(private router: Router, private route: ActivatedRoute) { 
     
   }
   ngOnInit(): void {
@@ -25,24 +25,17 @@ export class LayoutComponent implements OnInit {
 
   loginUser(userData: {id: string, username: string}) {
     console.log("User logged in: " + userData.id);
-  //  setTimeout(() => {
-      this.username = userData.username;
-      this.isLoggedIn = true;
-      //this.cdRef.detectChanges();
-      console.log("IsLoggedIn changed to true");
-      this.router.navigate(['home'], {relativeTo: this.route});
-   // }, 1000);
-    
+    this.username = userData.username;
+    this.isLoggedIn = true;
+    console.log("IsLoggedIn changed to true");
+    this.router.navigate(['home'], {relativeTo: this.route});   
   }
 
   logout() {
     this.router.navigate(['/game']);
     this.doLogout = true;
-//    setTimeout(() => {
-      this.isLoggedIn = false;
-      //this.cdRef.detectChanges();
-      console.log("IsLoggedIn changed to false");
- //   }, 1000);
+    this.isLoggedIn = false;
+    console.log("IsLoggedIn changed to false");
   }
 
   

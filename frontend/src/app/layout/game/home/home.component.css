@@ -22,7 +22,6 @@ h2 {
     font-weight: lighter;
     display: flex;
     justify-content: center;
-
 }
 h2 input {
   width: 30%;
@@ -31,8 +30,9 @@ h2 input {
   margin-right: 1%;
 }
 h2 img {
-    height: 50vh;
-    width: auto;
+  padding-top: 2rem;
+  height: 50vh;
+  width: auto;
 }
 h2 button {
   width: 10%;
