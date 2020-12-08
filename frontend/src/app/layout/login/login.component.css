@@ -1,0 +1,49 @@
+
+#login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 80%;
+    position: relative;
+    top: 2rem;
+    left: 39%;
+    right: 0;
+    bottom: 0;
+}
+
+
+h1 {
+    position: relative;
+    right: 2%;
+    color: #69F0AE;
+}
+
+mat-form-field {
+    margin: 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-group button {
+    width: 15em;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+fieldset {
+    border-color: #757575;
+    width: 16rem;
+    padding: 2rem 1rem;
+}

@@ -91,4 +91,5 @@ mat-card {
 ::ng-deep .mat-expansion-panel-body {
     padding: 0px;
     padding-top: 0;
+    background-color: #424242;
 }

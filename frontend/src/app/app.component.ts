@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { HttpClient } from'@angular/common/http';
-import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
 
  
 @Component({
@@ -11,25 +12,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent{
 
-  constructor(private http: HttpClient, private router: Router) { 
-
-
+  constructor(private router: Router) { 
   }
-
   
-  title = "What Do You Meme? CPSC"
-  public toolbarToggleValue;
-  public hideUsers = true;
-  public hideChat = true;
+  title = "What Do You Meme? CPSC";
 
-  onToggleChange(event) {
-    if (event === "users") {
-      console.log("Toggling users");
-      this.hideUsers = !this.hideUsers;
-    }
-    if (event === "chat") {
-      console.log("Toggling chat");
-      this.hideChat = !this.hideChat;
-    }
+  appRouterActive() {
+    console.log("App router outlet was activated.")
   }
+  
 }

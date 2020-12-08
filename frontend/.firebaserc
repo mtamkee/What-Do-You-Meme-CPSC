@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "what-do-you-meme-cpsc": {
+      "hosting": {
+        "frontend": [
+          "what-do-you-meme-cpsc"
+        ]
+      }
+    }
+  }
+}

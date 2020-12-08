@@ -1,6 +1,6 @@
 
 <section id="main-content" class="mat-typography">
-  <mat-card [hidden]="_hideChat" [ngClass]="{'chat-container': !_hideUsers, 'full-size-chat-container': _hideUsers}" id="chat-container">
+  <mat-card [ngClass]="{'chat-container': !_hideUsers, 'full-size-chat-container': _hideUsers}" id="chat-container">
     <mat-card-title>Chat</mat-card-title>
     <br>
     <mat-divider></mat-divider>
@@ -12,7 +12,7 @@
   </mat-card>
   
   
-  <mat-card [hidden]="_hideChat" [ngClass]="{'chat-input-container': !_hideUsers, 'full-size-chat-input-container': _hideUsers}" id="chat-input-container">
+  <mat-card [ngClass]="{'chat-input-container': !_hideUsers, 'full-size-chat-input-container': _hideUsers}" id="chat-input-container">
     <app-chat-input [cookie]="cookie"></app-chat-input>
   </mat-card>
   
@@ -22,13 +22,11 @@
         Users
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <mat-card [hidden]="_hideChat" [hidden]="_hideUsers" id="chat-users">
-      <mat-card-content>
-        <app-users [cookie]="cookie" [onlineUsers]="onlineUsers"
-        (usersStateUpdateEvent)="updateStateFromUsers($event)" (usersUpdateEvent)="updateUsers($event)">
-        </app-users>
-      </mat-card-content>
-    </mat-card>
+    <div [hidden]="_hideUsers" id="chat-users">
+      <app-users [cookie]="cookie" [onlineUsers]="onlineUsers"
+      (usersStateUpdateEvent)="updateStateFromUsers($event)" (usersUpdateEvent)="updateUsers($event)">
+      </app-users>
+    </div>
   </mat-expansion-panel>
 
   
