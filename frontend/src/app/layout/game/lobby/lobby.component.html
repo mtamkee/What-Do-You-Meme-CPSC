@@ -1,3 +1,10 @@
 <h1 id="title">Game Lobby</h1> 
 <h1> Code: {{code}} </h1> 
 <h1><button (click)="startGame()">Start Game!</button></h1>
+<h1><button (click)="getUsers()">get users</button></h1>
+<div id="userbox">
+    <h1>Users in Lobby: </h1>
+    <div *ngFor="let user of users">
+        <h1> {{user}} </h1>
+    </div>
+</div>
