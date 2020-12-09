@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from'@angular/common/http';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { RoomService } from '../../../room.service';
+import { LobbyComponent } from '../lobby/lobby.component';
 
 
 @Component({
@@ -11,13 +12,30 @@ import { RoomService } from '../../../room.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: HttpClient, private router: Router, private roomService: RoomService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService) { }
+
+  username: String; 
+  id: String; 
 
   ngOnInit(): void {
-    console.log('here');
+    this.route.queryParams.subscribe(params => { 
+      this.username = params['username'];
+      this.id = params['id'];
+    });
+  } 
+  
+  getUsername() {
+    return this.username;
   }
 
-  goToLobby(): String { 
+  getId() {
+    return this.id;
+  }
+
+  /**
+   * create and join a new lobby with a randomly generated code
+   */
+  createLobby(username: String): String { 
     //generate code:
     //from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
     var result = '';
@@ -25,34 +43,34 @@ export class HomeComponent implements OnInit {
     var charactersLength = characters.length;
     for ( var i = 0; i < 5; i++ ) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    
+    }    
     this.roomService.createLobby(result);
-    this.joinLobby(result, 'user 1'); //fix username to match login
-
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "code": result
-      }
-    };
-
-    this.router.navigate(['/game/lobby'], navigationExtras);
-
+    this.joinLobby(result, username); 
+    //this.navigateLobby(result, this.username, this.id);
     return result;
   }
-
+  
+  /**
+   * join a new lobby by code 
+   */
   joinLobby(code: String, username: String) {
-
     this.roomService.sendAddUser(username, code);
-
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "code": code
-      }
-    };
+    this.navigateLobby(code, this.username, this.id);
     
-    this.router.navigate(['/game/lobby'], navigationExtras);
   } 
 
+  /**
+   *  navigate to the lobby with router
+   */
+  navigateLobby(code: String, username: String, id: String) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "code": code,
+        'username': username,
+        'id': id
+      }
+    };
+    this.router.navigate(['/game/lobby'], navigationExtras);
+  }
 
 }

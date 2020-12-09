@@ -22,5 +22,9 @@ export class RoomService {
     receiveUsers() {
       return this.socket.fromEvent('receiveUsers');
     }
+
+    leaveLobby(username: string, code: string) {
+      return this.socket.emit('leaveLobby', username, code);
+    }
   
 }
