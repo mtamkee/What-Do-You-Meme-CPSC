@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SocketService } from '../socket-service/socket-service';
-import { Card } from './card';
+import { Card } from '../wdym/card';
 import { ReplaySubject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { startWith } from 'rxjs/operators'
 import { map } from "rxjs/operators";
 import { Globals } from "./globals";
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 @Component({
-  selector: 'app-game',
+  selector: 'game',
   templateUrl: './wdym.component.html',
-  styleUrls: ['./game.component.less']
+  styleUrls: ['./wdym.component.less']
 })
-export class WdymComponent {
+export class GameComponent {
   private hand: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>([]);
   private numSpaces: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private isMyTurn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
