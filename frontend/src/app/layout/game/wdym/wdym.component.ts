@@ -6,6 +6,7 @@ import { startWith } from 'rxjs/operators'
 import { map } from "rxjs/operators";
 import { Globals } from "./globals";
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-game',
   templateUrl: './wdym.component.html',
@@ -56,8 +57,9 @@ export class WdymComponent {
   }));
 
   constructor(private socketService: SocketService,
-              private globals: Globals){}
-
+              private globals: Globals,
+              private http: HttpClient){}
+              memeImage;
   ngOnInit() {
     this.socketService.getSocket().on('setHand', (data) => {
       if (data.status == 'success') {
@@ -66,6 +68,12 @@ export class WdymComponent {
         }));
       }
     });
+
+    var number = Math.floor(Math.random() * (99 + 1));
+
+    this.http.get<any>('https://api.imgflip.com/get_memes').subscribe(data => {
+        this.memeImage = data.data.memes[number].url;
+    })
 
     this.socketService.getSocket().on('setBlackCard', (data) => {
       if (data.status == 'success') {
