@@ -2,10 +2,15 @@
     <div class="top-row">
         <div class="card black">
             <!--Api Call for black card-->
+            {{getCurrentBlackCardText() | async}}
         </div>
         <div class="main-stage">
             <div class="white-card-selections-container"[class.hidden]="!(isStageNumber(0))">
-                <div class="white-card-selections"
+                <div class="white-card-selections" [ngClass]="getSelectionBoxLength() | async"
+                cdkDropList
+                #selections="cdkDropList"
+                [cdkDropListData]="getSelectedCards() | async"
+                
              ></div>
             </div>
         </div>

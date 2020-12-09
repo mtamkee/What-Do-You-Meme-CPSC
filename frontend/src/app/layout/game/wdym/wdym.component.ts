@@ -9,7 +9,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 @Component({
   selector: 'app-game',
   templateUrl: './wdym.component.html',
-  styleUrls: ['./game.component.less']
+  styleUrls: ['./wdym.component.less']
 })
 export class WdymComponent {
   private hand: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>([]);
