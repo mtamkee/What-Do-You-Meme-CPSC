@@ -30,6 +30,9 @@ export class WdymComponent implements OnInit {
   getImage() {
     this.roomService.getImage(this.code);
   }
+  getCard(){
+    this.roomService.getCard(this.code);
+  }
 
 
 

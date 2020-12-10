@@ -96,12 +96,20 @@ io.on('connection', function(socket) {
         fetchImage(lobbyCode);
     });
 
+    socket.on('')
     async function fetchImage(lobbyCode) {
         var num = Math.floor(Math.random() * (99+1));
         const img = await fetch('https://api.imgflip.com/get_memes').then(res => res.json()).catch(err => console.error(err))
         const { memes } = await img.data
         await io.sockets.in(lobbyCode).emit('returnImage', memes[num].url);
+    };
+
+    socket.on('')
+    async function fetchImage(lobbyCode){
+    var num = Math.floor(Math.random() * (99+1));    
     }
+
+
 
 });
 
