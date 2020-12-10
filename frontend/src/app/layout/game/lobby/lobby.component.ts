@@ -3,8 +3,6 @@ import { Router, ActivatedRoute, ParamMap, NavigationExtras} from '@angular/rout
 import { HttpClient } from'@angular/common/http';
 import { RoomService } from '../../../room.service';
 
-
-
 @Component({
   selector: 'app-lobby',
   templateUrl: './lobby.component.html',
@@ -16,10 +14,9 @@ export class LobbyComponent implements OnInit {
   code: string;  
   username: string;
   id: string;
+
   
   constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService) { }
-  
-
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => { 
       this.code = params['code'];
@@ -27,16 +24,27 @@ export class LobbyComponent implements OnInit {
       this.id = params['id']
     })
     this.getUsers();
+
+    this.roomService.getStartGame().subscribe(() => {
+      console.log(this.username + " is leaving");
+      let navigationExtras: NavigationExtras = { queryParams: 
+        {'code': this.code}
+      };
+      this.router.navigate(['/game/wdym'], navigationExtras);
+    });
+
+
+  }
+
+
+  startGame() {
+
+    this.roomService.startGame(this.code);
   }
 
   
-  startGame() {
-    let navigationExtras: NavigationExtras = { };
-    this.router.navigate(['/game/wdym'], navigationExtras);
-  }
-  
   getUsers() { 
-    this.roomService.receiveUsers().subscribe((users: String[]) => {
+    this.roomService.receiveUsers().subscribe((users: string[]) => {
       this.users = users;
     });
     this.roomService.getUsers(this.code);
@@ -49,7 +57,7 @@ export class LobbyComponent implements OnInit {
     this.navigateHome(this.username, this.id);
   }
 
-  navigateHome(username: String, id: String) {
+  navigateHome(username: string, id: string) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         'username': username,
