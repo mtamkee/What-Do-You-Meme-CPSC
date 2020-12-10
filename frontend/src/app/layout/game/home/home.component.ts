@@ -14,9 +14,9 @@ export class HomeComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService) { }
 
-  username: String; 
-  id: String; 
-
+  username: string; 
+  id: string; 
+  validLobby: boolean;
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => { 
       this.username = params['username'];
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   /**
    * create and join a new lobby with a randomly generated code
    */
-  createLobby(username: String): String { 
+  createLobby(username: string): string { 
     //generate code:
     //from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
     var result = '';
@@ -47,22 +47,29 @@ export class HomeComponent implements OnInit {
     this.roomService.createLobby(result);
     this.joinLobby(result, username); 
     //this.navigateLobby(result, this.username, this.id);
-    return result;
+    return result;  
   }
   
   /**
    * join a new lobby by code 
    */
-  joinLobby(code: String, username: String) {
-    this.roomService.sendAddUser(username, code);
-    this.navigateLobby(code, this.username, this.id);
-    
+  joinLobby(code: string, username: string) {
+
+    //if (this.isValidLobby(code)) {
+       // if (this.isValidLobby(code)===true) {
+      //if (this.validLobby === true) {
+        this.roomService.sendAddUser(username, code);
+        this.navigateLobby(code, this.username, this.id);
+       // }
+    //  }
+  //  }
+
   } 
 
   /**
    *  navigate to the lobby with router
    */
-  navigateLobby(code: String, username: String, id: String) {
+  navigateLobby(code: string, username: string, id: string) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         "code": code,
@@ -72,5 +79,16 @@ export class HomeComponent implements OnInit {
     };
     this.router.navigate(['/game/lobby'], navigationExtras);
   }
-
+  
+  /* 
+   * need to fix
+   *
+  isValidLobby(code: string) {
+    var res;
+    this.roomService.receiveValidLobby().subscribe((answer) => {
+      return answer;
+    });
+    this.roomService.isValidLobby(code);
+  }
+  */
 }
