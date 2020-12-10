@@ -50,5 +50,8 @@ export class RoomService {
     getImage(code) {
       this.socket.emit('callImage', code);
     }
-  
+    
+    getCard(code){
+      this.socket.emit('callCard',code);
+    }
 }
