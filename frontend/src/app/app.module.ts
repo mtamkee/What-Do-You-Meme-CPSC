@@ -12,15 +12,19 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FormsModule} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
+
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 //import {MatCardModule} from '@angular/material/card';
 
 //import { ChatContainerComponent } from './chat-container/chat-container.component';
+const config: SocketIoConfig = { url: "http://localhost:3000", options: {} };
+
 
 @NgModule({
   declarations: [
@@ -44,7 +48,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    //MatCardModule
+    SocketIoModule.forRoot(config)
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

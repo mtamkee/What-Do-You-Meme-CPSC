@@ -18,6 +18,7 @@ export class LayoutComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) { 
     
   }
+
   ngOnInit(): void {
     console.log("route children:");
     console.log(this.router);
@@ -28,7 +29,7 @@ export class LayoutComponent implements OnInit {
     this.username = userData.username;
     this.isLoggedIn = true;
     console.log("IsLoggedIn changed to true");
-    this.router.navigate(['home'], {relativeTo: this.route});   
+    this.router.navigate(['home'], {queryParams: {username: userData.username, id: userData.id}, relativeTo: this.route});   
   }
 
   logout() {
@@ -37,13 +38,12 @@ export class LayoutComponent implements OnInit {
     this.isLoggedIn = false;
     console.log("IsLoggedIn changed to false");
   }
-
   
   title = "What Do You Meme? CPSC"
   public toolbarToggleValue;
   public hideUsers = true;
   public hideChat = true;
-
+  
   onToggleChange(event) {
     if (event === "users") {
       console.log("Toggling users");
@@ -52,8 +52,9 @@ export class LayoutComponent implements OnInit {
     if (event === "chat") {
       console.log("Toggling chat");
       this.hideChat = !this.hideChat;
+      
       if (!this.hideChat) {
-        this.router.navigate([{ outlets: {drawer: "chat"} }], {relativeTo: this.route});
+        this.router.navigate([{ outlets: {drawer: "chat"} }], {relativeTo: this.route}, );
       }
     }
   }
