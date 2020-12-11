@@ -12,9 +12,13 @@
     grid-template-columns: minmax(20rem, 860px) minmax(12rem, auto);
     grid-template-rows: 80% 20%;
     height: 560px;
-    width: 540px;
 }
 
+@media screen and (min-width: 600px) {
+    #main-content {
+        width: 520px !important;
+    }
+}
 
 mat-card {
     margin: 1rem;
@@ -27,8 +31,8 @@ mat-card {
 }
 
 #chat-container mat-card-content {
-    height: 90%;
     width: auto;
+    height: 100%;
 }
 
 .full-size-chat-container {
