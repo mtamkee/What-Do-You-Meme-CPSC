@@ -54,4 +54,8 @@ export class RoomService {
     getCard(code){
       this.socket.emit('callCard',code);
     }
+
+    receiveCard() {
+      return this.socket.fromEvent('returnCard');
+    }
 }

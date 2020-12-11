@@ -12,8 +12,11 @@ import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collection
 export class WdymComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private roomService: RoomService ) { }
-  memeImage;
-  code;
+  
+  public memeImage;
+  public code;
+  public caption: string;
+  
   ngOnInit(): void {  
     
     this.route.queryParams.subscribe(params => { 
@@ -22,6 +25,10 @@ export class WdymComponent implements OnInit {
 
     this.roomService.receiveImage().subscribe((photo) => {
       this.memeImage = photo;
+    });
+
+    this.roomService.receiveCard().subscribe((cardString: string) => {
+      this.caption = cardString;
     });
   }
 

@@ -12,16 +12,17 @@ var photo;
 
 class User {
     constructor(username) {
-        this.username = username;        
+        this.username = username;
+        this.hand = [];   
     }
-    hand = [];
+    
 }
 
 class Lobby { 
     constructor(code) {
         this.code = code;
+        this.users = [];
     }
-    users = [];
 }
 
 
@@ -96,7 +97,7 @@ io.on('connection', function(socket) {
         fetchImage(lobbyCode);
     });
 
-    socket.on('')
+    //socket.on('')
     async function fetchImage(lobbyCode) {
         var num = Math.floor(Math.random() * (99+1));
         const img = await fetch('https://api.imgflip.com/get_memes').then(res => res.json()).catch(err => console.error(err))
@@ -104,11 +105,14 @@ io.on('connection', function(socket) {
         await io.sockets.in(lobbyCode).emit('returnImage', memes[num].url);
     };
 
-    socket.on('')
-    async function fetchImage(lobbyCode){
-    var num = Math.floor(Math.random() * (99+1));    
-    }
+    //socket.on('')
+    // async function fetchImage(lobbyCode){
+    // var num = Math.floor(Math.random() * (99+1));    
+    // }
 
+    socket.on('callCard', (lobbyCode) => {
+        io.emit("returnCard", "Big brain");
+    });
 
 
 });
