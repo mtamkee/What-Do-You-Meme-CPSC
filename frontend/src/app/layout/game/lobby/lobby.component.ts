@@ -30,6 +30,7 @@ export class LobbyComponent implements OnInit {
     this.code = this.userStateService.getLobbyCode();
     this.username = this.userStateService.getUsername();
     this.id = this.userStateService.getUserId();
+    this.isCzar = this.userStateService.getIsCzar();
 
     this.getUsers();
   
