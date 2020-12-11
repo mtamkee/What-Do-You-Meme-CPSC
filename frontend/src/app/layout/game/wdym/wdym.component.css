@@ -1,0 +1,110 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-text-size-adjust: none;
+}
+/* Style the header */
+.header {
+    grid-area: header;
+    background-color: #f1f1f1;
+    text-align: center;
+    font-size: 35px;
+    word-wrap: break-word;
+    height: 530px;
+    max-height: 100%;
+}
+.img{
+    height: auto;
+    width: auto;
+    max-width: 350px;
+    max-height: 400px;
+}
+.headerr{
+    width: 20%;
+    height: 25%
+}
+.headerl,
+.headerm{
+    width: 40%;
+    padding: 10px;
+    height: 25%
+}
+/* The grid container */
+.grid-container {
+    display: grid;
+    grid-template-areas: 
+      'header header header header header ' 
+      'left leftc middle rightc right' 
+      'footer footer footer footer footer';
+     grid-column-gap: 1%;
+} 
+.headerl{
+    padding: 10px;
+    height: 100%;
+
+}
+.left,
+.middle,
+.right,
+.rightc,
+.leftc {
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+    font-size: 30px;
+    color: black;
+    outline: 4px solid black;
+    outline-offset: -4px;
+    text-align: center;
+    line-height: 1.1;
+    
+}
+/* Style the left column */
+.left {
+    grid-area: left;
+    background-color: blueviolet;
+    
+}
+.leftc {
+    grid-area: leftc;
+    background-color: hotpink;
+} 
+  /* Style the middle column */
+  .middle {
+    grid-area: middle;
+    background-color: Red;
+}
+  
+/* Style the right column */
+  .rightc {
+    grid-area: rightc;
+    background-color: grey;
+}
+  /* Style the right column */
+  .right {
+    grid-area: right;
+    background-color: lightblue;
+  }
+
+  /* Style the footer */
+.footer {
+    grid-area: footer;
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .grid-container  {
+      grid-template-areas: 
+        'header header header header header' 
+        'left left left left left' 
+        'leftc leftc leftc leftc leftc'
+        'middle middle middle middle middle' 
+        'rightc rightc rightc rightc rightc'
+        'right right right right right' 
+        'footer footer footer footer footer';
+    }
+  }
+

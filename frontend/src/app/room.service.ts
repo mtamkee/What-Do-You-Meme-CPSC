@@ -58,4 +58,7 @@ export class RoomService {
     receiveCard() {
       return this.socket.fromEvent('returnCard');
     }
+    receiveCard1() {
+      return this.socket.fromEvent('returnCard1');
+    }
 }
