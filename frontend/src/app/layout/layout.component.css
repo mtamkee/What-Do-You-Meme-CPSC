@@ -8,8 +8,16 @@
     margin: 0;
 }
 
+@media screen and (min-width: 700px) {
+    #header {
+        width: 100% !important;
+    }
+}
+
 mat-toolbar {
     height: 84px;
+    background-color: #212121;
+    width: 100%;
 }
 
 #app-name {
@@ -56,8 +64,7 @@ mat-sidenav button {
 }
 
 #header-filler {
-    flex-grow: 2;
-    min-width: 42%;
+    flex-grow: 1;
 }
 
 mat-drawer {
@@ -79,4 +86,10 @@ mat-drawer-container {
 #username {
     color: #69F0AE;
     padding: 0 1em;
+}
+
+@media screen and (max-width: 700px) {
+    #username {
+        font-size: 10px;
+    }
 }

@@ -46,3 +46,7 @@ body, input[type="text"], button {
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+img {
+  width: 50%;
+}
