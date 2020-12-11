@@ -8,7 +8,10 @@ export class UserStateService {
   private username:string;
   private userId: string;
   private lobbyCode: string;
+<<<<<<< HEAD
   private isCzar: boolean = false;
+=======
+>>>>>>> 7b164db (Use session-shared service to store the user's state)
 
   constructor() { }
 
@@ -24,6 +27,7 @@ export class UserStateService {
     this.lobbyCode = lobbyCode;
   }
 
+<<<<<<< HEAD
   setSelfAsCzar() {
     this.isCzar = true;
   }
@@ -32,6 +36,8 @@ export class UserStateService {
     this.isCzar = false;
   }
 
+=======
+>>>>>>> 7b164db (Use session-shared service to store the user's state)
   getUsername(): string {
     return this.username;
   }
@@ -43,8 +49,12 @@ export class UserStateService {
   getLobbyCode(): string {
     return this.lobbyCode;
   }
+<<<<<<< HEAD
 
   getIsCzar(): boolean {
     return this.isCzar;
   }
 }
+=======
+}
+>>>>>>> 7b164db (Use session-shared service to store the user's state)

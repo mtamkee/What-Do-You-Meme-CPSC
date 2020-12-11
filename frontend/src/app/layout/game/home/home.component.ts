@@ -22,10 +22,6 @@ export class HomeComponent implements OnInit {
   validLobby;
 
   ngOnInit(): void {
-   /* this.route.queryParams.subscribe(params => { 
-      this.username = params['username'];
-      this.id = params['id'];
-    });*/
     this.username =this.userStateService.getUsername();
     this.id = this.userStateService.getUserId();
     
@@ -46,7 +42,7 @@ export class HomeComponent implements OnInit {
   /**
    * create and join a new lobby with a randomly generated code
    */
-  createLobby() { 
+  createLobby(): string { 
     //generate code:
     //from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
     var result = '';
@@ -71,6 +67,8 @@ export class HomeComponent implements OnInit {
        // if (this.isValidLobby(code)===true) {
      // this.isValidLobby(code);
       //if (this.validLobby === true) {
+        console.log("Lobby code: " + code);
+        console.log("Username: " + this.username);
         this.userStateService.setLobbyCode(code);
         this.roomService.sendAddUser(this.username, code);
         this.navigateLobby(code, this.username, this.id);
@@ -84,15 +82,7 @@ export class HomeComponent implements OnInit {
    *  navigate to the lobby with router
    */
   navigateLobby(code: string, username: string, id: string) {
-    /*let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "code": code,
-        'username': username,
-        'id': id
-      }
-    };*/
-    
-    this.router.navigate(['/game/lobby']);//, navigationExtras);
+    this.router.navigate(['/game/lobby']);
   }
   
   /* 

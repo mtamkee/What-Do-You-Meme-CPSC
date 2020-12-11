@@ -8,7 +8,6 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Socket } from 'ngx-socket-io';
 import { UserStateService } from 'src/app/user-state.service';
 
-
 @Component({
   selector: 'app-game',
   templateUrl: './wdym.component.html',
@@ -37,12 +36,6 @@ export class WdymComponent implements OnInit {
   ngOnInit(): void {   
     this.code = this.userStateService.getLobbyCode();
     this.isCzar = this.userStateService.getIsCzar();
-
-    /*
-    this.route.queryParams.subscribe(params => { 
-      this.code = params['code'];
-      //this.host = params['host'];
-    });*/
 
     this.roomService.receiveImage().subscribe((photo) => {
       this.memeImage = photo;
