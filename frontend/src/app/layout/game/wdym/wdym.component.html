@@ -1,6 +1,22 @@
-<div>
-    <button (click)="getImage()">Get New Image :O</button>
-    <div><img src="{{memeImage}}" width="400px" height="auto"></div>
-    <button (click)="getCard()">Get Player Cards :O</button>
-    <div>{{caption}}</div>
-</div>
+<!DOCTYPE html>
+<html>
+    <header>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </header>
+    <div class = "grid-container">
+        <div class="header">
+            <button (click)="getImage()">Get New Image :O</button>
+            <button (click)="getCard()">Get Player Cards :O</button>
+        <div class="headerl"><img src="{{memeImage}}" height="450"></div>
+        <div class="headerm"></div>
+        
+        </div>
+        <div class = "left" draggable="true" ondragstart="dragDrop(event)">
+            {{caption}}
+        </div>
+        <div class = "leftc" >{{caption}}</div>
+        <div class = "middle">{{caption}}</div>
+        <div class = "rightc">{{caption}}</div>
+        <div class = "right">{{caption}}</div>
+    </div>
+</html>

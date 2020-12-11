@@ -33,6 +33,34 @@ function getLobbyByCode(code) {
     return Boolean(false);
 }
 
+let captions = [
+    'When you get fucked in your 449 final.',
+    'The Comp Sci Lab.',
+    'When you are frustrated with your Base Model Macbook Air.',
+    'Remembering you are in Haskayne.',
+    'I am dropping out to start an Only Fans.',
+    'Oh you know how to write "Hello World" and you call yourself a programmer?',
+    'I enojoy long walks to Math Sciences in my free time.',
+    'My back hurts from carrying my team so hard.',
+    'Who needs sleep when you have coffee.',
+    'HTML is a language',
+    'When your girlfriend brags about her friend knowing HTML',
+    'Having a teammate as useless as a chromebook',
+    'When you find out there is going to be a peer review.',
+    'Merged right to Main and caused an Error.',
+    'when you get a merge conflict.',
+    'copying code from stackoverflow',
+    'null pointer exception',
+    'when you hit compile and it works the first time',
+    'when someone merges spaghetti code ',
+    'when the project manager wants to use C',
+    '3 billion devices run java',
+    'arrays indexes should start at 1',
+    'when your unicard does not scan at math sciences ',
+    'linux users',    
+    'Assembly > Prolog',
+    'Academic Misconduct'
+]
 
 io.on('connection', function(socket) {
 
@@ -105,17 +133,18 @@ io.on('connection', function(socket) {
         await io.sockets.in(lobbyCode).emit('returnImage', memes[num].url);
     };
 
-    //socket.on('')
-    // async function fetchImage(lobbyCode){
-    // var num = Math.floor(Math.random() * (99+1));    
-    // }
-
+    
     socket.on('callCard', (lobbyCode) => {
-        io.emit("returnCard", "Big brain");
+        var randomCaption = Math.floor(Math.random() * (captions.length));
+        io.emit("returnCard", captions[randomCaption]);
+    });
+    socket.on('callCard1', (lobbyCode) => {
+        var randomCaption = Math.floor(Math.random() * (captions.length));
+        io.emit("returnCard1", captions[randomCaption]);
     });
 
-
 });
+
 
 
 /**
