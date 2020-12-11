@@ -42,3 +42,12 @@
             {{hand[4]}}</div>
          </div>
     </div>
+</html>
+<div>
+    <button *ngIf="isCzar" (click)="getImage()">Get New Image :O</button>
+    <div><img src="{{memeImage}}" width="400px" height="auto"></div>
+    <button *ngIf="!isCzar" (click)="getCard()">Get Player Cards :O</button>
+    <div>{{caption}}</div>
+    <button *ngIf="!isCzar" (click)="submitPlayerCard()">Submit card</button>
+    <button *ngIf="isCzar" (click)="endTurn()">End turn</button>
+</div>
