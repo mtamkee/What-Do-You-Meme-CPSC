@@ -19,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+<<<<<<< HEAD
     //Imports for drag and drop
     DragDropModule,
     BrowserAnimationsModule,
@@ -48,5 +50,9 @@ import {MatIconModule} from '@angular/material/icon';
   ],
   providers:[],
   
+=======
+    MatDividerModule
+  ]
+>>>>>>> f548c7c (Styling to be more consistent with angular material and styling for wdym.component)
 })
 export class GameModule { }

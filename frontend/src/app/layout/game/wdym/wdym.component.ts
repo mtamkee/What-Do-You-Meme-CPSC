@@ -24,7 +24,6 @@ export class WdymComponent implements OnInit {
   
   public memeImage;
   public code;
-  public caption: string;
   public currentlyClickedCardIndex: number = 0;  //index of selected card
   hand: string[];
   submittedCards: string[];
@@ -33,6 +32,7 @@ export class WdymComponent implements OnInit {
   roundWinner;
   winner; //game winner
   public winningCaption;
+  public captions: string[] = [];
   public isCzar;
   public showOverlay: boolean = false;
   public showWinnerOverlay: boolean = false;
@@ -47,7 +47,11 @@ export class WdymComponent implements OnInit {
     });
 
     this.roomService.receiveCard().subscribe((cardString: string) => {
-      this.caption = cardString;
+      this.captions[0] = cardString;
+      this.captions[1] = cardString;
+      this.captions[2] = cardString;
+      this.captions[3] = cardString;
+      this.captions[4] = cardString;
     });
     
     this.roomService.receiveHand().subscribe((hand: string[]) => {

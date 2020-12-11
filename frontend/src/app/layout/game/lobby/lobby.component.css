@@ -23,7 +23,7 @@
   float: left;
   width: 45%;
   height: 50%;
-  border: solid 1px white;
+  border: solid 1px #757575;
   border-radius: 10px;
   overflow: auto;
 }
@@ -31,9 +31,16 @@
 h1 {
     color:#BA68C8;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     display: flex;
     justify-content: center;
+    cursor: default;
+}
+
+.code-text {
+  color: white;
+  padding-left: 1rem;
+  cursor: text;
 }
 
 h2 {
@@ -74,5 +81,6 @@ h1 button {
 }
 
 #title {
+  font-size: 2rem;
   padding-top: 1rem;
 }

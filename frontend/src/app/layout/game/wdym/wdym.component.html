@@ -70,3 +70,37 @@
         </div>
 
     </div>
+</div>
+<div id="game-container">
+    <div class="game-content-container">
+        <div id="new-image-button">
+            <button *ngIf="isCzar" (click)="getImage()" mat-raised-button color="accent">Get New Image :O</button>
+        </div>
+        <div id="image-container"><img src="{{memeImage}}"></div>
+    </div>
+
+    <div class="game-content-container card-content-container">
+        <div id="card-button-container">
+            <button *ngIf="!isCzar" (click)="getCard()" mat-raised-button color="accent">Get Player Cards :O</button>
+            <button *ngIf="!isCzar" (click)="submitPlayerCard()" mat-raised-button color="primary">Submit Card</button>
+            <button *ngIf="isCzar" (click)="endTurn()" mat-raised-button color="primary">End turn</button>           
+        </div>
+        
+        <div id="card-container">
+            <div class="card-button" *ngFor="let caption of captions; index as i">
+                <div class="card-button-child">
+                    <mat-card>
+                        <mat-card-content>
+                            <div>{{i+1}}</div>
+                            <mat-divider></mat-divider>
+                            <br>
+                            <div>{{caption}}</div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>

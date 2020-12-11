@@ -1,10 +1,10 @@
 <div id="wrapper">
    
     <div class="container"> 
-        <h1 id="title">Game Lobby</h1> 
-        <h1> Code: {{code}} </h1> 
-        <h1 *ngIf="isCzar"><button (click)="startGame()">Start Game!</button></h1>
-        <h1><button (click)="leaveLobby()">Leave Lobby</button></h1>
+        <h1 id="title">Game Lobby</h1>        
+        <h1> Code: <span class="code-text">{{code}}</span></h1> 
+        <h1 *ngIf="isCzar"><button (click)="startGame()" mat-raised-button color="accent">Start Game!</button></h1>
+        <h1><button (click)="leaveLobby()" mat-raised-button color="accent">Leave Lobby</button></h1>
         <h2 #errorMessage></h2>
     </div>
     
