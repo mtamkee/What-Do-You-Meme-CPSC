@@ -35,7 +35,7 @@
       </mat-drawer>
       <mat-drawer-content>
         <div *ngIf="!isLoggedIn">
-          <app-login [logout]="doLogout" (loginEvent)="loginUser($event)"></app-login>
+          <app-login></app-login>
         </div>
         <router-outlet id="main-router-outlet" (activate)="mainRouterActive()"></router-outlet>
       </mat-drawer-content>
