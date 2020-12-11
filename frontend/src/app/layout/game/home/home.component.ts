@@ -57,10 +57,8 @@ export class HomeComponent implements OnInit {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }    
     this.roomService.createLobby(result);
-    this.joinLobby(result); 
+    this.joinLobby(result);  // will use roomService and navigate to lobby
     this.userStateService.setLobbyCode(result);
-    this.userStateService.setSelfAsCzar();
-
     return result;  
   }
   
