@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
   validLobby;
 
   ngOnInit(): void {
-   
     this.username =this.userStateService.getUsername();
     this.id = this.userStateService.getUserId();
     
@@ -48,7 +47,7 @@ export class HomeComponent implements OnInit {
   /**
    * create and join a new lobby with a randomly generated code
    */
-  createLobby() { 
+  createLobby(): string { 
     //generate code:
     //from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
     var result = '';
@@ -85,9 +84,7 @@ export class HomeComponent implements OnInit {
    *  navigate to the lobby with router
    */
   navigateLobby(code: string, username: string, id: string) {
-  
     this.router.navigate(['/game/lobby']);
-
   }
   
   /* 

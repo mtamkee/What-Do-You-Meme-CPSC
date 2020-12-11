@@ -8,7 +8,6 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Socket } from 'ngx-socket-io';
 import { UserStateService } from 'src/app/user-state.service';
 
-
 @Component({
   selector: 'app-game',
   templateUrl: './wdym.component.html',
