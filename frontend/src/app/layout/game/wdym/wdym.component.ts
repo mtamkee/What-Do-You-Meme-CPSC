@@ -9,7 +9,7 @@ import { Socket } from 'ngx-socket-io';
 import { UserStateService } from 'src/app/user-state.service';
 
 @Component({
-  selector: 'app-game',
+  selector: 'app-wdym',
   templateUrl: './wdym.component.html',
   styleUrls: ['./wdym.component.css'],
 })
