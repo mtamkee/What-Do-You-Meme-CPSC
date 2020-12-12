@@ -3,10 +3,13 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = 3000;
 const fetch = require('node-fetch');
+const { resolve } = require('path');
+const { del } = require('request');
 var lobbies = [];
 var users = [];
 var photo;
-
+const {promisify} = require('util');
+const delay = promisify(setTimeout);
 
 
 
@@ -174,6 +177,7 @@ io.on('connection', function(socket) {
         socket.emit('returnHand', socket.hand);
     });
 
+    
     //call a random image from the api
     async function fetchImage(lobbyCode) {
         var num = Math.floor(Math.random() * (99+1));
