@@ -66,7 +66,9 @@ const captions = [
     'Will my program work if I re-compile?',
     'Missing semicolon in line 331',
     'Cannot have any runtime errors if your code does not compile',
-    'I hate programming, I hate programming, I love programming! YAY!'
+    'I hate programming, I hate programming, I love programming! YAY!',
+    'Submitting an infinite loop to WebCat',
+    'Print Statements are better than a debugger.'
 ];
 
 class User {
