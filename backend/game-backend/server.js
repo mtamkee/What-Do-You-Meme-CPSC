@@ -10,30 +10,16 @@ var photo;
 
 
 
-class User {
-    constructor(username) {
-        this.username = username;
-        this.hand = [];   
-    }
-    
-}
-
-class Lobby { 
-    constructor(code) {
-        this.code = code;
-        this.users = [];
-    }
-}
+/**
+ * Socket (player) Properties:
+ *  string username;
+ *  boolean host;
+ *  string[] hand;
+ * 
+ */
 
 
-function getLobbyByCode(code) {
-    for (let i = 0; i < lobbies.length; i++) {
-        if (lobbies[i].code === code) return lobbies[i];
-    }
-    return Boolean(false);
-}
-
-let captions = [
+const captions = [
     'When you get fucked in your 449 final.',
     'The Comp Sci Lab.',
     'When you are frustrated with your Base Model Macbook Air.',
@@ -48,46 +34,73 @@ let captions = [
     'Having a teammate as useless as a chromebook',
     'When you find out there is going to be a peer review.',
     'Merged right to Main and caused an Error.',
-    'when you get a merge conflict.',
-    'copying code from stackoverflow',
+    'When you get a merge conflict.',
+    'Copying code from stackoverflow',
     'null pointer exception',
-    'when you hit compile and it works the first time',
-    'when someone merges spaghetti code ',
-    'when the project manager wants to use C',
+    'When you hit compile and it works the first time',
+    'When someone merges spaghetti code ',
+    'When the project manager wants to use C',
     '3 billion devices run java',
-    'arrays indexes should start at 1',
-    'when your unicard does not scan at math sciences ',
+    'Array indexes should start at 1',
+    'When your unicard will not scan at math sciences ',
     'linux users',    
     'Assembly > Prolog',
-    'Academic Misconduct'
-]
+    'Academic Misconduct',
+    'Closing 12 Stackoverflow tabs after solving the problem'
+];
+
+class User {
+    constructor(username) {
+        this.username = username;
+        this.hand = [];   
+    }
+}
+
+class Lobby { 
+    constructor(code) {
+        this.code = code;
+        this.users = [];
+        this.captions = Array.from(captions);
+        this.captionsRemaining = Array.from(captions);
+    }        
+}
+
+function getLobbyByCode(code) {
+    for (let i = 0; i < lobbies.length; i++) {
+        if (lobbies[i].code === code) return lobbies[i];
+    }
+    return Boolean(false);
+}
 
 io.on('connection', function(socket) {
-
     console.log('user connected');
     socket.on('createLobby', function(code) {
+        socket.host = true; //
         socket.join(code);  //join new room specified by code
+        //TO-DO: Add username function
         let lobby = new Lobby(code);
         lobbies.push(lobby);
         console.log("lobby: " + code + " has been created");
     });
 
     socket.on('addUser', function(username, lobbyCode) {
+
         if (getLobbyByCode(lobbyCode) != false) {
             socket.join(lobbyCode); 
+            socket.host = false;
+            socket.username = username;
             let user = new User(username);
             users.push(user);
             let lobby = getLobbyByCode(lobbyCode);
             lobby.users.push(user);
         }
-       
+
     });
 
     socket.on('getUsers', function(lobbyCode) {
         console.log("called getusers with lobby " + lobbyCode);
         var tempLobby = getLobbyByCode(lobbyCode);
         var tempUsers=[];
-        
         if (tempLobby) {
             for (let i = 0; i < tempLobby.users.length; i++) {
                 console.log(tempLobby.users[i].username);
@@ -104,7 +117,7 @@ io.on('connection', function(socket) {
         removeUser(lobbyCode, username);
         socket.leave(lobbyCode);
     });
-
+    
     socket.on('isValidLobby', function(lobbyCode) {
         console.log("searching for lobby: " + lobbyCode);
         if (getLobbyByCode(lobbyCode) != false) {
@@ -117,6 +130,7 @@ io.on('connection', function(socket) {
         }
     });
 
+    
     socket.on('startGame', function(lobbyCode) {
         io.sockets.in(lobbyCode).emit('getStartGame');
     });
@@ -125,27 +139,51 @@ io.on('connection', function(socket) {
         fetchImage(lobbyCode);
     });
 
-    //socket.on('')
+    //replaces one card by index for a single user 
+    socket.on('replaceCard', (lobbyCode, index) => {
+        socket.hand[index] = getCard(lobbyCode);
+        socket.emit('returnHand', socket.hand);
+    });
+
+    //call a random image from the api
     async function fetchImage(lobbyCode) {
         var num = Math.floor(Math.random() * (99+1));
-        const img = await fetch('https://api.imgflip.com/get_memes').then(res => res.json()).catch(err => console.error(err))
-        const { memes } = await img.data
+        const img = await fetch('https://api.imgflip.com/get_memes').then(res => res.json()).catch(err => console.error(err));
+        const { memes } = await img.data;
         await io.sockets.in(lobbyCode).emit('returnImage', memes[num].url);
     };
 
-    
-    socket.on('callCard', (lobbyCode) => {
-        var randomCaption = Math.floor(Math.random() * (captions.length));
-        io.emit("returnCard", captions[randomCaption]);
+  
+
+    socket.on('callHand', (lobbyCode) => {
+        console.log("captions remaining in lobby: " + lobbyCode + " " + getLobbyByCode(lobbyCode).captionsRemaining.length);
+        io.of('/').in(lobbyCode).clients((error, clients) => {
+            if (error) throw error;
+            for (client in clients) {
+                var current = io.sockets.connected[clients[client]];
+                current.hand = getHand(lobbyCode);
+                current.emit("returnHand", current.hand);
+            }
+        });
+
     });
+
+    /**
+     * don't think these two functions are used currently
+     */
+    socket.on('callCard', (lobbyCode) => {
+        //var randomCaption = Math.floor(Math.random() * (captions.length));
+      //  getCard(lobbyCode);
+      var randomCaption = Math.floor(Math.random() * (captions.length));
+      io.emit("returnCard", captions[randomCaption]);
+    });
+
     socket.on('callCard1', (lobbyCode) => {
         var randomCaption = Math.floor(Math.random() * (captions.length));
         io.emit("returnCard1", captions[randomCaption]);
     });
 
 });
-
-
 
 /**
  *  remove a user from a lobby 
@@ -154,7 +192,6 @@ io.on('connection', function(socket) {
 function removeUser(lobbyCode, username) {
     var tempLobby = getLobbyByCode(lobbyCode);
     console.log(tempLobby.users.length);
-    
     for (let i = 0; i < tempLobby.users.length; i++) {
         console.log(tempLobby.users[i].username);
         if (tempLobby.users[i].username === username) {
@@ -162,12 +199,34 @@ function removeUser(lobbyCode, username) {
             break;
         }
     }
+}
 
-    
+/**
+ * return one card available in the card pile
+ * 
+ */
+function getCard(lobbyCode) {
+    var tempLobby = getLobbyByCode(lobbyCode);
+    var randomIndex = Math.floor(Math.random() * (tempLobby.captionsRemaining.length));
+    var caption = tempLobby.captionsRemaining[randomIndex];
+    tempLobby.captionsRemaining.splice(randomIndex, 1);
+    return caption;
+}
+/**
+ * return one entire hand of cards from the card pile
+ * 
+ */
+function getHand(lobbyCode) {
+    var tempLobby = getLobbyByCode(lobbyCode);
+    hand = [];
+    for (let i = 0; i < 5; i ++) { 
+        var randomCaption = Math.floor(Math.random() * (tempLobby.captionsRemaining.length));
+        hand.push(tempLobby.captionsRemaining[randomCaption]);
+        tempLobby.captionsRemaining.splice(randomCaption, 1);
+    }
+    return hand;
 }
 
 http.listen(port, () => {
     console.log(`listening on port:${port}`);
 });
-
-

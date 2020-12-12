@@ -55,6 +55,18 @@ export class RoomService {
       this.socket.emit('callCard',code);
     }
 
+    getHand(code) {
+      this.socket.emit('callHand', code)
+    }
+    
+    replaceCard(code, index) {
+      this.socket.emit('replaceCard', code, index);
+    }
+
+    receiveHand() {
+      return this.socket.fromEvent('returnHand');
+    }
+    
     receiveCard() {
       return this.socket.fromEvent('returnCard');
     }
