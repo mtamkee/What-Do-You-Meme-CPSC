@@ -10,7 +10,7 @@
             -->
             <button (click)="submitCard(getSelected())"> Submit! </button>
             
-        <div class="headerl"><img src="{{memeImage}}" height="450">
+        <div class="headerl"><img src="{{memeImage}}">
             
             
         </div>
@@ -27,28 +27,29 @@
         </div>
     
         
-
-        <div class = "left" (click)=selectCard(0) 
-        [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
-        (click)="setcurrentlyClickedCardIndex(1)">
-            {{hand[0]}}
+        <div class = "cards">
+            <div class = "left" (click)=selectCard(0) 
+            [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
+            (click)="setcurrentlyClickedCardIndex(1)">
+                {{hand[0]}}
+            </div>
+            <div  class = "leftc" (click)="selectCard(1)"
+            [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
+            (click)="setcurrentlyClickedCardIndex(2)"
+            >{{hand[1]}}</div>
+            <div class = "middle" (click)="selectCard(2)"
+            [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
+            (click)="setcurrentlyClickedCardIndex(3)"
+            >{{hand[2]}}</div>
+            <div class = "rightc" (click)="selectCard(3)"
+            [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
+            (click)="setcurrentlyClickedCardIndex(4)"
+            >{{hand[3]}}</div>
+            <div class = "right" (click)="selectCard(4)"
+            [ngClass]="{'highlight':checkIfCardIsClicked(5)}"
+            (click)="setcurrentlyClickedCardIndex(5)"
+            >{{hand[4]}}</div>
         </div>
-        <div  class = "leftc" (click)="selectCard(1)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
-        (click)="setcurrentlyClickedCardIndex(2)"
-        >{{hand[1]}}</div>
-        <div class = "middle" (click)="selectCard(2)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
-        (click)="setcurrentlyClickedCardIndex(3)"
-        >{{hand[2]}}</div>
-        <div class = "rightc" (click)="selectCard(3)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
-        (click)="setcurrentlyClickedCardIndex(4)"
-        >{{hand[3]}}</div>
-        <div class = "right" (click)="selectCard(4)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(5)}"
-        (click)="setcurrentlyClickedCardIndex(5)"
-        >{{hand[4]}}</div>
     </div>
 
 </html> 
