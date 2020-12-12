@@ -75,33 +75,33 @@ h1 {
     text-align: center;
     line-height: 1.1;
     cursor: pointer;
-    
+    width: 300px;
 }
 /* Style the left column */
 .left {
     grid-area: left;
-    background-color: blueviolet;
+    background-color: whitesmoke;
     
 }
 .leftc {
     grid-area: leftc;
-    background-color: hotpink;
+    background-color: whitesmoke;
 } 
   /* Style the middle column */
   .middle {
     grid-area: middle;
-    background-color: Red;
+    background-color: whitesmoke;
 }
   
 /* Style the right column */
   .rightc {
     grid-area: rightc;
-    background-color: grey;
+    background-color: whitesmoke;
 }
   /* Style the right column */
   .right {
     grid-area: right;
-    background-color: lightblue;
+    background-color: whitesmoke;
   }
 
   /* Style the footer */
@@ -125,3 +125,6 @@ h1 {
     }
   }
 
+  .highlight {
+    background-color: yellow;
+  }
