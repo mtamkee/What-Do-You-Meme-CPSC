@@ -15,7 +15,7 @@
         </div>
         <div class="headerm">
             <div *ngIf="hotSeat">
-                <p style="color: black">Pick the winner</p>
+                <p style="color: lime"><u>Pick the winner</u></p>
             </div>
             <div *ngFor="let submittedCard of submittedCards; let i = index">
                 <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
@@ -24,6 +24,7 @@
         <div class="headerr">
             <button (click)="submitCard(getSelected())"> Submit! </button>   
             <!--Score board here-->
+            <h2 style="color: black"><u>Game Score</u></h2>
         </div>
 
         
