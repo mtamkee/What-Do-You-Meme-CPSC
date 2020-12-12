@@ -17,6 +17,7 @@ export class WdymComponent implements OnInit {
   public memeImage;
   public code;
   public caption: string;
+  selected = 0;     //index of selected card
   hand: string[];
   ngOnInit(): void {  
     
@@ -61,7 +62,13 @@ onDrop(event: CdkDragDrop<string[]>) {
     return this.roomService.getCard(this.code);
   }
 
+  getSelected() {
+    return this.selected;
+  }
 
+  selectCard(index) { 
+    this.selected = index;
+  }
   /**
    * returns an entire hand of cards for start of game
    */

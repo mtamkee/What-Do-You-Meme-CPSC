@@ -11,10 +11,10 @@ var photo;
 
 
 /**
- * Socket (player) Properties
- * string username;
- * boolean host;
- * string[] hand;
+ * Socket (player) Properties:
+ *  string username;
+ *  boolean host;
+ *  string[] hand;
  * 
  */
 
@@ -96,7 +96,7 @@ io.on('connection', function(socket) {
         }
 
     });
-    
+
     socket.on('getUsers', function(lobbyCode) {
         console.log("called getusers with lobby " + lobbyCode);
         var tempLobby = getLobbyByCode(lobbyCode);
