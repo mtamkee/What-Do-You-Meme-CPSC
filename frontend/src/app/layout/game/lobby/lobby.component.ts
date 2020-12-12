@@ -14,7 +14,6 @@ export class LobbyComponent implements OnInit {
   code: string;  
   username: string;
   id: string;
-
   
   constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService) { }
   ngOnInit(): void {
@@ -24,6 +23,8 @@ export class LobbyComponent implements OnInit {
       this.id = params['id']
     })
     this.getUsers();
+  
+    
 
     this.roomService.getStartGame().subscribe(() => {
       console.log(this.username + " is leaving");
@@ -32,13 +33,10 @@ export class LobbyComponent implements OnInit {
       };
       this.router.navigate(['/game/wdym'], navigationExtras);
     });
-
-
   }
 
 
   startGame() {
-
     this.roomService.startGame(this.code);
   }
 

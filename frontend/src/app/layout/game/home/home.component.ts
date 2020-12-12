@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   /**
    * create and join a new lobby with a randomly generated code
    */
-  createLobby(username: string): string { 
+  createLobby(username: string) { 
     //generate code:
     //from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
     var result = '';
@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
     }    
     this.roomService.createLobby(result);
     this.joinLobby(result, username); 
-    //this.navigateLobby(result, this.username, this.id);
     return result;  
   }
   

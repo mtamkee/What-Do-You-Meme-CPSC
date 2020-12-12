@@ -22,9 +22,7 @@ import {MatCardModule} from '@angular/material/card';
   declarations: [LayoutComponent, LoginComponent],
   imports: [
     CommonModule,
-
     ChatModule,
-    
     LayoutRoutingModule,
     MatSidenavModule,
     MatToolbarModule,

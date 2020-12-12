@@ -73,4 +73,31 @@ export class RoomService {
     receiveCard1() {
       return this.socket.fromEvent('returnCard1');
     }
+
+    returnSubmittedCards() {
+      return this.socket.fromEvent('returnSubmittedCards');
+    }
+
+    submitCard(lobbyCode, card) {
+      return this.socket.emit('submitCard', lobbyCode, card);
+    }
+
+    startTurn(lobbyCode) {
+      return this.socket.emit('startTurn', lobbyCode);
+    }
+
+    receiveHost() {
+      return this.socket.fromEvent('returnHost');
+    }
+    
+    //i don't think this is used
+    returnHost() {
+      return this.socket.fromEvent('returnHost');
+    }
+    
+
+
+
+
+
 }
