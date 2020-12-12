@@ -46,7 +46,27 @@ const captions = [
     'linux users',    
     'Assembly > Prolog',
     'Academic Misconduct',
-    'Closing 12 Stackoverflow tabs after solving the problem'
+    'Closing 12 Stackoverflow tabs after solving the problem',
+    'Coding in EMacs',
+    'Look at me, I am the scrum master now.',
+    'Am I dumb or am I stupid?.',
+    'incrementing a loop, x++ versus x -= -1 ',
+    'my spaghetti code versus my clean code',
+    'git merge --force',
+    'writing "Hello World" does not make you a programmer.',
+    'Why is my code returning an infinite loop?',
+    'Your friends Chegg Account',
+    'Fork child, kill parent',
+    'This task should take you 2 hours.',
+    'And that is how you calculate 1+3',
+    'Writes 10 lines of code without looking at Google.',
+    'You study computer science, can you fix my printer?',
+    'I hate LINUX',
+    'Sorry babe, not tonight, I am coding.',
+    'Will my program work if I re-compile?',
+    'Missing semicolon in line 331',
+    'Cannot have any runtime errors if your code does not compile',
+    'I hate programming, I hate programming, I love programming! YAY!'
 ];
 
 class User {
