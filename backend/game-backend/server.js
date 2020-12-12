@@ -62,6 +62,8 @@ class Lobby {
         this.users = [];
         this.captions = Array.from(captions);
         this.captionsRemaining = Array.from(captions);
+        this.submittedCards = [];
+        this.turn = 0;
     }        
 }
 
@@ -75,23 +77,28 @@ function getLobbyByCode(code) {
 io.on('connection', function(socket) {
     console.log('user connected');
     socket.on('createLobby', function(code) {
-        socket.host = true; //
+       // socket.host = true; //
+
         socket.join(code);  //join new room specified by code
-        //TO-DO: Add username function
         let lobby = new Lobby(code);
         lobbies.push(lobby);
         console.log("lobby: " + code + " has been created");
+
+
     });
 
     socket.on('addUser', function(username, lobbyCode) {
 
         if (getLobbyByCode(lobbyCode) != false) {
             socket.join(lobbyCode); 
-            socket.host = false;
+            //first user to join is host
+            let lobby = getLobbyByCode(lobbyCode);
+            if (lobby.users.length === 0) socket.host = true;
+            else socket.host = false;
             socket.username = username;
+
             let user = new User(username);
             users.push(user);
-            let lobby = getLobbyByCode(lobbyCode);
             lobby.users.push(user);
         }
 
@@ -153,9 +160,10 @@ io.on('connection', function(socket) {
         await io.sockets.in(lobbyCode).emit('returnImage', memes[num].url);
     };
 
-  
-
     socket.on('callHand', (lobbyCode) => {
+        socket.hand = getHand(lobbyCode);
+        socket.emit("returnHand", socket.hand);
+        /*
         console.log("captions remaining in lobby: " + lobbyCode + " " + getLobbyByCode(lobbyCode).captionsRemaining.length);
         io.of('/').in(lobbyCode).clients((error, clients) => {
             if (error) throw error;
@@ -164,9 +172,59 @@ io.on('connection', function(socket) {
                 current.hand = getHand(lobbyCode);
                 current.emit("returnHand", current.hand);
             }
+        });*/
+
+    });
+
+    socket.on('startTurn', (lobbyCode) => {
+        tempLobby = getLobbyByCode(lobbyCode);
+        tempLobby.submittedCards = [];
+        //get host and put in hotseat
+        io.of('/').in(lobbyCode).clients((error, clients) => {
+            if (error) throw error;
+            for (client in clients) {
+                var current = io.sockets.connected[clients[client]];
+                if (current.host === true) {
+                    current.emit('returnHost', '');
+                    break;
+
+                }   
+            }
         });
 
     });
+    
+    socket.on('submitCard', (lobbyCode, card) => {    
+
+        tempLobby = getLobbyByCode(lobbyCode);
+        tempLobby.submittedCards.push(card);
+
+        //if everyone except hotSeat user has submitted a poggers meme
+        if (tempLobby.submittedCards.length === (tempLobby.users.length - 1)) {
+            //TO-DO: add hotseat user to lobby class to get it less stupidly  
+            
+            //search room to find user that is in the hotseat 
+            io.of('/').in(lobbyCode).clients((error, clients) => {
+                if (error) throw error;
+                for (client in clients) {
+                    var current = io.sockets.connected[clients[client]];
+                    if (current.host === true) {
+
+                        current.emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
+                        tempLobby.submittedCards = []; //clear submitted cards for next turn
+                        break;
+
+                    }   
+                }
+            });
+        }
+
+    }); 
+
+    
+    socket.on('getSubmittedCards', (lobbyCode) => {
+        
+    }); 
 
     /**
      * don't think these two functions are used currently
@@ -225,6 +283,12 @@ function getHand(lobbyCode) {
         tempLobby.captionsRemaining.splice(randomCaption, 1);
     }
     return hand;
+}
+
+
+function getSubmittedCards(lobbyCode) {
+    var tempLobby = getLobbyByCode(lobbyCode);
+    return tempLobby.submittedCards;
 }
 
 http.listen(port, () => {

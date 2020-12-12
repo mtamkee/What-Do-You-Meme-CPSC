@@ -5,13 +5,27 @@
     </header>
     <div class = "grid-container">
         <div class="header">
+            
             <button (click)="getImage()">Get New Image :O</button>
             <button (click)="getCard()">Get Player Cards :O</button>
-            <button (click)="replaceCard(getSelected())" > Submit! </button>
-        <div class="headerl"><img src="{{memeImage}}" height="450"></div>
-        <div class="headerm"></div>
+            <button (click)="submitCard(getSelected())"> Submit! </button>
+            
+        <div class="headerl"><img src="{{memeImage}}" height="450">
+            
+            
         </div>
-
+        <div class="headerm">
+            <div *ngIf="hotSeat">
+                <p style="color: black">Pick the winner</p>
+            </div>
+            <div *ngFor="let submittedCard of submittedCards; let i = index">
+                <h1 [attr.data-index]="i" (click)="chooseWinner(i)"> {{submittedCard}} </h1>
+            </div>
+        </div>
+        
+       
+        </div>
+    
         
 
         <div class = "left" (click)=selectCard(0) draggable="true" ondragstart="dragDrop(event)">
@@ -22,4 +36,5 @@
         <div class = "rightc" (click)="selectCard(3)">{{hand[3]}}</div>
         <div class = "right" (click)="selectCard(4)">{{hand[4]}}</div>
     </div>
+
 </html> 
