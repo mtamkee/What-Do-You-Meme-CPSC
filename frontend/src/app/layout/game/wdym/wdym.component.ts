@@ -78,6 +78,15 @@ onDrop(event: CdkDragDrop<string[]>) {
     }
   }
 
+  public currentlyClickedCardIndex: number = 0;
+
+  public setcurrentlyClickedCardIndex(cardIndex: number): void {
+    this.currentlyClickedCardIndex = cardIndex;
+  }
+
+  public checkIfCardIsClicked(cardIndex: number): boolean {
+    return cardIndex === this.currentlyClickedCardIndex;
+  }
 
   chooseWinner(index) {
     var winningCaption = this.submittedCards[index];
