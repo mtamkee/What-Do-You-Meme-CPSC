@@ -124,6 +124,10 @@ export class RoomService {
     }
 
     checkWinner(lobbyCode) {
-      return this.socket.emit('checkWinner', lobbyCode);
+      this.socket.emit('checkWinner', lobbyCode);
+    }
+
+    returnGameWinner() {
+      return this.socket.fromEvent('returnGameWinner');
     }
 }

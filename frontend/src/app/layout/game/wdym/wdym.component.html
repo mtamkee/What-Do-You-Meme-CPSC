@@ -60,4 +60,23 @@
             {{hand[4]}}</div>
          </div>
     </div>
+    <div *ngIf = "showOverlay" class = "roundOverlay">
+        <div class = "overlayText">
+           <p>{{roundWinner}} wins this round! Their card was:</p>
+           <p>{{winningCaption}}</p>
+           <p>The next round is about to start!</p>
+        </div>
+    </div>
+    <div *ngIf = "showWinnerOverlay" class = "roundOverlay">
+        <div class = "overlayText">
+            <p>With a score of 5! The Winner of What Do You Meme CPSC Edition is:</p>
+            <p> {{winner}} </p>        
+            <button (click)="returnHome()">Return Home</button>
+
+        </div>
+
+    </div>
+
+
+
 </html>
