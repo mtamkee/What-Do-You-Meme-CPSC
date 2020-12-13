@@ -22,6 +22,9 @@
                 <button (click)="submitCard(getSelected())"> Submit! </button>   
                 <!--Score board here-->
                 <h2 style="color: black"><u>Game Score</u></h2>
+                <div *ngFor="let score of scores">
+                    <h3> {{score[0]}}: {{score[1]}}</h3>
+                </div>
             </div>
          </div>
 
