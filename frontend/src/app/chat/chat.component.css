@@ -9,14 +9,14 @@
 
 #main-content {
     display: grid;
-    grid-template-columns: minmax(20rem, 860px) minmax(12rem, auto);
+    grid-template-columns: minmax(20rem, 80%) minmax(12rem, auto);
     grid-template-rows: 80% 20%;
     height: 560px;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (max-width: 600px) {
     #main-content {
-        width: 520px !important;
+        height: 300px !important;
     }
 }
 
