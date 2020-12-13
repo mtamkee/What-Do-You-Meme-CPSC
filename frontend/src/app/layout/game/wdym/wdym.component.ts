@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collections';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Socket } from 'ngx-socket-io';
+import { UserStateService } from 'src/app/user-state.service';
+
 
 @Component({
   selector: 'app-game',
@@ -14,7 +16,8 @@ import { Socket } from 'ngx-socket-io';
 })
 export class WdymComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private roomService: RoomService ) {
+  constructor(private route: ActivatedRoute, private roomService: RoomService,
+    private userStateService: UserStateService) {
     this.submittedCards = [];
     this.roundsWon = 0;
   }
@@ -29,13 +32,17 @@ export class WdymComponent implements OnInit {
   hotSeat;
   roundsWon;
   roundWinner;
+  public isCzar;
   
   ngOnInit(): void {   
-    
+    this.code = this.userStateService.getLobbyCode();
+    this.isCzar = this.userStateService.getIsCzar();
+
+    /*
     this.route.queryParams.subscribe(params => { 
       this.code = params['code'];
       //this.host = params['host'];
-    });
+    });*/
 
     this.roomService.receiveImage().subscribe((photo) => {
       this.memeImage = photo;
@@ -47,7 +54,7 @@ export class WdymComponent implements OnInit {
     
     //this will just put the host in the hot seat on game initialization
     this.roomService.receiveHost().subscribe((e) => {
-      this.hotSeat = true;
+      this.isCzar = true;
     });
 
     this.roomService.receiveHand().subscribe((hand: string[]) => {
@@ -81,7 +88,7 @@ export class WdymComponent implements OnInit {
   }
 
 //Controller for drag and drop
-onDrop(event: CdkDragDrop<string[]>) {
+/*onDrop(event: CdkDragDrop<string[]>) {
   if (event.previousContainer === event.container) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
   } else {
@@ -90,16 +97,20 @@ onDrop(event: CdkDragDrop<string[]>) {
         event.previousIndex,
         event.currentIndex);
     }
-  }
+  }*/
  
+
   public currentlyClickedCardIndex: number = 0;
   public setcurrentlyClickedCardIndex(cardIndex: number): void {
     this.currentlyClickedCardIndex = cardIndex;
   }
-
   public checkIfCardIsClicked(cardIndex: number): boolean {
-    return cardIndex === this.currentlyClickedCardIndex;
+    return cardIndex === this.selected;
   }
+
+
+
+
 
   chooseWinner(index) {
     var winningCaption= this.submittedCards[index];
@@ -155,5 +166,19 @@ onDrop(event: CdkDragDrop<string[]>) {
   }
 
 
+  endTurn(cardIndex) {
+    this.memeImage = "";
+    this.submitCard(cardIndex);
+    this.chooseWinner(cardIndex);
+
+
+    if (this.isCzar) {
+      this.userStateService.turnOffCzarInSelf();
+    }
+
+
+  }
+
+  
 
 } 

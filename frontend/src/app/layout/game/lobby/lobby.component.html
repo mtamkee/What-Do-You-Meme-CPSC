@@ -3,7 +3,7 @@
     <div class="container"> 
         <h1 id="title">Game Lobby</h1> 
         <h1> Code: {{code}} </h1> 
-        <h1><button (click)="startGame()">Start Game!</button></h1>
+        <h1 *ngIf="isCzar"><button (click)="startGame()">Start Game!</button></h1>
         <h1><button (click)="leaveLobby()">Leave Lobby</button></h1>
     </div>
     
