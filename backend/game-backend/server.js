@@ -6,11 +6,10 @@ const fetch = require('node-fetch');
 const { resolve } = require('path');
 const { del } = require('request');
 var lobbies = [];
-var users = [];
+
 var photo;
 const {promisify} = require('util');
 const delay = promisify(setTimeout);
-
 
 
 /**
@@ -18,7 +17,6 @@ const delay = promisify(setTimeout);
  *  string username;
  *  boolean host;
  *  string[] hand;
- * 
  */
 
 
@@ -108,6 +106,9 @@ const captions = [
     'When your professor gives a last-minute extension but you already pulled an all-nighter trying to finish the assignment'
 ];
 
+
+
+
 class User {
     constructor(username) {
         this.username = username;
@@ -121,13 +122,17 @@ class Lobby {
         this.code = code;
         this.users = [];
         this.captions = Array.from(captions);
-        this.captionsRemaining = Array.from(captions);
-        this.submittedCards = [];
+        this.captionsRemaining = Array.from(captions); //remaining cards in stack
+        this.submittedCards = [];   //cards that have been submitted this round
+        this.submittedUsers = [];   //sockets that have submitted; share index with card
         this.turn = 0;
-        this.submittedUsers = [];
     }        
 }
 
+/**
+ * Return the Lobby object by a lobby code
+ * return false if it does not exist
+ */
 function getLobbyByCode(code) {
     for (let i = 0; i < lobbies.length; i++) {
         if (lobbies[i].code === code) return lobbies[i];
@@ -135,41 +140,37 @@ function getLobbyByCode(code) {
     return Boolean(false);
 }
 
+
 io.on('connection', function(socket) {
-    console.log('user connected');
+
+    //create a lobby with the code supplied
     socket.on('createLobby', function(code) {
-       // socket.host = true; //
-
-        socket.join(code);  //join new room specified by code
-        let lobby = new Lobby(code);
-        lobbies.push(lobby);
-        console.log("lobby: " + code + " has been created");
-
-
+        socket.join(code);              //join new room specified by code   
+        let lobby = new Lobby(code);    //create the lobby
+        lobbies.push(lobby);            
     });
 
+    //Add a user to a lobby by code
     socket.on('addUser', function(username, lobbyCode) {
-
-        if (getLobbyByCode(lobbyCode) != false) {
-            socket.join(lobbyCode); 
-            //first user to join is host
+        if (getLobbyByCode(lobbyCode) != false) {   //make sure lobby exists
+            socket.join(lobbyCode);         
             let lobby = getLobbyByCode(lobbyCode);
-            if (lobby.users.length === 0) socket.host = true;
+            //first user to join is host
+            if (lobby.users.length === 0) socket.host = true;   
             else socket.host = false;
-            socket.username = username;
-
+            socket.username = username;       
             let user = new User(username);
-            users.push(user);
             lobby.users.push(user);
         }
-
     });
 
-
+    //get the scores of all users in a lobby
+    //returns in array of [username, score] pairs
     socket.on('getScores', function(lobbyCode) {
+
         var tempLobby = getLobbyByCode(lobbyCode);
         var scores = [];
-        if (tempLobby) {
+        if (tempLobby != false) {
             for (let i = 0; i < tempLobby.users.length; i++) {
                 var user = tempLobby.users[i];
                 console.log(user.username + ": " + user.score);
@@ -177,22 +178,23 @@ io.on('connection', function(socket) {
             }
         }   
         io.sockets.in(lobbyCode).emit('receiveScores', scores);
-    })
+    });
 
+    //get all users in a lobby
     socket.on('getUsers', function(lobbyCode) {
         console.log("called getusers with lobby " + lobbyCode);
         var tempLobby = getLobbyByCode(lobbyCode);
         var tempUsers=[];
-        if (tempLobby) {
+        if (tempLobby != false) {
             for (let i = 0; i < tempLobby.users.length; i++) {
                 console.log(tempLobby.users[i].username);
                 tempUsers.push(tempLobby.users[i].username);
             }
         }   
-        //io.emit('receiveUsers', tempUsers);
         io.sockets.in(lobbyCode).emit('receiveUsers', tempUsers);
     });
 
+    //leave a lobby
     socket.on('leaveLobby', function(username, lobbyCode) {
         console.log(username + ' leaving lobby: ' + lobbyCode);
         var tempLobby = getLobbyByCode(lobbyCode);
@@ -200,6 +202,7 @@ io.on('connection', function(socket) {
         socket.leave(lobbyCode);
     });
     
+    //check if lobby is exists
     socket.on('isValidLobby', function(lobbyCode) {
         console.log("searching for lobby: " + lobbyCode);
         if (getLobbyByCode(lobbyCode) != false) {
@@ -212,11 +215,12 @@ io.on('connection', function(socket) {
         }
     });
 
-    
+    //start game
     socket.on('startGame', function(lobbyCode) {
         io.sockets.in(lobbyCode).emit('getStartGame');
     });
 
+    //get a new meme image
     socket.on('callImage', function (lobbyCode) {
         fetchImage(lobbyCode);
     });
@@ -236,6 +240,7 @@ io.on('connection', function(socket) {
         await io.sockets.in(lobbyCode).emit('returnImage', memes[num].url);
     };
 
+    //get the hand of socket that called it
     socket.on('callHand', (lobbyCode) => {
         socket.hand = getHand(lobbyCode);
         socket.emit("returnHand", socket.hand);
@@ -252,9 +257,10 @@ io.on('connection', function(socket) {
 
     });
 
+    //start turn for a lobby
     socket.on('startTurn', (lobbyCode) => {
         tempLobby = getLobbyByCode(lobbyCode);
-        tempLobby.submittedCards = [];
+        if (tempLobby != false) tempLobby.submittedCards = [];
         //get host and put in hotseat
         io.of('/').in(lobbyCode).clients((error, clients) => {
             if (error) throw error;
@@ -269,56 +275,62 @@ io.on('connection', function(socket) {
 
     });
 
+
+
     socket.on('getHost', (lobbyCode) => {
-
-
 
     });
     
+    /**
+     * submit a card to the hot seat for judging
+     */
     socket.on('submitCard', (lobbyCode, card) => {    
 
         tempLobby = getLobbyByCode(lobbyCode);
-        tempLobby.submittedCards.push(card);
-        tempLobby.submittedUsers.push(socket);  
-
-        //if everyone except hotSeat user has submitted a poggers meme
-        if (tempLobby.submittedCards.length === (tempLobby.users.length - 1)) {
-            //TO-DO: add hotseat user to lobby class to get it less stupidly  
-            
-            //search room to find user that is in the hotseat 
-            io.of('/').in(lobbyCode).clients((error, clients) => {
-                if (error) throw error;
-                for (client in clients) {
-                    var current = io.sockets.connected[clients[client]];
-                    if (current.host === true) {
-                        current.emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
-                        tempLobby.submittedCards = []; //clear submitted cards for next turn
-                        break;
-                    }   
-                }
-            });
+        if (tempLobby != false) {
+            tempLobby.submittedCards.push(card);       
+            tempLobby.submittedUsers.push(socket);  
+                
+            //if everyone except hotSeat user has submitted a poggers meme
+            if (tempLobby.submittedCards.length === (tempLobby.users.length - 1)) {
+                //TO-DO: add hotseat user to lobby class to get it less stupidly  
+                //search room to find user that is in the hotseat 
+                io.of('/').in(lobbyCode).clients((error, clients) => {
+                    if (error) throw error;
+                    for (client in clients) {
+                        var current = io.sockets.connected[clients[client]];
+                        if (current.host === true) {
+                            current.emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
+                            tempLobby.submittedCards = []; //clear submitted cards for next turn
+                            break;
+                        }   
+                    }
+                });
+            }
         }
 
     }); 
 
+    //choose the winner for a given round
     socket.on('chooseWinner', (index, lobbyCode) => {
         
         tempLobby = getLobbyByCode(lobbyCode); 
-        let winner = tempLobby.submittedUsers[index];
-        console.log(winner.username);
-       // winner.emit('addPoint', '');
-        //update user score: 
-        for (user in tempLobby.users) {
-            if (tempLobby.users[user].username === winner.username) {
-                tempLobby.users[user].score++;
-            }
-        }
+        if (tempLobby != false) {
+            let winner = tempLobby.submittedUsers[index];
+            console.log(winner.username);
 
-        io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);
-        console.log('here');
-        tempLobby.submittedUsers = [];
-        
+        //update winner's score
+            for (user in tempLobby.users) {
+                if (tempLobby.users[user].username === winner.username) {
+                    tempLobby.users[user].score++;
+                }
+            }
+
+            io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);
+            tempLobby.submittedUsers = [];  //clear submittedUsers
+        }
     });
+
 
 
     
@@ -330,11 +342,10 @@ io.on('connection', function(socket) {
      * don't think these two functions are used currently
      */
     socket.on('callCard', (lobbyCode) => {
-        //var randomCaption = Math.floor(Math.random() * (captions.length));
-      //  getCard(lobbyCode);
       var randomCaption = Math.floor(Math.random() * (captions.length));
       io.emit("returnCard", captions[randomCaption]);
     });
+
 
     socket.on('callCard1', (lobbyCode) => {
         var randomCaption = Math.floor(Math.random() * (captions.length));
@@ -349,12 +360,13 @@ io.on('connection', function(socket) {
  */
 function removeUser(lobbyCode, username) {
     var tempLobby = getLobbyByCode(lobbyCode);
-    console.log(tempLobby.users.length);
-    for (let i = 0; i < tempLobby.users.length; i++) {
-        console.log(tempLobby.users[i].username);
-        if (tempLobby.users[i].username === username) {
-            tempLobby.users.splice(i, 1);
-            break;
+    if (tempLobby != false) {
+        for (let i = 0; i < tempLobby.users.length; i++) {
+            console.log(tempLobby.users[i].username);
+            if (tempLobby.users[i].username === username) {
+                tempLobby.users.splice(i, 1);
+                break;
+            }
         }
     }
 }
@@ -365,24 +377,30 @@ function removeUser(lobbyCode, username) {
  */
 function getCard(lobbyCode) {
     var tempLobby = getLobbyByCode(lobbyCode);
-    var randomIndex = Math.floor(Math.random() * (tempLobby.captionsRemaining.length));
-    var caption = tempLobby.captionsRemaining[randomIndex];
-    tempLobby.captionsRemaining.splice(randomIndex, 1);
+    if (tempLobby != false) {
+        var randomIndex = Math.floor(Math.random() * (tempLobby.captionsRemaining.length));
+        var caption = tempLobby.captionsRemaining[randomIndex];
+        tempLobby.captionsRemaining.splice(randomIndex, 1);
+    }
     return caption;
 }
+
 /**
  * return one entire hand of cards from the card pile
  * 
  */
 function getHand(lobbyCode) {
     var tempLobby = getLobbyByCode(lobbyCode);
-    hand = [];
-    for (let i = 0; i < 5; i ++) { 
-        //TO-DO: handle TypeError: Cannot read property 'length of undefined'
-        var randomCaption = Math.floor(Math.random() * (tempLobby.captionsRemaining.length));
-        hand.push(tempLobby.captionsRemaining[randomCaption]);
-        tempLobby.captionsRemaining.splice(randomCaption, 1);
-    }
+    if (tempLobby != false) {
+        hand = [];
+        for (let i = 0; i < 5; i ++) { 
+            //TO-DO: handle TypeError: Cannot read property 'length of undefined'
+            var randomCaption = Math.floor(Math.random() * (tempLobby.captionsRemaining.length));
+            hand.push(tempLobby.captionsRemaining[randomCaption]);
+            tempLobby.captionsRemaining.splice(randomCaption, 1);
+        }
+    }   
+    else hand = null;
     return hand;
 }
 

@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnInit, ViewChild 
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDrawer } from '@angular/material/sidenav';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { UserStateService } from '../user-state.service';
 
 @Component({
   selector: 'app-layout',
@@ -14,10 +15,10 @@ export class LayoutComponent implements OnInit, AfterViewInit{
 
   public username: string = "";
   public isLoggedIn: boolean = true;
-  private changedLogin = false;
+  private changedLogin: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, 
-    private auth: AngularFireAuth, private zone: NgZone) { 
+    private auth: AngularFireAuth, private zone: NgZone, private userStateService: UserStateService) { 
     
   }
   ngAfterViewInit(): void {
@@ -32,15 +33,21 @@ export class LayoutComponent implements OnInit, AfterViewInit{
     this.zone.runOutsideAngular(() => this.auth.onAuthStateChanged((user) => {
       if (user !== null) {
         let username = user.displayName || user.email;
+        let userId = user.uid;
+
         this.changedLogin = true;
         this.zone.run(() => {
           this.username = username;
           this.isLoggedIn = true;
         });
+
+        this.userStateService.setUsername(username);
+        this.userStateService.setUserId(userId)
+
         setTimeout(() => { // Do nothing and wait for login component to update
         }, 1000);
         this.zone.run(() => {
-          this.router.navigate(['home'], {queryParams: {username: this.username, id: user.uid}, relativeTo: this.route});   
+          this.router.navigate(['home'], {relativeTo: this.route});   
         })
       } else {
         this.username = "";
@@ -52,7 +59,7 @@ export class LayoutComponent implements OnInit, AfterViewInit{
     this.auth.signOut();
     this.isLoggedIn = false;
     this.router.navigate(['/game']);
-    console.log("IsLoggedIn changed to false");
+    //console.log("IsLoggedIn changed to false");
   }
   
   title = "What Do You Meme? CPSC"
@@ -62,11 +69,11 @@ export class LayoutComponent implements OnInit, AfterViewInit{
   
   onToggleChange(event) {
     if (event === "users") {
-      console.log("Toggling users");
+      //console.log("Toggling users");
       this.hideUsers = !this.hideUsers;
     }
     if (event === "chat") {
-      console.log("Toggling chat");
+      //console.log("Toggling chat");
       this.hideChat = !this.hideChat;
       
       if (!this.hideChat) {
@@ -85,11 +92,11 @@ export class LayoutComponent implements OnInit, AfterViewInit{
   }
 
   mainRouterActive() {
-    console.log("Main/default router outlet was activated.");
+    //console.log("Main/default router outlet was activated.");
   }
 
   chatRouterActive() {
-    console.log("Chat router outlet was activated.");
+    //console.log("Chat router outlet was activated.");
   }
 
 }

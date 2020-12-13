@@ -3,6 +3,7 @@ import { HttpClient } from'@angular/common/http';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { RoomService } from '../../../room.service';
 import { LobbyComponent } from '../lobby/lobby.component';
+import { UserStateService } from 'src/app/user-state.service';
 
 
 @Component({
@@ -12,17 +13,22 @@ import { LobbyComponent } from '../lobby/lobby.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService,
+    private userStateService: UserStateService) { }
+
 
   username: string; 
   id: string; 
   validLobby;
+
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => { 
+   /* this.route.queryParams.subscribe(params => { 
       this.username = params['username'];
       this.id = params['id'];
-    });
-  
+    });*/
+    this.username =this.userStateService.getUsername();
+    this.id = this.userStateService.getUserId();
+    
     this.roomService.receiveValidLobby().subscribe((valid) => {
       this.validLobby = valid;
     })
@@ -40,7 +46,7 @@ export class HomeComponent implements OnInit {
   /**
    * create and join a new lobby with a randomly generated code
    */
-  createLobby(username: string) { 
+  createLobby() { 
     //generate code:
     //from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
     var result = '';
@@ -50,20 +56,23 @@ export class HomeComponent implements OnInit {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }    
     this.roomService.createLobby(result);
-    this.joinLobby(result, username); 
+    this.joinLobby(result); 
+    this.userStateService.setLobbyCode(result);
+    this.userStateService.setSelfAsCzar();
     return result;  
   }
   
   /**
    * join a new lobby by code 
    */
-  joinLobby(code: string, username: string) {
+  joinLobby(code: string) {
 
     //if (this.isValidLobby(code)) {
        // if (this.isValidLobby(code)===true) {
      // this.isValidLobby(code);
       //if (this.validLobby === true) {
-        this.roomService.sendAddUser(username, code);
+        this.userStateService.setLobbyCode(code);
+        this.roomService.sendAddUser(this.username, code);
         this.navigateLobby(code, this.username, this.id);
       //}
     //  }
@@ -75,14 +84,15 @@ export class HomeComponent implements OnInit {
    *  navigate to the lobby with router
    */
   navigateLobby(code: string, username: string, id: string) {
-    let navigationExtras: NavigationExtras = {
+    /*let navigationExtras: NavigationExtras = {
       queryParams: {
         "code": code,
         'username': username,
         'id': id
       }
-    };
-    this.router.navigate(['/game/lobby'], navigationExtras);
+    };*/
+    
+    this.router.navigate(['/game/lobby']);//, navigationExtras);
   }
   
   /* 
