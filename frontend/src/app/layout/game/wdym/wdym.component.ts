@@ -24,11 +24,10 @@ export class WdymComponent implements OnInit {
   public memeImage;
   public code;
   public caption: string;
-  selected = 0;     //index of selected card
+  public currentlyClickedCardIndex: number = 0;  //index of selected card
   hand: string[];
   submittedCards: string[];
   scores;
-  hotSeat;
   roundsWon;
   roundWinner;
   public isCzar;
@@ -92,8 +91,6 @@ export class WdymComponent implements OnInit {
     }
   }*/
  
-
-  public currentlyClickedCardIndex: number = 0;
   public setcurrentlyClickedCardIndex(cardIndex: number): void {
     this.currentlyClickedCardIndex = cardIndex;
   }
@@ -101,14 +98,10 @@ export class WdymComponent implements OnInit {
     return cardIndex === this.selected;
   }
 
-
-
-
-
-  chooseWinner(index) {
-    var winningCaption= this.submittedCards[index];
+  chooseWinner(cardIndex) {
+    var winningCaption= this.submittedCards[cardIndex];
     //get User who submitted that card
-    this.roomService.chooseWinner(index, this.code);
+    this.roomService.chooseWinner(this.userStateService.getUsername(), this.code);
     this.roomService.getScores(this.code);
     console.log(winningCaption);
   }
@@ -117,12 +110,13 @@ export class WdymComponent implements OnInit {
     this.roomService.getImage(this.code);
   }
 
-  getCard(){
-    return this.roomService.getCard(this.code);
-  }
+  // Not used anymore
+  // getCard(){
+  //   return this.roomService.getCard(this.code);
+  // }
 
   getSelected() {
-    return this.selected;
+    return this.currentlyClickedCardIndex;
   }
 
   startTurn() {
@@ -135,9 +129,10 @@ export class WdymComponent implements OnInit {
     this.roomService.submitCard(this.code, card);
   }
 
-  selectCard(index) { 
-    this.selected = index;
-  }
+  // Not used
+  // selectCard(index) { 
+  //   this.selected = index;
+  // }
 
   /**
    * returns an entire hand of cards for start of game

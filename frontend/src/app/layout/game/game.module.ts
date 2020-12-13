@@ -18,7 +18,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -43,7 +43,7 @@ import { BrowserModule } from '@angular/platform-browser';
     //Imports for drag and drop
     DragDropModule,
     BrowserAnimationsModule,
-    BrowserModule
+    MatIconModule
 
   ],
   providers:[],

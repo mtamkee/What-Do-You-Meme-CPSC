@@ -93,6 +93,12 @@ img {
     max-height: auto;
 }
 
+#refresh-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
 .headerl {
     /* grid-area: headerl; */
     grid-row: 1 / 2;

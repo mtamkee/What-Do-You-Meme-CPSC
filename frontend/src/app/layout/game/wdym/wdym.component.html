@@ -1,52 +1,50 @@
-    <div class = "grid-container">
-            <!--
-            <button (click)="getImage()">Get New Image :O</button>
-            -->
-         
-        <div class="headerl"><img src="{{memeImage}}"></div>
-        <div class="headerm">
-            <div *ngIf="isCzar">
-                <p style="color: lime"><u>Pick the winner</u></p>
-            </div>
+<div class = "grid-container">
+        <!--
+        <button (click)="getImage()">Get New Image :O</button>
+        -->
+        
+    <div class="headerl">
+        <img src="{{memeImage}}">
+        <button *ngIf="isCzar" id="refresh-button" mat-mini-fab color="primary" (click)="getImage()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+    <div class="headerm">
+        <div *ngIf="isCzar">
+            <p style="color: lime"><u>Pick the winner</u></p>
         </div>
-        <div class="headerr">
-            <button (click)="submitCard(getSelected())"> Submit! </button>   
-            <!--Score board here-->
-            <h2 style="color: black"><u>Game Score</u></h2>
-            <div *ngFor="let score of scores">
-                <h3> {{score[0]}}: {{score[1]}}</h3>
-            </div>
+    </div>
+    <div class="headerr">
+        <button *ngIf="!isCzar" (click)="submitPlayerCard()">Submit card</button>
+        <button *ngIf="isCzar" (click)="endTurn(getSelected())">End turn</button> 
+        <!--Score board here-->
+        <h2 style="color: black"><u>Game Score</u></h2>
+        <div *ngFor="let score of scores">
+            <h3> {{score[0]}}: {{score[1]}}</h3>
         </div>
-         
+    </div>
+        
 
-        <div class = "card-section">
-        <div class = "left" (click)=selectCard(0) 
-        [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
-        (click)="setcurrentlyClickedCardIndex(1)">
-        {{hand[0]}}</div>
-        <div  class = "leftc" (click)="selectCard(1)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
-        (click)="setcurrentlyClickedCardIndex(2)">
-        {{hand[1]}}</div>
-        <div class = "middle" (click)="selectCard(2)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
-        (click)="setcurrentlyClickedCardIndex(3)">
-        {{hand[2]}}</div>
-        <div class = "rightc" (click)="selectCard(3)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
-        (click)="setcurrentlyClickedCardIndex(4)">
-        {{hand[3]}}</div>
-        <div class = "right" (click)="selectCard(4)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(5)}"
-        (click)="setcurrentlyClickedCardIndex(5)">
-        {{hand[4]}}</div>
-        </div>
-</div>
-<div>
-    <button *ngIf="isCzar" (click)="getImage()">Get New Image :O</button>
-    <div><img src="{{memeImage}}" width="400px" height="auto"></div>
-    <button *ngIf="!isCzar" (click)="getCard()">Get Player Cards :O</button>
-    <div>{{caption}}</div>
-    <button *ngIf="!isCzar" (click)="submitPlayerCard()">Submit card</button>
-    <button *ngIf="isCzar" (click)="endTurn()">End turn</button>
+    <div class = "card-section">
+    <div class = "left"
+    [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
+    (click)="setcurrentlyClickedCardIndex(1)">
+    {{hand[0]}}</div>
+    <div  class = "leftc"
+    [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
+    (click)="setcurrentlyClickedCardIndex(2)">
+    {{hand[1]}}</div>
+    <div class = "middle"
+    [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
+    (click)="setcurrentlyClickedCardIndex(3)">
+    {{hand[2]}}</div>
+    <div class = "rightc"
+    [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
+    (click)="setcurrentlyClickedCardIndex(4)">
+    {{hand[3]}}</div>
+    <div class = "right"
+    [ngClass]="{'highlight':checkIfCardIsClicked(5)}"
+    (click)="setcurrentlyClickedCardIndex(5)">
+    {{hand[4]}}</div>
+    </div>
 </div>
