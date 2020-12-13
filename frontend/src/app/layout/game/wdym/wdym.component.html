@@ -3,55 +3,49 @@
     <header>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </header>
+
     <div class = "grid-container">
-        
             <!--
             <button (click)="getImage()">Get New Image :O</button>
             -->
-            
-            
-        <div class="headerl"><img src="{{memeImage}}" height="450" width="500">
-        
-        </div>
-        <div class="headerm">
-            <div *ngIf="hotSeat">
-                <p style="color: lime"><u>Pick the winner</u></p>
+         <div class = "top-section">
+            <div class="headerl"><img src="{{memeImage}}"></div>
+            <div class="headerm">
+                <div *ngIf="hotSeat">
+                    <p style="color: lime"><u>Pick the winner</u></p>
+                </div>
+                <div *ngFor="let submittedCard of submittedCards; let i = index">
+                    <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
+                </div>
             </div>
-            <div *ngFor="let submittedCard of submittedCards; let i = index">
-                <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
+            <div class="headerr">
+                <button (click)="submitCard(getSelected())"> Submit! </button>   
+                <!--Score board here-->
+                <h2 style="color: black"><u>Game Score</u></h2>
             </div>
-        </div>
-        <div class="headerr">
-            <button (click)="submitCard(getSelected())"> Submit! </button>   
-            <!--Score board here-->
-            <h2 style="color: black"><u>Game Score</u></h2>
-        </div>
+         </div>
 
-        
-    
-        
-
-        <div class = "left" (click)=selectCard(0) 
-        [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
-        (click)="setcurrentlyClickedCardIndex(1)">
-            {{hand[0]}}
-        </div>
-        <div  class = "leftc" (click)="selectCard(1)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
-        (click)="setcurrentlyClickedCardIndex(2)"
-        >{{hand[1]}}</div>
-        <div class = "middle" (click)="selectCard(2)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
-        (click)="setcurrentlyClickedCardIndex(3)"
-        >{{hand[2]}}</div>
-        <div class = "rightc" (click)="selectCard(3)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
-        (click)="setcurrentlyClickedCardIndex(4)"
-        >{{hand[3]}}</div>
-        <div class = "right" (click)="selectCard(4)"
-        [ngClass]="{'highlight':checkIfCardIsClicked(5)}"
-        (click)="setcurrentlyClickedCardIndex(5)"
-        >{{hand[4]}}</div>
+         <div class = "card-section">
+            <div class = "left" (click)=selectCard(0) 
+            [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
+            (click)="setcurrentlyClickedCardIndex(1)">
+            {{hand[0]}}</div>
+            <div  class = "leftc" (click)="selectCard(1)"
+            [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
+            (click)="setcurrentlyClickedCardIndex(2)">
+            {{hand[1]}}</div>
+            <div class = "middle" (click)="selectCard(2)"
+            [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
+            (click)="setcurrentlyClickedCardIndex(3)">
+            {{hand[2]}}</div>
+            <div class = "rightc" (click)="selectCard(3)"
+            [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
+            (click)="setcurrentlyClickedCardIndex(4)">
+            {{hand[3]}}</div>
+            <div class = "right" (click)="selectCard(4)"
+            [ngClass]="{'highlight':checkIfCardIsClicked(5)}"
+            (click)="setcurrentlyClickedCardIndex(5)">
+            {{hand[4]}}</div>
+         </div>
     </div>
-
-</html> 
+</html>
