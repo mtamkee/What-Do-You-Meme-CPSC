@@ -3,10 +3,13 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = 3000;
 const fetch = require('node-fetch');
+const { resolve } = require('path');
+const { del } = require('request');
 var lobbies = [];
 var users = [];
 var photo;
-
+const {promisify} = require('util');
+const delay = promisify(setTimeout);
 
 
 
@@ -26,7 +29,7 @@ const captions = [
     'Remembering you are in Haskayne.',
     'I am dropping out to start an Only Fans.',
     'Oh you know how to write "Hello World" and you call yourself a programmer?',
-    'I enojoy long walks to Math Sciences in my free time.',
+    'I enjoy long walks to Math Sciences in my free time.',
     'My back hurts from carrying my team so hard.',
     'Who needs sleep when you have coffee.',
     'HTML is a language',
@@ -68,7 +71,21 @@ const captions = [
     'Cannot have any runtime errors if your code does not compile',
     'I hate programming, I hate programming, I love programming! YAY!',
     'Submitting an infinite loop to WebCat',
-    'Print Statements are better than a debugger.'
+    'Print Statements are better than a debugger.',
+    'The face you make when you get a segmentation fault.',
+    'FORK BOMB!',
+    'Only friends on social media are parents... gets cyberbullied.',
+    'When you try to think recursively.',
+    'When you get the same seat you picked in the first class.',
+    'Art students.',
+    'Needing to do a proof by induction.',
+    'When turning it off and on again does not work.',
+    'Trying to get that extra percent of test case coverage.',
+    'Assignment due date is not until tomorrow night.',
+    'Waiting for your program to compile.',
+    'When people do not shut up in Zoom chat.',
+    'Professor having to go over assignment rules for the fourth time.',
+    'Do you need an extension?'
 ];
 
 class User {
@@ -175,6 +192,7 @@ io.on('connection', function(socket) {
         socket.emit('returnHand', socket.hand);
     });
 
+    
     //call a random image from the api
     async function fetchImage(lobbyCode) {
         var num = Math.floor(Math.random() * (99+1));
