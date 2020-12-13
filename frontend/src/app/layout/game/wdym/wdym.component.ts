@@ -25,7 +25,11 @@ export class WdymComponent implements OnInit {
   public memeImage;
   public code;
   public caption: string;
+<<<<<<< HEAD
   public currentlyClickedCardIndex: number = 0;    //index of selected card
+=======
+  public currentlyClickedCardIndex: number = 0;  //index of selected card
+>>>>>>> 7bf1950 (Integrate turn end with existing functions and fix chooseWinner in server - score increments now)
   hand: string[];
   submittedCards: string[];
   scores;
@@ -129,7 +133,7 @@ export class WdymComponent implements OnInit {
     var winningCaption = this.submittedCards[index];
     this.winningCaption = winningCaption;
     //get User who submitted that card
-    this.roomService.chooseWinner(index, this.code);
+    this.roomService.chooseWinner(this.userStateService.getUsername(), this.code);
     this.roomService.getScores(this.code);
     this.endTurn();
     return winningCaption;
@@ -139,9 +143,10 @@ export class WdymComponent implements OnInit {
     this.roomService.getImage(this.code);
   }
 
-  getCard(){
-    return this.roomService.getCard(this.code);
-  }
+  // Not used anymore
+  // getCard(){
+  //   return this.roomService.getCard(this.code);
+  // }
 
   getSelected() {
     return this.currentlyClickedCardIndex;

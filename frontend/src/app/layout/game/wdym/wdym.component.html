@@ -1,23 +1,29 @@
-    <div class = "grid-container">
-            <!--
-            <button (click)="getImage()">Get New Image :O</button>
-            -->
-         
-        <div class="headerl"><img src="{{memeImage}}"></div>
-        <div class="headerm">
-            <div *ngIf="isCzar">
-                <p style="color: lime"><u>Pick the winner</u></p>
-            </div>
+<div class = "grid-container">
+        <!--
+        <button (click)="getImage()">Get New Image :O</button>
+        -->
+        
+    <div class="headerl">
+        <img src="{{memeImage}}">
+        <button *ngIf="isCzar" id="refresh-button" mat-mini-fab color="primary" (click)="getImage()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+    <div class="headerm">
+        <div *ngIf="isCzar">
+            <p style="color: lime"><u>Pick the winner</u></p>
         </div>
-        <div class="headerr">
-            <button (click)="submitCard(getSelected())"> Submit! </button>   
-            <!--Score board here-->
-            <h2 style="color: black"><u>Game Score</u></h2>
-            <div *ngFor="let score of scores">
-                <h3> {{score[0]}}: {{score[1]}}</h3>
-            </div>
+    </div>
+    <div class="headerr">
+        <button *ngIf="!isCzar" (click)="submitPlayerCard()">Submit card</button>
+        <button *ngIf="isCzar" (click)="endTurn(getSelected())">End turn</button> 
+        <!--Score board here-->
+        <h2 style="color: black"><u>Game Score</u></h2>
+        <div *ngFor="let score of scores">
+            <h3> {{score[0]}}: {{score[1]}}</h3>
         </div>
-         
+    </div>
+        
 
          <div *ngIf="isCzar" class = "card-section">
             <div *ngFor="let submittedCard of submittedCards; let i = index">
@@ -64,4 +70,3 @@
         </div>
 
     </div>
-
