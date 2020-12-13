@@ -11,7 +11,8 @@
         </button>
     </div>
     <div class="headerm">
-        <p class="title"><u>Pick the Winner</u></p>
+        <p *ngIf="isCzar" class="title"><u>Pick the Winner</u></p>
+        <p *ngIf="!isCzar" class="title"><u>Round Winner</u></p>
         <p>{{hand[getSelected()]}}</p>
         <button *ngIf="!isCzar" (click)="submitPlayerCard()" class="submit-button" mat-raised-button color="primary">
             Submit card
@@ -24,7 +25,8 @@
         <!--Score board here-->
         <p class="title"><u>Game Score</u></p>
         <div *ngFor="let score of scores">
-            <h3> {{score[0]}}: {{score[1]}}</h3>
+            <h3 *ngIf="score[0] == username; else playerScore"><b>{{score[0]}}: {{score[1]}}</b></h3>
+            <h3 #playerScore> {{score[0]}}: {{score[1]}}</h3>
         </div>
     </div>
         

@@ -36,11 +36,12 @@ export class WdymComponent implements OnInit {
   public isCzar;
   public showOverlay: boolean = false;
   public showWinnerOverlay: boolean = false;
-
+  username;
   
   ngOnInit(): void {   
     this.code = this.userStateService.getLobbyCode();
     this.isCzar = this.userStateService.getIsCzar();
+    this.username = this.userStateService.getUsername();
 
     this.roomService.receiveImage().subscribe((photo) => {
       this.memeImage = photo;
