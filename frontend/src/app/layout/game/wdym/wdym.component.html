@@ -3,7 +3,9 @@
     <header>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </header>
-
+    <style>
+        
+    </style>
     <div class = "grid-container">
             <!--
             <button (click)="getImage()">Get New Image :O</button>
@@ -19,9 +21,14 @@
                         <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
                     </div>
                 </div>
+                <div class="bottom">
+                    <div *ngIf="!isCzar">
+                    <button id = "clicker" (click)="submitCard(getSelected())"> Submit Your Meme! </button> 
+                    </div>
+                </div>
             </div>
             <div class="headerr">
-                <button (click)="submitCard(getSelected())"> Submit! </button>   
+                  
                 <!--Score board here-->
                 <h2 style="color: black"><u>Game Score</u></h2>
                 <div *ngFor="let score of scores">
