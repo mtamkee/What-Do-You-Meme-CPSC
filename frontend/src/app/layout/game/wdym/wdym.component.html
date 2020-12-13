@@ -4,27 +4,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </header>
     <div class = "grid-container">
-        <div class="header">
+        
             <!--
             <button (click)="getImage()">Get New Image :O</button>
             -->
-            <button (click)="submitCard(getSelected())"> Submit! </button>
-            
-        <div class="headerl"><img src="{{memeImage}}" height="450">
             
             
+        <div class="headerl"><img src="{{memeImage}}" height="450" width="500">
+        
         </div>
         <div class="headerm">
             <div *ngIf="hotSeat">
-                <p style="color: black">Pick the winner</p>
+                <p style="color: lime"><u>Pick the winner</u></p>
             </div>
             <div *ngFor="let submittedCard of submittedCards; let i = index">
                 <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
             </div>
         </div>
-        
-       
+        <div class="headerr">
+            <button (click)="submitCard(getSelected())"> Submit! </button>   
+            <!--Score board here-->
+            <h2 style="color: black"><u>Game Score</u></h2>
         </div>
+
+        
     
         
 

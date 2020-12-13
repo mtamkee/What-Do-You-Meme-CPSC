@@ -13,53 +13,60 @@ h1 {
     
     border-radius: 10px;
 }
-/* Style the header */
-.header {
-    grid-area: header;
-    background-color: #f1f1f1;
-    text-align: center;
-    font-size: 35px;
-    word-wrap: break-word;
-    height: 530px;
-    max-height: 100%;
-}
-.img{
-    height: auto;
-    width: auto;
-    max-width: 350px;
-    max-height: 400px;
-}
-
-.headerr{
-    width: 20%;
-    height: 25%
-}
-.headerl {
-    width: 40%;
-    padding: 10px;
-    height: 25%;
-    float: left;
-}
-.headerm {
-    width: 40%;
-    padding: 10px;
-    height: 25%;
-    float: right;
-}
 /* The grid container */
 .grid-container {
     position: relative;
     display: grid;
     grid-template-areas: 
-      'header header header header header ' 
+      'headerl headerl headerm headerm headerr ' 
       'left leftc middle rightc right' 
       'footer footer footer footer footer';
      grid-column-gap: 1%;
 } 
+.img{
+    height: auto;
+    width: auto;
+    max-width: 450px;
+    max-height: 400px;
+}
+
+   
+
+.headerr{
+    width: 300px;
+    height: 450px;
+    grid-area: headerr;
+    background-color: limegreen;
+}
+.headerl {
+    grid-area: headerl;
+    width: 600px;
+    padding: 10px;
+    height: 450px;
+    float: left;
+    background-color: aqua;
+}
+.headerm {
+    grid-area: headerm;
+    width: 600px;
+    padding: 10px;
+    height: 450px;
+    float: right;
+    background-color: pink;
+    
+}
+p{
+    text-align: center;
+    font-weight: bolder;
+    font-size: 50px;
+    font-style: comic;
+    font-family: "Comic Sans MS" ;
+    color: greenyellow;
+}
 .headerl{
     padding: 10px;
     height: 100%;
-
+    
 }
 .left,
 .middle,
@@ -111,11 +118,25 @@ h1 {
     padding: 10px;
     text-align: center;
 }
-
+h2{
+    text-align: center;
+    font-size: 40px;
+}
+u{
+    text-decoration-line: underline;
+    text-decoration-color: black ;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 50;
+    font-style: comic;
+    font-family: "Comic Sans MS" ;
+}
 @media (max-width: 600px) {
     .grid-container  {
       grid-template-areas: 
-        'header header header header header' 
+        'headerr headerr headerr headerr headerr'
+        'headerm headerm headerm headerm headerm' 
+        'headerl headerl headerl headerl headerl'
         'left left left left left' 
         'leftc leftc leftc leftc leftc'
         'middle middle middle middle middle' 
