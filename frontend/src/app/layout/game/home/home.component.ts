@@ -61,11 +61,11 @@ export class HomeComponent implements OnInit {
 
     //if (this.isValidLobby(code)) {
        // if (this.isValidLobby(code)===true) {
-      this.isValidLobby(code);
-      if (this.validLobby === true) {
+     // this.isValidLobby(code);
+      //if (this.validLobby === true) {
         this.roomService.sendAddUser(username, code);
         this.navigateLobby(code, this.username, this.id);
-      }
+      //}
     //  }
   //  }
 
@@ -88,9 +88,10 @@ export class HomeComponent implements OnInit {
   /* 
    * need to fix
    */
+  /*
   isValidLobby(code: string) {
     var res;
     this.roomService.isValidLobby(code);
-  }
+  }*/
   
 }

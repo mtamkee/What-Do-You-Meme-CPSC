@@ -25,6 +25,7 @@ export class WdymComponent implements OnInit {
   selected = 0;     //index of selected card
   hand: string[];
   submittedCards: string[];
+  scores;
   hotSeat;
   roundsWon;
   roundWinner;
@@ -44,7 +45,6 @@ export class WdymComponent implements OnInit {
       this.caption = cardString;
     });
     
-
     //this will just put the host in the hot seat on game initialization
     this.roomService.receiveHost().subscribe((e) => {
       this.hotSeat = true;
@@ -53,6 +53,11 @@ export class WdymComponent implements OnInit {
     this.roomService.receiveHand().subscribe((hand: string[]) => {
       this.hand = hand;
     });
+
+    this.roomService.receiveScores().subscribe((scores) => {
+      this.scores = scores;
+    });
+
 
     this.roomService.returnSubmittedCards().subscribe((submitted: string[]) => {
       this.submittedCards = submitted;
@@ -72,6 +77,7 @@ export class WdymComponent implements OnInit {
     this.startTurn(); //this will get host and put them in the hotseat
     this.getHand();
     this.getImage();  //fix this to only call once
+    this.getScores();
   }
 
 //Controller for drag and drop
@@ -96,10 +102,10 @@ onDrop(event: CdkDragDrop<string[]>) {
   }
 
   chooseWinner(index) {
-    
-    var winningCaption = this.submittedCards[index];
+    var winningCaption= this.submittedCards[index];
     //get User who submitted that card
     this.roomService.chooseWinner(index, this.code);
+    this.roomService.getScores(this.code);
     console.log(winningCaption);
   }
  
@@ -144,6 +150,9 @@ onDrop(event: CdkDragDrop<string[]>) {
     return this.roomService.replaceCard(this.code, index);
   }
 
+  getScores() {
+    this.roomService.getScores(this.code);
+  }
 
 
 

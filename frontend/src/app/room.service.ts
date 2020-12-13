@@ -107,5 +107,12 @@ export class RoomService {
       return this.socket.fromEvent('returnRoundWinner');
     }
 
+    getScores(lobbyCode) {
+       this.socket.emit('getScores', lobbyCode);
+    } 
+
+    receiveScores() {
+      return this.socket.fromEvent('receiveScores');
+    }
 
 }

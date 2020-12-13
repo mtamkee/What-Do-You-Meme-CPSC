@@ -26,26 +26,14 @@ const captions = [
     'When you get fucked in your 449 final.',
     'The Comp Sci Lab.',
     'When you are frustrated with your Base Model Macbook Air.',
-    'Building your own PC',
     'Remembering you are in Haskayne.',
-    'When your recursion works',
-    'recursion > loops',
-    'Coding in bitwise operations',
-    'Trying to understand what your professor is saying',
     'I am dropping out to start an Only Fans.',
     'Oh you know how to write "Hello World" and you call yourself a programmer?',
     'I enjoy long walks to Math Sciences in my free time.',
     'My back hurts from carrying my team so hard.',
     'Who needs sleep when you have coffee.',
-    'Coding for 8 hours straight',
-    'Giving up on Git because you have been resolving merge conflicts for 4 hours',
-    'Keeeping copies of files as version control',
-    'When you write a ton of code in one go and spend 8 hours debugging it',
-    'Just because it compiles, doesn\'t mean it works',
     'HTML is a language',
-    'When someone brags about their friend knowing HTML',
-    "C code",
-    "Calculating what you need to get on the final to pass the course",
+    'When your girlfriend brags about her friend knowing HTML',
     'Having a teammate as useless as a chromebook',
     'When you find out there is going to be a peer review.',
     'Merged right to Main and caused an Error.',
@@ -57,16 +45,12 @@ const captions = [
     'When the project manager wants to use C',
     '3 billion devices run java',
     'Array indexes should start at 1',
-    'Counting everything from 0',
-    'When your unicard will not scan at math sciences',
-    'Linux users',
+    'When your unicard will not scan at math sciences ',
+    'linux users',    
     'Assembly > Prolog',
     'Academic Misconduct',
     'Closing 12 Stackoverflow tabs after solving the problem',
-    'Having 50 tabs open',
     'Coding in EMacs',
-    'Preferring Vim over Emacs',
-    'Trying to exit Vim',
     'Look at me, I am the scrum master now.',
     'Am I dumb or am I stupid?.',
     'incrementing a loop, x++ versus x -= -1 ',
@@ -76,17 +60,14 @@ const captions = [
     'Why is my code returning an infinite loop?',
     'Your friends Chegg Account',
     'Fork child, kill parent',
-    'Fork children, kill orphans',
     'This task should take you 2 hours.',
     'And that is how you calculate 1+3',
     'Writes 10 lines of code without looking at Google.',
     'You study computer science, can you fix my printer?',
     'I hate LINUX',
-    'Voting Linux for best OS',
     'Sorry babe, not tonight, I am coding.',
     'Will my program work if I re-compile?',
-    'Will my program work if I restart the computer?',
-    'Missing semicolon on line 331',
+    'Missing semicolon in line 331',
     'Cannot have any runtime errors if your code does not compile',
     'I hate programming, I hate programming, I love programming! YAY!',
     'Submitting an infinite loop to WebCat',
@@ -104,14 +85,14 @@ const captions = [
     'Waiting for your program to compile.',
     'When people do not shut up in Zoom chat.',
     'Professor having to go over assignment rules for the fourth time.',
-    'Do you need an extension?',
-    'When your professor gives a last-minute extension but you already pulled an all-nighter trying to finish the assignment'
+    'Do you need an extension?'
 ];
 
 class User {
     constructor(username) {
         this.username = username;
         this.hand = [];   
+        this.score = 0;
     }
 }
 
@@ -163,6 +144,20 @@ io.on('connection', function(socket) {
         }
 
     });
+
+
+    socket.on('getScores', function(lobbyCode) {
+        var tempLobby = getLobbyByCode(lobbyCode);
+        var scores = [];
+        if (tempLobby) {
+            for (let i = 0; i < tempLobby.users.length; i++) {
+                var user = tempLobby.users[i];
+                console.log(user.username + ": " + user.score);
+                scores.push([user.username, user.score]);
+            }
+        }   
+        io.sockets.in(lobbyCode).emit('receiveScores', scores);
+    })
 
     socket.on('getUsers', function(lobbyCode) {
         console.log("called getusers with lobby " + lobbyCode);
@@ -291,7 +286,14 @@ io.on('connection', function(socket) {
         tempLobby = getLobbyByCode(lobbyCode); 
         let winner = tempLobby.submittedUsers[index];
         console.log(winner.username);
-        winner.emit('addPoint', '');
+       // winner.emit('addPoint', '');
+        //update user score: 
+        for (user in tempLobby.users) {
+            if (tempLobby.users[user].username === winner.username) {
+                tempLobby.users[user].score++;
+            }
+        }
+
         io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);
         console.log('here');
         tempLobby.submittedUsers = [];
@@ -356,6 +358,7 @@ function getHand(lobbyCode) {
     var tempLobby = getLobbyByCode(lobbyCode);
     hand = [];
     for (let i = 0; i < 5; i ++) { 
+        //TO-DO: handle TypeError: Cannot read property 'length of undefined'
         var randomCaption = Math.floor(Math.random() * (tempLobby.captionsRemaining.length));
         hand.push(tempLobby.captionsRemaining[randomCaption]);
         tempLobby.captionsRemaining.splice(randomCaption, 1);
