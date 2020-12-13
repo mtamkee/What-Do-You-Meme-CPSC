@@ -311,21 +311,6 @@ io.on('connection', function(socket) {
 
     }); 
 
-<<<<<<< HEAD
-    //choose the winner for a given round
-    socket.on('chooseWinner', (index, lobbyCode) => {
-        
-        tempLobby = getLobbyByCode(lobbyCode); 
-        if (tempLobby != false) {
-            let winner = tempLobby.submittedUsers[index];
-            console.log(winner.username);
-
-        //update winner's score
-            for (user in tempLobby.users) {
-                if (tempLobby.users[user].username === winner.username) {
-                    tempLobby.users[user].score++;
-                }
-=======
     socket.on('chooseWinner', (username, lobbyCode) => {
         
         tempLobby = getLobbyByCode(lobbyCode); 
@@ -337,7 +322,6 @@ io.on('connection', function(socket) {
         for (user in tempLobby.users) {
             if (tempLobby.users[user].username === winner.username) {
                 tempLobby.users[user].score++;
->>>>>>> 59d1313 (Integrate turn end with existing functions and fix chooseWinner in server - score increments now)
             }
 
             io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);

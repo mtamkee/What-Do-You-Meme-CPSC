@@ -95,7 +95,7 @@ export class WdymComponent implements OnInit {
     this.currentlyClickedCardIndex = cardIndex;
   }
   public checkIfCardIsClicked(cardIndex: number): boolean {
-    return cardIndex === this.selected;
+    return cardIndex === this.currentlyClickedCardIndex;
   }
 
   chooseWinner(cardIndex) {
