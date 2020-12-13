@@ -20,7 +20,9 @@
                     <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
                 </div>
                 <div class="bottom">
+                    <div *ngIf="!isCzar">
                     <button id = "clicker" (click)="submitCard(getSelected())"> Submit Your Meme! </button> 
+                    </div>
                 </div>
             </div>
             <div class="headerr">

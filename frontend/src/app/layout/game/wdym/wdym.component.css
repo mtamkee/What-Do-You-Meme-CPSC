@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-    
+    text-align: center;
     border: solid 1px black;
     color: black; 
     cursor: pointer;
@@ -163,7 +163,7 @@ p {
     margin: auto;
 }
 #clicker{
-    background-color: #7b38d8;
+    background-color: #7b1fa2;
         border-radius: 10px;
         border: 4px double #cccccc;
         color: #eeeeee;
