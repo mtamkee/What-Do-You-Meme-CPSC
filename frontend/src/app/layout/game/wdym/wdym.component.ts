@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationExtras} from '@angular/router';
 import { RoomService } from '../../../room.service';
@@ -16,6 +16,7 @@ import { UserStateService } from 'src/app/user-state.service';
 })
 export class WdymComponent implements OnInit {
 
+
   constructor(private route: ActivatedRoute, private roomService: RoomService,
     private userStateService: UserStateService) {
     this.submittedCards = [];
@@ -29,7 +30,6 @@ export class WdymComponent implements OnInit {
   hand: string[];
   submittedCards: string[];
   scores;
-  hotSeat;
   roundsWon;
   roundWinner;
   public isCzar;
@@ -46,12 +46,6 @@ export class WdymComponent implements OnInit {
       this.caption = cardString;
     });
     
-    //this will just put the host in the hot seat on game initialization
-    /*this.roomService.receiveHost().subscribe((e) => {
-      this.isCzar = true;
-      this.startTurn();
-    });*/
-
     this.roomService.receiveHand().subscribe((hand: string[]) => {
       this.hand = hand;
     });
@@ -165,6 +159,7 @@ export class WdymComponent implements OnInit {
     this.roomService.getScores(this.code);
   }
 
+  
 
   endTurn() {
     this.getImage();

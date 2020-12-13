@@ -36,9 +36,20 @@ h1 {
     justify-content: center;
 }
 
+h2 {
+  color: white;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
 @media (max-width: 600px) {
   h1 {
     font-size: 1rem;
+  }
+  h2 {
+    font-size: 0.8rem;
   }
 }
 
@@ -49,6 +60,7 @@ h1 button {
     font-size: 80%;
     border-radius: 10px;
 }
+
 
 #user {
   font-size: 1.2rem;

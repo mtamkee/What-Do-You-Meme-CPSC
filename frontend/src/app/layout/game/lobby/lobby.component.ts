@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router, ActivatedRoute, ParamMap, NavigationExtras} from '@angular/router';
 import { HttpClient } from'@angular/common/http';
 import { RoomService } from '../../../room.service';
@@ -12,35 +12,40 @@ import { UserStateService } from 'src/app/user-state.service';
 })
 export class LobbyComponent implements OnInit {
 
+
+
   public users = []; //array of users in Lobby
   code: string;  
   username: string;
   id: string;
   isCzar: boolean;
+  @ViewChild('errorMessage') errorMessage: ElementRef;
+
 
   constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService,
     private userStateService: UserStateService) { }
   ngOnInit(): void {
-   /* this.route.queryParams.subscribe(params => { 
-      this.code = params['code'];
-      this.username = params['username'],
-      this.id = params['id']
-    })*/
+
     this.code = this.userStateService.getLobbyCode();
     this.username = this.userStateService.getUsername();
     this.id = this.userStateService.getUserId();
     this.isCzar = this.userStateService.getIsCzar();
     this.getUsers();  
     this.roomService.getStartGame().subscribe(() => {
-     /* let navigationExtras: NavigationExtras = { queryParams: 
-        {'code': this.code}
-      };*/
-      this.router.navigate(['/game/wdym']);//, navigationExtras);
+
+      this.router.navigate(['/game/wdym']);
     });
   }
 
   startGame() {
+    if (this.users.length < 2) {
+      this.errorMessage.nativeElement.innerHTML = 'Error: Need more than one User!';
+      return;
+    }
+    this.errorMessage.nativeElement.innerHTML = "";
     this.roomService.startGame(this.code);
+    
+
   }
   
   getUsers() { 

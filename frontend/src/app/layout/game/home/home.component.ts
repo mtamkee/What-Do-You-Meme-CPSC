@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from'@angular/common/http';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { RoomService } from '../../../room.service';
 import { LobbyComponent } from '../lobby/lobby.component';
 import { UserStateService } from 'src/app/user-state.service';
+
 
 
 @Component({
@@ -13,8 +14,12 @@ import { UserStateService } from 'src/app/user-state.service';
 })
 export class HomeComponent implements OnInit {
 
+
+  @ViewChild('errorMessage') errorMessage: ElementRef;
+
   constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService,
     private userStateService: UserStateService) { }
+  
 
 
   username: string; 
@@ -22,10 +27,7 @@ export class HomeComponent implements OnInit {
   validLobby;
 
   ngOnInit(): void {
-   /* this.route.queryParams.subscribe(params => { 
-      this.username = params['username'];
-      this.id = params['id'];
-    });*/
+   
     this.username =this.userStateService.getUsername();
     this.id = this.userStateService.getUserId();
     
@@ -67,18 +69,15 @@ export class HomeComponent implements OnInit {
    * join a new lobby by code 
    */
   joinLobby(code: string) {
+      if (code.length != 5) {
 
-    //if (this.isValidLobby(code)) {
-       // if (this.isValidLobby(code)===true) {
-     // this.isValidLobby(code);
-      //
+        this.errorMessage.nativeElement.innerHTML = 'Error: Invalid Lobby Code. Try Again!';
+        return;
+      };
       this.userStateService.setLobbyCode(code);
       this.roomService.sendAddUser(this.userStateService.getUsername(), code);
       this.navigateLobby(code, this.userStateService.getUsername(), this.userStateService.getUserId());
-      //}
-    //  }
-
-
+      this.errorMessage.nativeElement.innerHTML = '';
 
   } 
 
@@ -86,21 +85,16 @@ export class HomeComponent implements OnInit {
    *  navigate to the lobby with router
    */
   navigateLobby(code: string, username: string, id: string) {
-    /*let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "code": code,
-        'username': username,
-        'id': id
-      }
-    };*/
+  
+    this.router.navigate(['/game/lobby']);
 
-    this.router.navigate(['/game/lobby']);//, navigationExtras);
   }
   
   /* 
    * need to fix
    */
-  /*
+  
+   /*
   isValidLobby(code: string) {
     var res;
     this.roomService.isValidLobby(code);

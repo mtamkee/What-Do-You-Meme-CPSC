@@ -279,7 +279,7 @@ io.on('connection', function(socket) {
                 }   
             }
         });
-
+    });
 
     socket.on('checkWinner', (lobbyCode) => {
         
@@ -293,13 +293,7 @@ io.on('connection', function(socket) {
         }
     });
 
-
-    });
-
-
-
-
-
+    //});
 
     socket.on('getHost', (lobbyCode) => {
 
@@ -332,8 +326,13 @@ io.on('connection', function(socket) {
                 });
             }
         }
+        // TODO: separate hot seat's submitted cards logic from the players' card submitting logic. 
+        // This is here because the above wasn't throwing for the hotseat user. This would throw to some extra connections even when using one browser though...
+        // Also, the client needs to receive this before calling chooseWinner to avoid a race condition.
+    //   io.sockets.in(lobbyCode).emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
 
     }); 
+
 
     //choose the winner for a given round
     socket.on('chooseWinner', (index, lobbyCode) => {
@@ -354,6 +353,25 @@ io.on('connection', function(socket) {
         }
         
     });
+
+    /*
+    socket.on('chooseWinner', (username, lobbyCode) => {
+        tempLobby = getLobbyByCode(lobbyCode); 
+        let winner = tempLobby.submittedUsers.find((socket) => socket.username === username);
+        console.log("Winner:")
+        console.log(winner.username);
+       // winner.emit('addPoint', '');
+        //update user score: 
+        for (user in tempLobby.users) {
+            if (tempLobby.users[user].username === winner.username) {
+                tempLobby.users[user].score++;
+            }
+
+            io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);
+            tempLobby.submittedUsers = [];  //clear submittedUsers
+        }
+    });*/
+    
 
     socket.on('getNextCzar', (lobbyCode) => {
         tempLobby = getLobbyByCode(lobbyCode);
@@ -397,6 +415,9 @@ io.on('connection', function(socket) {
         
 
     });
+
+
+
 
     
     socket.on('getSubmittedCards', (lobbyCode) => {

@@ -10,6 +10,8 @@ h1 {
     text-align: center;
     border: solid 1px black;
     color: black; 
+    background-color: white;
+    margin-top: 3rem;
     cursor: pointer;
     border-radius: 10px;
 }
