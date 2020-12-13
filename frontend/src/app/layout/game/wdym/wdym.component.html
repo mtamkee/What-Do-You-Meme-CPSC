@@ -4,11 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </header>
     <style>
-        #bottom { 
-                position:absolute;                  
-                bottom:0;                          
-                left:0;                          
-            } 
+        
     </style>
     <div class = "grid-container">
             <!--
@@ -23,8 +19,8 @@
                 <div *ngFor="let submittedCard of submittedCards; let i = index">
                     <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
                 </div>
-                <div id="bottom">
-                    <button class = "clicker" (click)="submitCard(getSelected())"> Submit! </button> 
+                <div class="bottom">
+                    <button id = "clicker" (click)="submitCard(getSelected())"> Submit Your Meme! </button> 
                 </div>
             </div>
             <div class="headerr">
