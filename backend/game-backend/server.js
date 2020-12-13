@@ -86,6 +86,7 @@ class Lobby {
         this.captionsRemaining = Array.from(captions);
         this.submittedCards = [];
         this.turn = 0;
+        this.submittedUsers = [];
     }        
 }
 
@@ -209,10 +210,15 @@ io.on('connection', function(socket) {
                 if (current.host === true) {
                     current.emit('returnHost', '');
                     break;
-
                 }   
             }
         });
+
+    });
+
+    socket.on('getHost', (lobbyCode) => {
+
+
 
     });
     
@@ -220,6 +226,7 @@ io.on('connection', function(socket) {
 
         tempLobby = getLobbyByCode(lobbyCode);
         tempLobby.submittedCards.push(card);
+        tempLobby.submittedUsers.push(socket);  
 
         //if everyone except hotSeat user has submitted a poggers meme
         if (tempLobby.submittedCards.length === (tempLobby.users.length - 1)) {
@@ -231,17 +238,28 @@ io.on('connection', function(socket) {
                 for (client in clients) {
                     var current = io.sockets.connected[clients[client]];
                     if (current.host === true) {
-
                         current.emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
                         tempLobby.submittedCards = []; //clear submitted cards for next turn
                         break;
-
                     }   
                 }
             });
         }
 
     }); 
+
+    socket.on('chooseWinner', (index, lobbyCode) => {
+        
+        tempLobby = getLobbyByCode(lobbyCode); 
+        let winner = tempLobby.submittedUsers[index];
+        console.log(winner.username);
+        winner.emit('addPoint', '');
+        io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);
+        console.log('here');
+        tempLobby.submittedUsers = [];
+        
+    });
+
 
     
     socket.on('getSubmittedCards', (lobbyCode) => {
@@ -312,6 +330,7 @@ function getSubmittedCards(lobbyCode) {
     var tempLobby = getLobbyByCode(lobbyCode);
     return tempLobby.submittedCards;
 }
+
 
 http.listen(port, () => {
     console.log(`listening on port:${port}`);
