@@ -25,11 +25,7 @@ export class WdymComponent implements OnInit {
   public memeImage;
   public code;
   public caption: string;
-<<<<<<< HEAD
-  public currentlyClickedCardIndex: number = 0;    //index of selected card
-=======
   public currentlyClickedCardIndex: number = 0;  //index of selected card
->>>>>>> 7bf1950 (Integrate turn end with existing functions and fix chooseWinner in server - score increments now)
   hand: string[];
   submittedCards: string[];
   scores;
