@@ -286,8 +286,9 @@ io.on('connection', function(socket) {
         tempLobby = getLobbyByCode(lobbyCode); 
         if (tempLobby != false) {
             for (user in tempLobby.users) {
-                if (tempLobby.users[user].score >= 3) { //user has 5 cards
+                if (tempLobby.users[user].score >= 5) { //user has 5 cards
                     console.log(tempLobby.users[user].username + " has won!");
+                    io.sockets.in(lobbyCode).emit('returnGameWinner', tempLobby.users[user].username);
                 } 
             }
         }

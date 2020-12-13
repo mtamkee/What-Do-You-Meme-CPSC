@@ -17,7 +17,7 @@ import { UserStateService } from 'src/app/user-state.service';
 export class WdymComponent implements OnInit {
 
 
-  constructor(private route: ActivatedRoute, private roomService: RoomService,
+  constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService,
     private userStateService: UserStateService) {
     this.submittedCards = [];
     this.roundsWon = 0;
@@ -32,7 +32,12 @@ export class WdymComponent implements OnInit {
   scores;
   roundsWon;
   roundWinner;
+  winner; //game winner
+  public winningCaption;
   public isCzar;
+  public showOverlay: boolean = false;
+  public showWinnerOverlay: boolean = false;
+
   
   ngOnInit(): void {   
     this.code = this.userStateService.getLobbyCode();
@@ -64,6 +69,8 @@ export class WdymComponent implements OnInit {
     
     this.roomService.returnRoundWinner().subscribe((winner) => {
       this.roundWinner = winner;
+      this.showOverlay = true;
+      setTimeout(() => {  this.showOverlay=false; }, 1000); //show overlay for 7s
       console.log('winner is: ' + winner);
     });
 
@@ -71,6 +78,16 @@ export class WdymComponent implements OnInit {
       this.userStateService.setSelfAsCzar();
       this.isCzar = true;
     });
+
+
+    this.roomService.returnGameWinner().subscribe((winner) => { 
+      this.winner = winner;
+      console.log('winner' + winner);
+      this.showWinnerOverlay = true;
+    });
+
+
+
 
     //automatically get hands and image on creation of a lobby
     this.startTurn(); 
@@ -89,7 +106,15 @@ export class WdymComponent implements OnInit {
         event.currentIndex);
     }
   }*/
- 
+
+
+
+  public returnHome() {
+    console.log('yes');
+    this.router.navigate(['/game/home']);
+
+    this.userStateService.setLobbyCode("");
+  }
 
   public currentlyClickedCardIndex: number = 0;
   public setcurrentlyClickedCardIndex(cardIndex: number): void {
@@ -100,11 +125,13 @@ export class WdymComponent implements OnInit {
   }
 
   chooseWinner(index) {
-    var winningCaption= this.submittedCards[index];
+    var winningCaption = this.submittedCards[index];
+    this.winningCaption = winningCaption;
     //get User who submitted that card
     this.roomService.chooseWinner(index, this.code);
     this.roomService.getScores(this.code);
     this.endTurn();
+    return winningCaption;
   }
  
   getImage() {
