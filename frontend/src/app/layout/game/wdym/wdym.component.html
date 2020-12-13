@@ -1,40 +1,23 @@
-<!DOCTYPE html>
-<html>
-    <header>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </header>
-    <style>
-        
-    </style>
     <div class = "grid-container">
             <!--
             <button (click)="getImage()">Get New Image :O</button>
             -->
-         <div class = "top-section">
-            <div class="headerl"><img src="{{memeImage}}"></div>
-            <div class="headerm">
-                <div *ngIf="isCzar">
-                    <p style="color: #7b1fa2; font-size: 50px;"><u>Pick the winner</u></p>
-                </div>
-                
-                <div class="bottom">
-                    <div *ngIf="!isCzar">
-                        <button id = "clicker" (click)="submitCard(getSelected())"> Submit Your Meme! </button> 
-                    </div>
-                    <div *ngIf="isCzar">
-                        <button id = "clicker" (click)="chooseWinner(getSelected())"> End Turn </button> 
-                    </div>
-                </div>
+         
+        <div class="headerl"><img src="{{memeImage}}"></div>
+        <div class="headerm">
+            <div *ngIf="hotSeat">
+                <p style="color: lime"><u>Pick the winner</u></p>
             </div>
-            <div class="headerr">
-                  
-                <!--Score board here-->
-                <h2 style="color: #7b1fa2"><u>Game Score</u></h2>
-                <div *ngFor="let score of scores">
-                    <h3> {{score[0]}}: {{score[1]}}</h3>
-                </div>
+        </div>
+        <div class="headerr">
+            <button (click)="submitCard(getSelected())"> Submit! </button>   
+            <!--Score board here-->
+            <h2 style="color: black"><u>Game Score</u></h2>
+            <div *ngFor="let score of scores">
+                <h3> {{score[0]}}: {{score[1]}}</h3>
             </div>
-         </div>
+        </div>
+         
 
          <div *ngIf="isCzar" class = "card-section">
             <div *ngFor="let submittedCard of submittedCards; let i = index">
