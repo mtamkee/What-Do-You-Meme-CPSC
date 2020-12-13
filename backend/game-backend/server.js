@@ -112,6 +112,7 @@ class User {
     constructor(username) {
         this.username = username;
         this.hand = [];   
+        this.score = 0;
     }
 }
 
@@ -123,6 +124,7 @@ class Lobby {
         this.captionsRemaining = Array.from(captions);
         this.submittedCards = [];
         this.turn = 0;
+        this.submittedUsers = [];
     }        
 }
 
@@ -162,6 +164,20 @@ io.on('connection', function(socket) {
         }
 
     });
+
+
+    socket.on('getScores', function(lobbyCode) {
+        var tempLobby = getLobbyByCode(lobbyCode);
+        var scores = [];
+        if (tempLobby) {
+            for (let i = 0; i < tempLobby.users.length; i++) {
+                var user = tempLobby.users[i];
+                console.log(user.username + ": " + user.score);
+                scores.push([user.username, user.score]);
+            }
+        }   
+        io.sockets.in(lobbyCode).emit('receiveScores', scores);
+    })
 
     socket.on('getUsers', function(lobbyCode) {
         console.log("called getusers with lobby " + lobbyCode);
@@ -247,10 +263,15 @@ io.on('connection', function(socket) {
                 if (current.host === true) {
                     current.emit('returnHost', '');
                     break;
-
                 }   
             }
         });
+
+    });
+
+    socket.on('getHost', (lobbyCode) => {
+
+
 
     });
     
@@ -258,6 +279,7 @@ io.on('connection', function(socket) {
 
         tempLobby = getLobbyByCode(lobbyCode);
         tempLobby.submittedCards.push(card);
+        tempLobby.submittedUsers.push(socket);  
 
         //if everyone except hotSeat user has submitted a poggers meme
         if (tempLobby.submittedCards.length === (tempLobby.users.length - 1)) {
@@ -269,17 +291,35 @@ io.on('connection', function(socket) {
                 for (client in clients) {
                     var current = io.sockets.connected[clients[client]];
                     if (current.host === true) {
-
                         current.emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
                         tempLobby.submittedCards = []; //clear submitted cards for next turn
                         break;
-
                     }   
                 }
             });
         }
 
     }); 
+
+    socket.on('chooseWinner', (index, lobbyCode) => {
+        
+        tempLobby = getLobbyByCode(lobbyCode); 
+        let winner = tempLobby.submittedUsers[index];
+        console.log(winner.username);
+       // winner.emit('addPoint', '');
+        //update user score: 
+        for (user in tempLobby.users) {
+            if (tempLobby.users[user].username === winner.username) {
+                tempLobby.users[user].score++;
+            }
+        }
+
+        io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);
+        console.log('here');
+        tempLobby.submittedUsers = [];
+        
+    });
+
 
     
     socket.on('getSubmittedCards', (lobbyCode) => {
@@ -338,6 +378,7 @@ function getHand(lobbyCode) {
     var tempLobby = getLobbyByCode(lobbyCode);
     hand = [];
     for (let i = 0; i < 5; i ++) { 
+        //TO-DO: handle TypeError: Cannot read property 'length of undefined'
         var randomCaption = Math.floor(Math.random() * (tempLobby.captionsRemaining.length));
         hand.push(tempLobby.captionsRemaining[randomCaption]);
         tempLobby.captionsRemaining.splice(randomCaption, 1);
@@ -350,6 +391,7 @@ function getSubmittedCards(lobbyCode) {
     var tempLobby = getLobbyByCode(lobbyCode);
     return tempLobby.submittedCards;
 }
+
 
 http.listen(port, () => {
     console.log(`listening on port:${port}`);

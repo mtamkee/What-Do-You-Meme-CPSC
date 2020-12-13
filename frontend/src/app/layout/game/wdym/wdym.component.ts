@@ -7,8 +7,6 @@ import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collection
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Socket } from 'ngx-socket-io';
 
-
-
 @Component({
   selector: 'app-game',
   templateUrl: './wdym.component.html',
@@ -18,6 +16,7 @@ export class WdymComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private roomService: RoomService ) {
     this.submittedCards = [];
+    this.roundsWon = 0;
   }
   
   public memeImage;
@@ -26,11 +25,13 @@ export class WdymComponent implements OnInit {
   selected = 0;     //index of selected card
   hand: string[];
   submittedCards: string[];
+  scores;
   hotSeat;
-
-  ngOnInit(): void {  
+  roundsWon;
+  roundWinner;
+  
+  ngOnInit(): void {   
     
-
     this.route.queryParams.subscribe(params => { 
       this.code = params['code'];
       //this.host = params['host'];
@@ -44,7 +45,6 @@ export class WdymComponent implements OnInit {
       this.caption = cardString;
     });
     
-
     //this will just put the host in the hot seat on game initialization
     this.roomService.receiveHost().subscribe((e) => {
       this.hotSeat = true;
@@ -54,16 +54,30 @@ export class WdymComponent implements OnInit {
       this.hand = hand;
     });
 
+    this.roomService.receiveScores().subscribe((scores) => {
+      this.scores = scores;
+    });
+
+
     this.roomService.returnSubmittedCards().subscribe((submitted: string[]) => {
       this.submittedCards = submitted;
     });
+
+    this.roomService.addPoint().subscribe((e) => {
+      this.roundsWon++;
+    });
     
+    this.roomService.returnRoundWinner().subscribe((winner) => {
+      this.roundWinner = winner;
+      console.log('winner is: ' + winner);
+    });
 
     //automatically get hands and image on creation of a lobby
-
+    
     this.startTurn(); //this will get host and put them in the hotseat
     this.getHand();
     this.getImage();  //fix this to only call once
+    this.getScores();
   }
 
 //Controller for drag and drop
@@ -77,9 +91,8 @@ onDrop(event: CdkDragDrop<string[]>) {
         event.currentIndex);
     }
   }
-
+ 
   public currentlyClickedCardIndex: number = 0;
-
   public setcurrentlyClickedCardIndex(cardIndex: number): void {
     this.currentlyClickedCardIndex = cardIndex;
   }
@@ -89,11 +102,13 @@ onDrop(event: CdkDragDrop<string[]>) {
   }
 
   chooseWinner(index) {
-    var winningCaption = this.submittedCards[index];
+    var winningCaption= this.submittedCards[index];
+    //get User who submitted that card
+    this.roomService.chooseWinner(index, this.code);
+    this.roomService.getScores(this.code);
     console.log(winningCaption);
   }
-
-
+ 
   getImage() {
     this.roomService.getImage(this.code);
   }
@@ -135,6 +150,9 @@ onDrop(event: CdkDragDrop<string[]>) {
     return this.roomService.replaceCard(this.code, index);
   }
 
+  getScores() {
+    this.roomService.getScores(this.code);
+  }
 
 
 

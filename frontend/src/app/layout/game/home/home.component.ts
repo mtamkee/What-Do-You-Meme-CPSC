@@ -16,12 +16,17 @@ export class HomeComponent implements OnInit {
 
   username: string; 
   id: string; 
-  validLobby: boolean;
+  validLobby;
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => { 
       this.username = params['username'];
       this.id = params['id'];
     });
+  
+    this.roomService.receiveValidLobby().subscribe((valid) => {
+      this.validLobby = valid;
+    })
+  
   } 
   
   getUsername() {
@@ -56,10 +61,11 @@ export class HomeComponent implements OnInit {
 
     //if (this.isValidLobby(code)) {
        // if (this.isValidLobby(code)===true) {
+     // this.isValidLobby(code);
       //if (this.validLobby === true) {
         this.roomService.sendAddUser(username, code);
         this.navigateLobby(code, this.username, this.id);
-       // }
+      //}
     //  }
   //  }
 
@@ -81,13 +87,11 @@ export class HomeComponent implements OnInit {
   
   /* 
    * need to fix
-   *
+   */
+  /*
   isValidLobby(code: string) {
     var res;
-    this.roomService.receiveValidLobby().subscribe((answer) => {
-      return answer;
-    });
     this.roomService.isValidLobby(code);
-  }
-  */
+  }*/
+  
 }
