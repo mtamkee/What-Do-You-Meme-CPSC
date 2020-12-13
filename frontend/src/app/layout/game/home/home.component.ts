@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit {
     this.joinLobby(result); 
     this.userStateService.setLobbyCode(result);
     this.userStateService.setSelfAsCzar();
+
     return result;  
   }
   
@@ -70,13 +71,14 @@ export class HomeComponent implements OnInit {
     //if (this.isValidLobby(code)) {
        // if (this.isValidLobby(code)===true) {
      // this.isValidLobby(code);
-      //if (this.validLobby === true) {
-        this.userStateService.setLobbyCode(code);
-        this.roomService.sendAddUser(this.username, code);
-        this.navigateLobby(code, this.username, this.id);
+      //
+      this.userStateService.setLobbyCode(code);
+      this.roomService.sendAddUser(this.userStateService.getUsername(), code);
+      this.navigateLobby(code, this.userStateService.getUsername(), this.userStateService.getUserId());
       //}
     //  }
-  //  }
+
+
 
   } 
 
@@ -91,7 +93,7 @@ export class HomeComponent implements OnInit {
         'id': id
       }
     };*/
-    
+
     this.router.navigate(['/game/lobby']);//, navigationExtras);
   }
   
