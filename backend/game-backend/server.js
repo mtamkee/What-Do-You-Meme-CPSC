@@ -115,6 +115,7 @@ class User {
         this.hand = [];   
         this.score = 0;
     }
+    czar;
 }
 
 class Lobby { 
@@ -126,7 +127,9 @@ class Lobby {
         this.submittedCards = [];   //cards that have been submitted this round
         this.submittedUsers = [];   //sockets that have submitted; share index with card
         this.turn = 0;
-    }        
+        
+    }   
+    czar;
 }
 
 /**
@@ -156,24 +159,30 @@ io.on('connection', function(socket) {
             socket.join(lobbyCode);         
             let lobby = getLobbyByCode(lobbyCode);
             //first user to join is host
-            if (lobby.users.length === 0) socket.host = true;   
+            if (lobby.users.length === 0) {
+                socket.host = true;   
+                socket.czar = true;
+            }
             else socket.host = false;
             socket.username = username;       
             let user = new User(username);
+            if (lobby.users.length === 0 ) {
+                lobby.czar = user;
+                user.czar = true;
+            }
             lobby.users.push(user);
+
         }
     });
 
     //get the scores of all users in a lobby
     //returns in array of [username, score] pairs
     socket.on('getScores', function(lobbyCode) {
-
         var tempLobby = getLobbyByCode(lobbyCode);
         var scores = [];
         if (tempLobby != false) {
             for (let i = 0; i < tempLobby.users.length; i++) {
                 var user = tempLobby.users[i];
-                console.log(user.username + ": " + user.score);
                 scores.push([user.username, user.score]);
             }
         }   
@@ -187,7 +196,6 @@ io.on('connection', function(socket) {
         var tempUsers=[];
         if (tempLobby != false) {
             for (let i = 0; i < tempLobby.users.length; i++) {
-                console.log(tempLobby.users[i].username);
                 tempUsers.push(tempLobby.users[i].username);
             }
         }   
@@ -204,7 +212,6 @@ io.on('connection', function(socket) {
     
     //check if lobby is exists
     socket.on('isValidLobby', function(lobbyCode) {
-        console.log("searching for lobby: " + lobbyCode);
         if (getLobbyByCode(lobbyCode) != false) {
             console.log('lobby ' + lobbyCode + ' exists');
             socket.emit('receiveValidLobby', true);
@@ -266,14 +273,31 @@ io.on('connection', function(socket) {
             if (error) throw error;
             for (client in clients) {
                 var current = io.sockets.connected[clients[client]];
-                if (current.host === true) {
-                    current.emit('returnHost', '');
+                if (current.czar === true) {
+                    current.emit('returnCzar', '');
                     break;
                 }   
             }
         });
 
+
+    socket.on('checkWinner', (lobbyCode) => {
+        
+        tempLobby = getLobbyByCode(lobbyCode); 
+        if (tempLobby != false) {
+            for (user in tempLobby.users) {
+                if (tempLobby.users[user].score >= 3) { //user has 5 cards
+                    console.log(tempLobby.users[user].username + " has won!");
+                } 
+            }
+        }
     });
+
+
+    });
+
+
+
 
 
 
@@ -293,13 +317,13 @@ io.on('connection', function(socket) {
                 
             //if everyone except hotSeat user has submitted a poggers meme
             if (tempLobby.submittedCards.length === (tempLobby.users.length - 1)) {
-                //TO-DO: add hotseat user to lobby class to get it less stupidly  
-                //search room to find user that is in the hotseat 
+                //search room to find czar 
                 io.of('/').in(lobbyCode).clients((error, clients) => {
                     if (error) throw error;
                     for (client in clients) {
                         var current = io.sockets.connected[clients[client]];
-                        if (current.host === true) {
+                        if (current.czar === true) {
+                            //return submitted cards to czar only
                             current.emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
                             tempLobby.submittedCards = []; //clear submitted cards for next turn
                             break;
@@ -317,7 +341,6 @@ io.on('connection', function(socket) {
         tempLobby = getLobbyByCode(lobbyCode); 
         if (tempLobby != false) {
             let winner = tempLobby.submittedUsers[index];
-            console.log(winner.username);
 
         //update winner's score
             for (user in tempLobby.users) {
@@ -329,9 +352,51 @@ io.on('connection', function(socket) {
             io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);
             tempLobby.submittedUsers = [];  //clear submittedUsers
         }
+        
     });
 
+    socket.on('getNextCzar', (lobbyCode) => {
+        tempLobby = getLobbyByCode(lobbyCode);
 
+        if (tempLobby != false) {
+            //set czar to next user
+            for (let i = 0; i < tempLobby.users.length; i++) {
+                var currentUser = tempLobby.users[i];
+
+                if (currentUser.czar === true) {
+                    currentUser.czar = false;
+                    if (i === tempLobby.users.length - 1) {
+                        tempLobby.users[0].czar = true;
+                        tempLobby.czar = tempLobby.users[0];
+                    }
+                    else { 
+                        tempLobby.users[i+1].czar = true;
+                        tempLobby.czar = tempLobby.users[i+1];
+                    }
+                    break;
+                }
+            }
+
+        
+            
+            //emit message to set new czar
+            io.of('/').in(lobbyCode).clients((error, clients) => {
+                if (error) throw error;
+                for (client in clients) {
+                    var current = io.sockets.connected[clients[client]];
+                    if (current.czar === true) current.czar = false;
+                    if (current.username === tempLobby.czar.username) {
+                        current.czar = true;
+                        current.emit('returnCzar', '');
+                        break;
+                    }   
+                }
+            });
+
+        }
+        
+
+    });
 
     
     socket.on('getSubmittedCards', (lobbyCode) => {
@@ -362,7 +427,6 @@ function removeUser(lobbyCode, username) {
     var tempLobby = getLobbyByCode(lobbyCode);
     if (tempLobby != false) {
         for (let i = 0; i < tempLobby.users.length; i++) {
-            console.log(tempLobby.users[i].username);
             if (tempLobby.users[i].username === username) {
                 tempLobby.users.splice(i, 1);
                 break;
