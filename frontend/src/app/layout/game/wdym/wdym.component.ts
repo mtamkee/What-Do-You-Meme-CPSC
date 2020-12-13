@@ -38,12 +38,6 @@ export class WdymComponent implements OnInit {
     this.code = this.userStateService.getLobbyCode();
     this.isCzar = this.userStateService.getIsCzar();
 
-    /*
-    this.route.queryParams.subscribe(params => { 
-      this.code = params['code'];
-      //this.host = params['host'];
-    });*/
-
     this.roomService.receiveImage().subscribe((photo) => {
       this.memeImage = photo;
     });
@@ -53,9 +47,10 @@ export class WdymComponent implements OnInit {
     });
     
     //this will just put the host in the hot seat on game initialization
-    this.roomService.receiveHost().subscribe((e) => {
+    /*this.roomService.receiveHost().subscribe((e) => {
       this.isCzar = true;
-    });
+      this.startTurn();
+    });*/
 
     this.roomService.receiveHand().subscribe((hand: string[]) => {
       this.hand = hand;
@@ -64,7 +59,6 @@ export class WdymComponent implements OnInit {
     this.roomService.receiveScores().subscribe((scores) => {
       this.scores = scores;
     });
-
 
     this.roomService.returnSubmittedCards().subscribe((submitted: string[]) => {
       this.submittedCards = submitted;
@@ -79,11 +73,14 @@ export class WdymComponent implements OnInit {
       console.log('winner is: ' + winner);
     });
 
+    this.roomService.returnCzar().subscribe((e) => {
+      this.userStateService.setSelfAsCzar();
+      this.isCzar = true;
+    });
+
     //automatically get hands and image on creation of a lobby
-    
-    this.startTurn(); //this will get host and put them in the hotseat
+    this.startTurn(); 
     this.getHand();
-    this.getImage();  //fix this to only call once
     this.getScores();
   }
 
@@ -108,16 +105,12 @@ export class WdymComponent implements OnInit {
     return cardIndex === this.selected;
   }
 
-
-
-
-
   chooseWinner(index) {
     var winningCaption= this.submittedCards[index];
     //get User who submitted that card
     this.roomService.chooseWinner(index, this.code);
     this.roomService.getScores(this.code);
-    console.log(winningCaption);
+    this.endTurn();
   }
  
   getImage() {
@@ -133,7 +126,8 @@ export class WdymComponent implements OnInit {
   }
 
   startTurn() {
-    this.roomService.startTurn(this.code);
+    this.getImage();
+    return this.roomService.startTurn(this.code);
   }
 
   submitCard(index) {
@@ -146,6 +140,12 @@ export class WdymComponent implements OnInit {
     this.selected = index;
   }
 
+
+  //winner is currently set in backend for 5 points (can be changed easily)
+  checkWinner(lobbyCode) {
+    this.roomService.checkWinner(lobbyCode);
+  }
+ 
   /**
    * returns an entire hand of cards for start of game
    */
@@ -166,19 +166,16 @@ export class WdymComponent implements OnInit {
   }
 
 
-  endTurn(cardIndex) {
-    this.memeImage = "";
-    this.submitCard(cardIndex);
-    this.chooseWinner(cardIndex);
-
-
+  endTurn() {
+    this.getImage();
+    this.submittedCards=[];
     if (this.isCzar) {
       this.userStateService.turnOffCzarInSelf();
-    }
-
-
+      this.isCzar = false;
+    }     
+    this.checkWinner(this.userStateService.getLobbyCode());
+    this.roomService.getNextCzar(this.code);
   }
 
-  
 
 } 

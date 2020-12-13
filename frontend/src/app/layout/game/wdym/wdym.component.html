@@ -16,8 +16,10 @@
                 <div *ngIf="isCzar">
                     <p style="color: lime"><u>Pick the winner</u></p>
                 </div>
-                <div *ngFor="let submittedCard of submittedCards; let i = index">
-                    <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
+                <div *ngIf="isCzar">
+                    <div *ngFor="let submittedCard of submittedCards; let i = index">
+                        <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
+                    </div>
                 </div>
                 <div class="bottom">
                     <div *ngIf="!isCzar">

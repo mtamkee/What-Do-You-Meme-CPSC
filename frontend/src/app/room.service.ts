@@ -115,4 +115,15 @@ export class RoomService {
       return this.socket.fromEvent('receiveScores');
     }
 
+    returnCzar() {
+      return this.socket.fromEvent('returnCzar'); 
+    }
+
+    getNextCzar(lobbyCode) {
+      return this.socket.emit('getNextCzar', lobbyCode);
+    }
+
+    checkWinner(lobbyCode) {
+      return this.socket.emit('checkWinner', lobbyCode);
+    }
 }

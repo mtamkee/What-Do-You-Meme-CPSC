@@ -52,6 +52,9 @@ export class LobbyComponent implements OnInit {
 
   
   leaveLobby() {
+    if (this.userStateService.getIsCzar()) {
+      this.userStateService.turnOffCzarInSelf();
+    }
     this.roomService.leaveLobby(this.username, this.code);
     this.userStateService.setLobbyCode('');
     this.getUsers();
