@@ -203,3 +203,34 @@ u{
   .highlight {
     background-color: yellow;
   }
+
+.roundOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.roundOverlay * {
+    pointer-events: none;
+}
+
+.overlayText {
+    width: 40%;
+    background-color: black;
+    border: 2px solid white;
+    border-radius: 40px;
+}
+
+.overlayText h1, p {
+    color: white;
+    font-size: 1em;
+}

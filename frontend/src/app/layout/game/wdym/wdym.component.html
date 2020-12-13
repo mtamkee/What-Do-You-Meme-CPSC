@@ -55,5 +55,13 @@
             (click)="setcurrentlyClickedCardIndex(4)">
             {{hand[4]}}</div>
          </div>
+
+        <div *ngIf = "showOverlay" class = "roundOverlay">
+            <div class = "overlayText">
+               <p>{{roundWinner}} wins this round! Their card was:</p>
+               <p>{{roundCaption}}</p>
+               <p>The next round is about to start!</p>
+            </div>
+        </div>
     </div>
 </html>

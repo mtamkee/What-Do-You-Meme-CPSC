@@ -312,12 +312,12 @@ io.on('connection', function(socket) {
     }); 
 
     //choose the winner for a given round
-    socket.on('chooseWinner', (index, lobbyCode) => {
+    socket.on('chooseWinner', (index, lobbyCode, caption) => {
         
         tempLobby = getLobbyByCode(lobbyCode); 
         if (tempLobby != false) {
             let winner = tempLobby.submittedUsers[index];
-            console.log(winner.username);
+            console.log(winner.username + " " + caption);
 
         //update winner's score
             for (user in tempLobby.users) {
@@ -327,6 +327,8 @@ io.on('connection', function(socket) {
             }
 
             io.sockets.in(lobbyCode).emit('returnRoundWinner', winner.username);
+            io.sockets.in(lobbyCode).emit('returnRoundCaption', caption);
+            io.sockets.in(lobbyCode).emit('toggleOverlay');
             tempLobby.submittedUsers = [];  //clear submittedUsers
         }
     });

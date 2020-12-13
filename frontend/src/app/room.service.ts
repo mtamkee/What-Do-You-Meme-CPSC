@@ -95,8 +95,8 @@ export class RoomService {
       return this.socket.fromEvent('returnHost');
     }
     
-    chooseWinner(index, lobbyCode) {
-      this.socket.emit('chooseWinner', index, lobbyCode);
+    chooseWinner(index, lobbyCode, caption) {
+      this.socket.emit('chooseWinner', index, lobbyCode, caption);
     }
 
     addPoint() {
@@ -105,6 +105,14 @@ export class RoomService {
 
     returnRoundWinner() {
       return this.socket.fromEvent('returnRoundWinner');
+    }
+
+    returnRoundCaption() {
+      return this.socket.fromEvent('returnRoundCaption');
+    }
+
+    toggleOverlay() {
+      return this.socket.fromEvent('toggleOverlay');
     }
 
     getScores(lobbyCode) {

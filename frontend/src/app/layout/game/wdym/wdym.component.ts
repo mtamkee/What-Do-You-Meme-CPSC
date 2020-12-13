@@ -7,6 +7,7 @@ import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collection
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Socket } from 'ngx-socket-io';
 import { UserStateService } from 'src/app/user-state.service';
+import { interval } from 'rxjs';
 
 
 @Component({
@@ -32,7 +33,9 @@ export class WdymComponent implements OnInit {
   hotSeat;
   roundsWon;
   roundWinner;
+  roundCaption;
   public isCzar;
+  showOverlay: boolean = false;
   
   ngOnInit(): void {   
     this.code = this.userStateService.getLobbyCode();
@@ -76,7 +79,16 @@ export class WdymComponent implements OnInit {
     
     this.roomService.returnRoundWinner().subscribe((winner) => {
       this.roundWinner = winner;
-      console.log('winner is: ' + winner);
+      console.log('winner is: ' + this.roundWinner);
+    });
+
+    this.roomService.returnRoundCaption().subscribe((caption) => {
+      this.roundCaption = caption;
+      console.log('caption is: ' + this.roundCaption);
+    });
+
+    this.roomService.toggleOverlay().subscribe(() => {
+      this.showOverlay = true;
     });
 
     //automatically get hands and image on creation of a lobby
@@ -113,11 +125,10 @@ export class WdymComponent implements OnInit {
 
 
   chooseWinner(index) {
-    var winningCaption= this.submittedCards[index];
+    var caption = this.submittedCards[index];
     //get User who submitted that card
-    this.roomService.chooseWinner(index, this.code);
+    this.roomService.chooseWinner(index, this.code, caption);
     this.roomService.getScores(this.code);
-    console.log(winningCaption);
   }
  
   getImage() {
@@ -178,7 +189,4 @@ export class WdymComponent implements OnInit {
 
 
   }
-
-  
-
-} 
+}
