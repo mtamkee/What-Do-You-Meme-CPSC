@@ -29,38 +29,38 @@
     </div>
         
 
-         <div *ngIf="isCzar" class = "card-section">
-            <div #card class="card-button"  *ngFor="let submittedCard of submittedCards; let i = index"
-            [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
-            (click)="setcurrentlyClickedCardIndex(i)">
-                <div class="card-button-child" [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
-                    <mat-card>
-                        <mat-card-content>
-                            <div>{{i+1}}</div>
-                            <mat-divider></mat-divider>
-                            <br>
-                            <div>{{submittedCard}}</div>
-                        </mat-card-content>
-                    </mat-card>
-                </div>
-            </div>
-         </div>
-        <div *ngIf="!isCzar" class = "card-section">
-            <div #card class="card-button" *ngFor="let card of hand; index as i"
-            [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
-            (click)="setcurrentlyClickedCardIndex(i)">
-                <div class="card-button-child" [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
-                    <mat-card>
-                        <mat-card-content>
-                            <div>{{i+1}}</div>
-                            <mat-divider></mat-divider>
-                            <br>
-                            <div>{{card}}</div>
-                        </mat-card-content>
-                    </mat-card>
-                </div>
+    <div *ngIf="isCzar" class = "card-section">
+        <div #card class="card-button"  *ngFor="let submittedCard of submittedCards; let i = index"
+        [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
+        (click)="setcurrentlyClickedCardIndex(i)">
+            <div class="card-button-child" [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
+                <mat-card>
+                    <mat-card-content>
+                        <div>{{i+1}}</div>
+                        <mat-divider></mat-divider>
+                        <br>
+                        <div>{{submittedCard}}</div>
+                    </mat-card-content>
+                </mat-card>
             </div>
         </div>
+    </div>
+    <div *ngIf="!isCzar" class = "card-section">
+        <div #card class="card-button" *ngFor="let card of hand; index as i"
+        [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
+        (click)="setcurrentlyClickedCardIndex(i)">
+            <div class="card-button-child" [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
+                <mat-card>
+                    <mat-card-content>
+                        <div>{{i+1}}</div>
+                        <mat-divider></mat-divider>
+                        <br>
+                        <div>{{card}}</div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
             
     </div>
     <div *ngIf = "showOverlay" class = "roundOverlay">

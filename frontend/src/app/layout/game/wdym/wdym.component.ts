@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-=======
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
->>>>>>> bb92b8b (Integrate angular material styles into wdym.component)
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationExtras} from '@angular/router';
 import { RoomService } from '../../../room.service';
