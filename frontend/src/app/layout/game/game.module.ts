@@ -41,18 +41,14 @@ import {MatDividerModule} from '@angular/material/divider';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-<<<<<<< HEAD
     //Imports for drag and drop
     DragDropModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatDividerModule
 
   ],
   providers:[],
   
-=======
-    MatDividerModule
-  ]
->>>>>>> f548c7c (Styling to be more consistent with angular material and styling for wdym.component)
 })
 export class GameModule { }

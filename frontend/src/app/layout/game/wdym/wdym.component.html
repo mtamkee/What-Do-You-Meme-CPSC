@@ -4,21 +4,25 @@
         -->
         
     <div class="headerl">
+        <p class="title"><u>Meme Image</u></p>
         <img src="{{memeImage}}">
         <button *ngIf="isCzar" id="refresh-button" mat-mini-fab color="primary" (click)="getImage()">
             <mat-icon>refresh</mat-icon>
         </button>
     </div>
     <div class="headerm">
-        <div *ngIf="isCzar">
-            <p style="color: lime"><u>Pick the winner</u></p>
-        </div>
+        <p class="title"><u>Pick the Winner</u></p>
+        <p>{{hand[getSelected()]}}</p>
+        <button *ngIf="!isCzar" (click)="submitPlayerCard()" class="submit-button" mat-raised-button color="primary">
+            Submit card
+        </button>
+        <button *ngIf="isCzar" (click)="endTurn(getSelected())"  class="submit-button" mat-raised-button color="primary">
+            End turn
+        </button> 
     </div>
     <div class="headerr">
-        <button *ngIf="!isCzar" (click)="submitPlayerCard()">Submit card</button>
-        <button *ngIf="isCzar" (click)="endTurn(getSelected())">End turn</button> 
         <!--Score board here-->
-        <h2 style="color: black"><u>Game Score</u></h2>
+        <p class="title"><u>Game Score</u></p>
         <div *ngFor="let score of scores">
             <h3> {{score[0]}}: {{score[1]}}</h3>
         </div>
@@ -26,31 +30,36 @@
         
 
          <div *ngIf="isCzar" class = "card-section">
-            <div *ngFor="let submittedCard of submittedCards; let i = index">
-                <div [ngClass]="{'highlight':checkIfCardIsClicked(0)}" [attr.data-index]="i" (click)="setcurrentlyClickedCardIndex(i)"> {{submittedCard}} </div>
+            <div #card class="card-button"  *ngFor="let submittedCard of submittedCards; let i = index"
+            [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
+            (click)="setcurrentlyClickedCardIndex(i)">
+                <div class="card-button-child" [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
+                    <mat-card>
+                        <mat-card-content>
+                            <div>{{i+1}}</div>
+                            <mat-divider></mat-divider>
+                            <br>
+                            <div>{{submittedCard}}</div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
             </div>
          </div>
         <div *ngIf="!isCzar" class = "card-section">
-            <div
-            [ngClass]="{'highlight':checkIfCardIsClicked(0)}"
-            (click)="setcurrentlyClickedCardIndex(0)">
-            {{hand[0]}}</div>
-            <div 
-            [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
-            (click)="setcurrentlyClickedCardIndex(1)">
-            {{hand[1]}}</div>
-            <div
-            [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
-            (click)="setcurrentlyClickedCardIndex(2)">
-            {{hand[2]}}</div>
-            <div 
-            [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
-            (click)="setcurrentlyClickedCardIndex(3)">
-            {{hand[3]}}</div>
-            <div
-            [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
-            (click)="setcurrentlyClickedCardIndex(4)">
-            {{hand[4]}}</div>
+            <div #card class="card-button" *ngFor="let card of hand; index as i"
+            [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
+            (click)="setcurrentlyClickedCardIndex(i)">
+                <div class="card-button-child" [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
+                    <mat-card>
+                        <mat-card-content>
+                            <div>{{i+1}}</div>
+                            <mat-divider></mat-divider>
+                            <br>
+                            <div>{{card}}</div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
         </div>
             
     </div>
@@ -69,9 +78,10 @@
 
         </div>
 
+    <div class = "card-section">
+        
     </div>
-</div>
-<div id="game-container">
+<!--div id="game-container">
     <div class="game-content-container">
         <div id="new-image-button">
             <button *ngIf="isCzar" (click)="getImage()" mat-raised-button color="accent">Get New Image :O</button>
@@ -87,20 +97,9 @@
         </div>
         
         <div id="card-container">
-            <div class="card-button" *ngFor="let caption of captions; index as i">
-                <div class="card-button-child">
-                    <mat-card>
-                        <mat-card-content>
-                            <div>{{i+1}}</div>
-                            <mat-divider></mat-divider>
-                            <br>
-                            <div>{{caption}}</div>
-                        </mat-card-content>
-                    </mat-card>
-                </div>
-            </div>
+            
         </div>
         
         
     </div>
-</div>
+</div-->

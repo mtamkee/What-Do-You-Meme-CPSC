@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+=======
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+>>>>>>> bb92b8b (Integrate angular material styles into wdym.component)
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationExtras} from '@angular/router';
 import { RoomService } from '../../../room.service';
@@ -46,16 +50,21 @@ export class WdymComponent implements OnInit {
       this.memeImage = photo;
     });
 
-    this.roomService.receiveCard().subscribe((cardString: string) => {
-      this.captions[0] = cardString;
-      this.captions[1] = cardString;
-      this.captions[2] = cardString;
-      this.captions[3] = cardString;
-      this.captions[4] = cardString;
-    });
+    // Not used anymore
+    // this.roomService.receiveCard().subscribe((cardString: string) => {
+    //   this.captions[0] = cardString;
+    //   this.captions[1] = cardString;
+    //   this.captions[2] = cardString;
+    //   this.captions[3] = cardString;
+    //   this.captions[4] = cardString;
+    //   console.log("Captions:");
+    //   console.log(this.captions);
+    // });
     
     this.roomService.receiveHand().subscribe((hand: string[]) => {
       this.hand = hand;
+      console.log("Hand:");
+      console.log(this.hand);
     });
 
     this.roomService.receiveScores().subscribe((scores) => {
@@ -158,7 +167,10 @@ export class WdymComponent implements OnInit {
   }
 
   submitCard(index) {
+    console.log("Submit card at index " + index);
     var card = this.hand[index];
+    console.log("Card from hand:")
+    console.log(card);
     this.replaceCard(index);
     this.roomService.submitCard(this.code, card);
   }
