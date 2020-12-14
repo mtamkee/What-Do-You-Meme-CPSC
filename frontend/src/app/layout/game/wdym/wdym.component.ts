@@ -24,7 +24,7 @@ export class WdymComponent implements OnInit {
   
   public memeImage;
   public code;
-  public currentlyClickedCardIndex: number = 0;  //index of selected card
+  public currentlyClickedCardIndex: number = null;  //index of selected card
   hand: string[];
   submittedCards: string[];
   scores;
@@ -73,6 +73,7 @@ export class WdymComponent implements OnInit {
     this.roomService.returnCzar().subscribe((e) => {
       this.userStateService.setSelfAsCzar();
       this.isCzar = true;
+      this.currentlyClickedCardIndex = null;
     });
 
 
