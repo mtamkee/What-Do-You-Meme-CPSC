@@ -5,24 +5,27 @@
 
 #wrapper {
   position: relative;
-  width: 100%;
+  width: 70%;
   margin: auto;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .container {
   margin-top: 10%;
-  margin-left: 13%;
-  float: left;
   width: 40%;
-  height: 100px;
-
+  height: max-content;
+  min-width: max-content;
 }
 
 .userbox { 
   margin-top: 10%;
-  margin-right: 10%;
-  float: left;
+  padding: 5%;
+  min-width: max-content;
   width: 30%;
   height: 50%;
   border: solid 1px #757575;
