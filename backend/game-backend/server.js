@@ -664,7 +664,7 @@ function removeOnlineUser(userRm) {
   }
 }
 
-function removeUser(userRm) {
+function removeChatUser(userRm) {
   let currentUserUserListIndex = usersList.findIndex((user) => user.username === userRm.username);
   if (currentUserUserListIndex !== -1) {
     console.log(`INFO: Found extra user ${userRm.username} : ${currentUserUserListIndex}. Removing from User List`);
@@ -758,7 +758,7 @@ function rejoinUser(username, currentUser) {
   let newCurrentUser = usersList.find( (user) => username === user.username );
   if (newCurrentUser !== undefined) {
     console.log(`currentUser.username = ${currentUser.username}`);
-    removeUser(currentUser);
+    removeChatUser(currentUser);
     currentUser = newCurrentUser;
     currentUser.setOnline();
     filterOnlineUsers();
@@ -779,7 +779,7 @@ function rejoinUserWithClone(username, currentUser) {
   let cloneNewCurrentUser = newCurrentUser.clone();
   if (newCurrentUser !== undefined) {
     console.log(`currentUser.username = ${currentUser.username}`);
-    removeUser(currentUser);
+    removeChatUser(currentUser);
     cloneNewCurrentUser.setOnline(); //shouldn't need this...
     onlineUsersList.push(cloneNewCurrentUser);
     usersList.push(cloneNewCurrentUser);
