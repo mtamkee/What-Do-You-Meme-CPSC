@@ -340,6 +340,10 @@ io.on('connection', function(socket) {
         
     });
 
+    socket.on('winCaption', (caption, lobbyCode) => {
+        io.sockets.in(lobbyCode).emit('returnRoundCaption', caption);
+    });
+
    
 
     socket.on('getNextCzar', (lobbyCode) => {
