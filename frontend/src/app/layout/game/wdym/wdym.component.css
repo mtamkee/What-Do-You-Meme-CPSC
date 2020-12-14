@@ -31,7 +31,7 @@ h1 {
 @media (max-width: 900px) {
     .grid-container {
         grid-template-columns: 100%;
-        grid-template-rows: 90% 50% 50% 100%;
+        grid-template-rows: 90% max-content max-content 100%;
     }
     .headerl {
         grid-row: 1 / 2 !important;
