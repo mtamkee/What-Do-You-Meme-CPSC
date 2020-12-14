@@ -16,14 +16,13 @@
                 <div *ngIf="isCzar">
                     <p style="color: #7b1fa2; font-size: 50px;"><u>Pick the winner</u></p>
                 </div>
-                <div  *ngIf="isCzar">
-                    <div *ngFor="let submittedCard of submittedCards; let i = index">
-                        <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
-                    </div>
-                </div>
+                
                 <div class="bottom">
                     <div *ngIf="!isCzar">
-                    <button id = "clicker" (click)="submitCard(getSelected())"> Submit Your Meme! </button> 
+                        <button id = "clicker" (click)="submitCard(getSelected())"> Submit Your Meme! </button> 
+                    </div>
+                    <div *ngIf="isCzar">
+                        <button id = "clicker" (click)="chooseWinner(getSelected())"> End Turn </button> 
                     </div>
                 </div>
             </div>
@@ -37,28 +36,34 @@
             </div>
          </div>
 
-         <div class = "card-section">
-            <div class = "left" (click)=selectCard(0) 
+         <div *ngIf="isCzar" class = "card-section">
+            <div *ngFor="let submittedCard of submittedCards; let i = index">
+                <div [ngClass]="{'highlight':checkIfCardIsClicked(0)}" [attr.data-index]="i" (click)="setcurrentlyClickedCardIndex(i)"> {{submittedCard}} </div>
+            </div>
+         </div>
+        <div *ngIf="!isCzar" class = "card-section">
+            <div
             [ngClass]="{'highlight':checkIfCardIsClicked(0)}"
             (click)="setcurrentlyClickedCardIndex(0)">
             {{hand[0]}}</div>
-            <div  class = "leftc" (click)="selectCard(1)"
+            <div 
             [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
             (click)="setcurrentlyClickedCardIndex(1)">
             {{hand[1]}}</div>
-            <div class = "middle" (click)="selectCard(2)"
+            <div
             [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
             (click)="setcurrentlyClickedCardIndex(2)">
             {{hand[2]}}</div>
-            <div class = "rightc" (click)="selectCard(3)"
+            <div 
             [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
             (click)="setcurrentlyClickedCardIndex(3)">
             {{hand[3]}}</div>
-            <div class = "right" (click)="selectCard(4)"
+            <div
             [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
             (click)="setcurrentlyClickedCardIndex(4)">
             {{hand[4]}}</div>
-         </div>
+        </div>
+            
     </div>
     <div *ngIf = "showOverlay" class = "roundOverlay">
         <div class = "overlayText">

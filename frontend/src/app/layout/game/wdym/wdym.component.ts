@@ -26,7 +26,7 @@ export class WdymComponent implements OnInit {
   public memeImage;
   public code;
   public caption: string;
-  selected = 0;     //index of selected card
+  public currentlyClickedCardIndex: number = 0;    //index of selected card
   hand: string[];
   submittedCards: string[];
   scores;
@@ -116,15 +116,17 @@ export class WdymComponent implements OnInit {
     this.userStateService.setLobbyCode("");
   }
 
-  public currentlyClickedCardIndex: number = 0;
+  
   public setcurrentlyClickedCardIndex(cardIndex: number): void {
     this.currentlyClickedCardIndex = cardIndex;
   }
+
   public checkIfCardIsClicked(cardIndex: number): boolean {
-    return cardIndex === this.selected;
+    return cardIndex === this.currentlyClickedCardIndex;
   }
 
   chooseWinner(index) {
+    this.getImage();
     var winningCaption = this.submittedCards[index];
     this.winningCaption = winningCaption;
     //get User who submitted that card
@@ -143,7 +145,7 @@ export class WdymComponent implements OnInit {
   }
 
   getSelected() {
-    return this.selected;
+    return this.currentlyClickedCardIndex;
   }
 
   startTurn() {
@@ -155,10 +157,6 @@ export class WdymComponent implements OnInit {
     var card = this.hand[index];
     this.replaceCard(index);
     this.roomService.submitCard(this.code, card);
-  }
-
-  selectCard(index) { 
-    this.selected = index;
   }
 
 

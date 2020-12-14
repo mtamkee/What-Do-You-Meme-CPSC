@@ -107,49 +107,7 @@ p {
     height: 100%;
     
 }
-.left,
-.middle,
-.right,
-.rightc,
-.leftc {
-    padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
-    font-size: 30px;
-    color: black;
-    outline: 4px solid black;
-    outline-offset: -4px;
-    text-align: center;
-    line-height: 1.1;
-    cursor: pointer;
-    min-width: 100%;
-    width: 100%;
-}
-/* Style the left column */
-.left {
-    grid-area: left;
-    background-color: whitesmoke;
-    
-}
-.leftc {
-    grid-area: leftc;
-    background-color: whitesmoke;
-} 
-  /* Style the middle column */
-  .middle {
-    grid-area: middle;
-    background-color: whitesmoke;
-}
-  
-/* Style the right column */
-  .rightc {
-    grid-area: rightc;
-    background-color: whitesmoke;
-}
-  /* Style the right column */
-  .right {
-    grid-area: right;
-    background-color: whitesmoke;
-  }
+
 
   /* Style the footer */
 .footer {
