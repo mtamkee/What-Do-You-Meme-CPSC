@@ -77,12 +77,8 @@
     </div>
     <div *ngIf = "showWinnerOverlay" class = "roundOverlay">
         <div class = "overlayText" (click)="returnHome()">
-            <p>With a score of 5! The Winner of What Do You Meme CPSC Edition is:</p>
+            <p>With a score of 3! The Winner of What Do You Meme CPSC Edition is:</p>
             <p> {{winner}} </p>    
-            <p>Final Scores: </p>
-            <div *ngFor="let score of scores">
-                <p> {{score[0]}}: {{score[1]}}</p>
-            </div>
             <p> Great Game! Returning home. </p>    
         </div>
     </div>
