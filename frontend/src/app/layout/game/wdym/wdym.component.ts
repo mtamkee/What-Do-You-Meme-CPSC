@@ -68,7 +68,10 @@ export class WdymComponent implements OnInit {
     this.roomService.returnRoundWinner().subscribe((winner) => {
       this.roundWinner = winner;
       this.showOverlay = true;
-      setTimeout(() => {  this.showOverlay=false; }, 1000); //show overlay for 7s
+      setTimeout(() => {  
+        this.showOverlay=false; 
+        this.getImage();
+      }, 7000); //show overlay for 7s
       console.log('winner is: ' + winner);
     });
 
@@ -83,9 +86,9 @@ export class WdymComponent implements OnInit {
       this.winner = winner;
       console.log('winner' + winner);
       this.showWinnerOverlay = true;
+      setTimeout(() => { this.returnHome()}, 10000);  //bring user home
+      this.userStateService.turnOffCzarInSelf();
     });
-
-
 
 
     //automatically get hands and image on creation of a lobby
@@ -106,12 +109,9 @@ export class WdymComponent implements OnInit {
     }
   }*/
 
-
-
   public returnHome() {
     console.log('yes');
     this.router.navigate(['/game/home']);
-
     this.userStateService.setLobbyCode("");
   }
 
@@ -190,7 +190,7 @@ export class WdymComponent implements OnInit {
   
 
   endTurn() {
-    this.getImage();
+
     this.submittedCards=[];
     if (this.isCzar) {
       this.userStateService.turnOffCzarInSelf();

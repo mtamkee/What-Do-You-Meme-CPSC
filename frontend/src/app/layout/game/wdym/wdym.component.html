@@ -76,11 +76,10 @@
         </div>
     </div>
     <div *ngIf = "showWinnerOverlay" class = "roundOverlay">
-        <div class = "overlayText">
-            <p>With a score of 5! The Winner of What Do You Meme CPSC Edition is:</p>
-            <p> {{winner}} </p>        
-            <button (click)="returnHome()">Return Home</button>
-
+        <div class = "overlayText" (click)="returnHome()">
+            <p>With a score of 3! The Winner of What Do You Meme CPSC Edition is:</p>
+            <p> {{winner}} </p>    
+            <p> Great Game! Returning home. </p>    
         </div>
     </div>
     <!--div id="game-container">
