@@ -229,7 +229,6 @@ function rejoinUserWithClone(username, currentUser) {
 let usersList = [];
 let onlineUsersList;
 let messagesList = [];
-let presentUsers = [];
 
 
 // connection and disconnect are default events from socket.io
@@ -270,39 +269,6 @@ io.on('connection', function(socket){
     }
   });
 
-  // Poll current users to see if they're actually there.
-  // Case where this fixes a bug: opening a new tab while still logged in in a different tab.
-  // The bug: the new tab generates a new username. This username ends up in the onlineUsersList.
-  //          No way to differentiate between this and an actual new user joining...
-  // Another case: username changes/ user opens a new tab, so this socket's currentUser is not representative of the user object.
-  //          When the connectiono closes, it removes the wrong user from the list...
-  // let pollingIntervalId = setInterval(() => {
-  //   for (user of onlineUsersList) {
-  //     io.sockets.emit("user poll", user.username);
-  //   }
-  //   // Wait for a minute for them to respond
-  //   setTimeout(() => {
-  //     console.log("Removing inactive users.")
-  //     for (user of onlineUsersList) {
-  //       if (!presentUsers.includes(user.username)) {
-  //         console.log("Found an incative user.");
-  //         removeOnlineUser(user);
-  //       }
-  //     }
-  //     presentUsers = [];
-  //     console.log("Online users list:");
-  //     console.log(onlineUsersList);
-
-  //     io.sockets.emit("users update", onlineUsersList);
-  //   }, 10000);  // wait for users to respond
-  // }, 100000); // poll every 100 seconds
-
-  // socket.on("user poll", function (userIsMe, polledUsername) {
-  //   if (userIsMe === true) {
-  //     console.log(polledUsername + " is present");
-  //     presentUsers.push(polledUsername);
-  //   }
-  // });
   
   // 'chat message' is an event from this particular connected client
   socket.on('message', function(message, username){
