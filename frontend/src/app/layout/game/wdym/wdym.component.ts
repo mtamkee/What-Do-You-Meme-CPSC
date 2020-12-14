@@ -105,20 +105,9 @@ export class WdymComponent implements OnInit {
     this.getScores();
   }
 
-//Controller for drag and drop
-/*onDrop(event: CdkDragDrop<string[]>) {
-  if (event.previousContainer === event.container) {
-    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    }
-  }*/
 
   public returnHome() {
-    console.log('yes');
+    this.userStateService.turnOffCzarInSelf();
     this.router.navigate(['/game/home']);
     this.userStateService.setLobbyCode("");
   }
