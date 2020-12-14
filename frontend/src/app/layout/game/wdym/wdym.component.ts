@@ -46,22 +46,9 @@ export class WdymComponent implements OnInit {
     this.roomService.receiveImage().subscribe((photo) => {
       this.memeImage = photo;
     });
-
-    // Not used anymore
-    // this.roomService.receiveCard().subscribe((cardString: string) => {
-    //   this.captions[0] = cardString;
-    //   this.captions[1] = cardString;
-    //   this.captions[2] = cardString;
-    //   this.captions[3] = cardString;
-    //   this.captions[4] = cardString;
-    //   console.log("Captions:");
-    //   console.log(this.captions);
-    // });
     
     this.roomService.receiveHand().subscribe((hand: string[]) => {
       this.hand = hand;
-      console.log("Hand:");
-      console.log(this.hand);
     });
 
     this.roomService.receiveScores().subscribe((scores) => {
@@ -135,11 +122,11 @@ export class WdymComponent implements OnInit {
   }
 
   chooseWinner(index) {
-    this.getImage();
+    console.log("Choosing index " + index + " as winner");
     var winningCaption = this.submittedCards[index];
     this.winningCaption = winningCaption;
     //get User who submitted that card
-    this.roomService.chooseWinner(this.userStateService.getUsername(), this.code);
+    this.roomService.chooseWinner(index, this.code);
     this.roomService.getScores(this.code);
     this.endTurn();
     return winningCaption;

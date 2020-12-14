@@ -11,13 +11,16 @@
         </button>
     </div>
     <div class="headerm">
+        <p *ngIf="!isCzar" class="title"><u>Your Caption</u></p>
         <p *ngIf="isCzar" class="title"><u>Pick the Winner</u></p>
-        <p *ngIf="!isCzar" class="title"><u>Round Winner</u></p>
-        <p>{{hand[getSelected()]}}</p>
-        <button *ngIf="!isCzar" (click)="submitPlayerCard()" class="submit-button" mat-raised-button color="primary">
+        
+        <p *ngIf="!isCzar">{{hand[getSelected()]}}</p>
+        <p *ngIf="isCzar">{{submittedCards[getSelected()]}}</p>
+
+        <button *ngIf="!isCzar" (click)="submitCard(getSelected())" class="submit-button" mat-raised-button color="primary">
             Submit card
         </button>
-        <button *ngIf="isCzar" (click)="endTurn(getSelected())"  class="submit-button" mat-raised-button color="primary">
+        <button *ngIf="isCzar" (click)="chooseWinner(getSelected())"  class="submit-button" mat-raised-button color="primary">
             End turn
         </button> 
     </div>
@@ -26,7 +29,7 @@
         <p class="title"><u>Game Score</u></p>
         <div *ngFor="let score of scores">
             <h3 *ngIf="score[0] == username; else playerScore"><b>{{score[0]}}: {{score[1]}}</b></h3>
-            <h3 #playerScore> {{score[0]}}: {{score[1]}}</h3>
+            <h3 *ngIf="score[0] != username"> {{score[0]}}: {{score[1]}}</h3>
         </div>
     </div>
         
@@ -79,11 +82,8 @@
             <button (click)="returnHome()">Return Home</button>
 
         </div>
-
-    <div class = "card-section">
-        
     </div>
-<!--div id="game-container">
+    <!--div id="game-container">
     <div class="game-content-container">
         <div id="new-image-button">
             <button *ngIf="isCzar" (click)="getImage()" mat-raised-button color="accent">Get New Image :O</button>

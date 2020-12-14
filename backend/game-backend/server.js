@@ -331,11 +331,6 @@ io.on('connection', function(socket) {
         // Also, the client needs to receive this before calling chooseWinner to avoid a race condition.
     //   io.sockets.in(lobbyCode).emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
 
-        // TODO: separate hot seat's submitted cards logic from the players' card submitting logic. 
-        // This is here because the above wasn't throwing for the hotseat user. This would throw to some extra connections even when using one browser though...
-        // Also, the client needs to receive this before calling chooseWinner to avoid a race condition.
-        io.sockets.in(lobbyCode).emit("returnSubmittedCards", getSubmittedCards(lobbyCode));
-
     }); 
 
 
