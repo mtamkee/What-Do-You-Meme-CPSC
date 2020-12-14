@@ -17,7 +17,7 @@
         <p *ngIf="!isCzar">{{hand[getSelected()]}}</p>
         <p *ngIf="isCzar">{{submittedCards[getSelected()]}}</p>
 
-        <button *ngIf="!isCzar" (click)="submitCard(getSelected())" class="submit-button" mat-raised-button color="primary">
+        <button *ngIf="!isCzar && getSelected() != null" (click)="submitCard(getSelected())" class="submit-button" mat-raised-button color="primary">
             Submit card
         </button>
         <button *ngIf="isCzar && getSelected() != null" (click)="chooseWinner(getSelected())"  class="submit-button" mat-raised-button color="primary">

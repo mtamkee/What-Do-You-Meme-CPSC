@@ -45,10 +45,12 @@ export class WdymComponent implements OnInit {
 
     this.roomService.receiveImage().subscribe((photo) => {
       this.memeImage = photo;
+      this.currentlyClickedCardIndex = null;
     });
     
     this.roomService.receiveHand().subscribe((hand: string[]) => {
       this.hand = hand;
+      this.currentlyClickedCardIndex = null;
     });
 
     this.roomService.receiveScores().subscribe((scores) => {
