@@ -68,6 +68,7 @@ export class WdymComponent implements OnInit {
     
     this.roomService.returnRoundWinner().subscribe((winner) => {
       this.roundWinner = winner;
+      this.currentlyClickedCardIndex = null;
       this.showOverlay = true;
       setTimeout(() => {  
         this.showOverlay=false; 
