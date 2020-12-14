@@ -1,64 +1,72 @@
-<!DOCTYPE html>
-<html>
-    <header>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </header>
-    <style>
+<div class = "grid-container">
+        <!--
+        <button (click)="getImage()">Get New Image :O</button>
+        -->
         
-    </style>
-    <div class = "grid-container">
-            <!--
-            <button (click)="getImage()">Get New Image :O</button>
-            -->
-         <div class = "top-section">
-            <div class="headerl"><img src="{{memeImage}}"></div>
-            <div class="headerm">
-                <div *ngIf="isCzar">
-                    <p style="color: #7b1fa2; font-size: 50px;"><u>Pick the winner</u></p>
-                </div>
-                <div  *ngIf="isCzar">
-                    <div *ngFor="let submittedCard of submittedCards; let i = index">
-                        <h1 [attr.data-index]="i" (click)="chooseWinner(i)" (click)="getImage()"> {{submittedCard}} </h1>
-                    </div>
-                </div>
-                <div class="bottom">
-                    <div *ngIf="!isCzar">
-                    <button id = "clicker" (click)="submitCard(getSelected())"> Submit Your Meme! </button> 
-                    </div>
-                </div>
-            </div>
-            <div class="headerr">
-                  
-                <!--Score board here-->
-                <h2 style="color: #7b1fa2"><u>Game Score</u></h2>
-                <div *ngFor="let score of scores">
-                    <h3> {{score[0]}}: {{score[1]}}</h3>
-                </div>
-            </div>
-         </div>
+    <div class="headerl">
+        <p class="title"><u>Meme Image</u></p>
+        <img src="{{memeImage}}">
+        <button *ngIf="isCzar" id="refresh-button" mat-mini-fab color="primary" (click)="getImage()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+    <div class="headerm">
+        <p *ngIf="!isCzar" class="title"><u>Your Caption</u></p>
+        <p *ngIf="isCzar" class="title"><u>Pick the Winner</u></p>
+        
+        <p *ngIf="!isCzar">{{hand[getSelected()]}}</p>
+        <p *ngIf="isCzar">{{submittedCards[getSelected()]}}</p>
 
-         <div class = "card-section">
-            <div class = "left" (click)=selectCard(0) 
-            [ngClass]="{'highlight':checkIfCardIsClicked(0)}"
-            (click)="setcurrentlyClickedCardIndex(0)">
-            {{hand[0]}}</div>
-            <div  class = "leftc" (click)="selectCard(1)"
-            [ngClass]="{'highlight':checkIfCardIsClicked(1)}"
-            (click)="setcurrentlyClickedCardIndex(1)">
-            {{hand[1]}}</div>
-            <div class = "middle" (click)="selectCard(2)"
-            [ngClass]="{'highlight':checkIfCardIsClicked(2)}"
-            (click)="setcurrentlyClickedCardIndex(2)">
-            {{hand[2]}}</div>
-            <div class = "rightc" (click)="selectCard(3)"
-            [ngClass]="{'highlight':checkIfCardIsClicked(3)}"
-            (click)="setcurrentlyClickedCardIndex(3)">
-            {{hand[3]}}</div>
-            <div class = "right" (click)="selectCard(4)"
-            [ngClass]="{'highlight':checkIfCardIsClicked(4)}"
-            (click)="setcurrentlyClickedCardIndex(4)">
-            {{hand[4]}}</div>
-         </div>
+        <button *ngIf="!isCzar" (click)="submitCard(getSelected())" class="submit-button" mat-raised-button color="primary">
+            Submit card
+        </button>
+        <button *ngIf="isCzar" (click)="chooseWinner(getSelected())"  class="submit-button" mat-raised-button color="primary">
+            End turn
+        </button> 
+    </div>
+    <div class="headerr">
+        <!--Score board here-->
+        <p class="title"><u>Game Score</u></p>
+        <div *ngFor="let score of scores">
+            <h3 *ngIf="score[0] == username; else playerScore"><b>{{score[0]}}: {{score[1]}}</b></h3>
+            <h3 *ngIf="score[0] != username"> {{score[0]}}: {{score[1]}}</h3>
+        </div>
+    </div>
+        
+
+    <div *ngIf="isCzar" class = "card-section">
+        <div #card class="card-button"  *ngFor="let submittedCard of submittedCards; let i = index"
+        [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
+        (click)="setcurrentlyClickedCardIndex(i)">
+            <div [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
+                <mat-card>
+                    <mat-card-content>
+                        <div>{{i+1}}</div>
+                        <mat-divider></mat-divider>
+                        <br>
+                        <div>{{submittedCard}}</div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isCzar" class = "card-section">
+        <div #card class="card-button" *ngFor="let card of hand; index as i"
+        [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
+        (click)="setcurrentlyClickedCardIndex(i)">
+            <div [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
+                <mat-card>
+                    <mat-card-content>
+                        <div>{{i+1}}</div>
+                        <mat-divider></mat-divider>
+                        <br>
+                        <div>{{card}}</div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+            
     </div>
     <div *ngIf = "showOverlay" class = "roundOverlay">
         <div class = "overlayText">
@@ -74,9 +82,26 @@
             <button (click)="returnHome()">Return Home</button>
 
         </div>
-
+    </div>
+    <!--div id="game-container">
+    <div class="game-content-container">
+        <div id="new-image-button">
+            <button *ngIf="isCzar" (click)="getImage()" mat-raised-button color="accent">Get New Image :O</button>
+        </div>
+        <div id="image-container"><img src="{{memeImage}}"></div>
     </div>
 
-
-
-</html>
+    <div class="game-content-container card-content-container">
+        <div id="card-button-container">
+            <button *ngIf="!isCzar" (click)="getCard()" mat-raised-button color="accent">Get Player Cards :O</button>
+            <button *ngIf="!isCzar" (click)="submitPlayerCard()" mat-raised-button color="primary">Submit Card</button>
+            <button *ngIf="isCzar" (click)="endTurn()" mat-raised-button color="primary">End turn</button>           
+        </div>
+        
+        <div id="card-container">
+            
+        </div>
+        
+        
+    </div>
+</div-->

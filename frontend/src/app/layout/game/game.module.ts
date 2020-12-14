@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { GameRoutingModule } from './game-routing.module';
 import { ChatModule } from '../../chat/chat.module';
 
+import { ChatContainerComponent } from './chat-container/chat-container.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { HomeComponent } from './home/home.component';
-import { ChatContainerComponent } from './chat-container/chat-container.component';
+import { WdymComponent } from './wdym/wdym.component';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -17,16 +18,16 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import { WdymComponent } from './wdym/wdym.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
   declarations: [
-    WdymComponent,
+    ChatContainerComponent,
     LobbyComponent,
     HomeComponent,
-    ChatContainerComponent
+    WdymComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +44,8 @@ import { WdymComponent } from './wdym/wdym.component';
     //Imports for drag and drop
     DragDropModule,
     BrowserAnimationsModule,
-    BrowserModule
+    MatIconModule,
+    MatDividerModule
 
   ],
   providers:[],

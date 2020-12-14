@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationExtras} from '@angular/router';
 import { RoomService } from '../../../room.service';
@@ -8,9 +8,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Socket } from 'ngx-socket-io';
 import { UserStateService } from 'src/app/user-state.service';
 
-
 @Component({
-  selector: 'app-game',
+  selector: 'app-wdym',
   templateUrl: './wdym.component.html',
   styleUrls: ['./wdym.component.css'],
 })
@@ -25,8 +24,7 @@ export class WdymComponent implements OnInit {
   
   public memeImage;
   public code;
-  public caption: string;
-  selected = 0;     //index of selected card
+  public currentlyClickedCardIndex: number = 0;  //index of selected card
   hand: string[];
   submittedCards: string[];
   scores;
@@ -34,21 +32,19 @@ export class WdymComponent implements OnInit {
   roundWinner;
   winner; //game winner
   public winningCaption;
+  public captions: string[] = [];
   public isCzar;
   public showOverlay: boolean = false;
   public showWinnerOverlay: boolean = false;
-
+  username;
   
   ngOnInit(): void {   
     this.code = this.userStateService.getLobbyCode();
     this.isCzar = this.userStateService.getIsCzar();
+    this.username = this.userStateService.getUsername();
 
     this.roomService.receiveImage().subscribe((photo) => {
       this.memeImage = photo;
-    });
-
-    this.roomService.receiveCard().subscribe((cardString: string) => {
-      this.caption = cardString;
     });
     
     this.roomService.receiveHand().subscribe((hand: string[]) => {
@@ -116,15 +112,17 @@ export class WdymComponent implements OnInit {
     this.userStateService.setLobbyCode("");
   }
 
-  public currentlyClickedCardIndex: number = 0;
+  
   public setcurrentlyClickedCardIndex(cardIndex: number): void {
     this.currentlyClickedCardIndex = cardIndex;
   }
+
   public checkIfCardIsClicked(cardIndex: number): boolean {
-    return cardIndex === this.selected;
+    return cardIndex === this.currentlyClickedCardIndex;
   }
 
   chooseWinner(index) {
+    console.log("Choosing index " + index + " as winner");
     var winningCaption = this.submittedCards[index];
     this.winningCaption = winningCaption;
     //get User who submitted that card
@@ -138,12 +136,13 @@ export class WdymComponent implements OnInit {
     this.roomService.getImage(this.code);
   }
 
-  getCard(){
-    return this.roomService.getCard(this.code);
-  }
+  // Not used anymore
+  // getCard(){
+  //   return this.roomService.getCard(this.code);
+  // }
 
   getSelected() {
-    return this.selected;
+    return this.currentlyClickedCardIndex;
   }
 
   startTurn() {
@@ -152,13 +151,12 @@ export class WdymComponent implements OnInit {
   }
 
   submitCard(index) {
+    console.log("Submit card at index " + index);
     var card = this.hand[index];
+    console.log("Card from hand:")
+    console.log(card);
     this.replaceCard(index);
     this.roomService.submitCard(this.code, card);
-  }
-
-  selectCard(index) { 
-    this.selected = index;
   }
 
 

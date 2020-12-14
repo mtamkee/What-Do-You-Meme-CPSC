@@ -1,6 +1,13 @@
+<div id="home-container">
   <h2> <img src="assets/wdym-cpsc.jpg"> </h2>
-  <h2> <input placeholder="Room Code" #code/> <button (click)="joinLobby(code.value)"> Enter </button> </h2>
-  
+  <form>
+    <mat-form-field MatFormFieldControl appearance="outline">
+      <mat-label>Room Code</mat-label>
+      <input matInput type="text" placeholder="Room Code" #code/> 
+    </mat-form-field>
+    <button id="join-button" (click)="joinLobby(code.value)" mat-raised-button color="primary"> Enter </button>
+  </form>
   <h2  #errorMessage> </h2> 
   <h2> or </h2>
-  <h1> <button (click)="createLobby()"> Start a Lobby! </button> </h1>   
+  <button id="start-button" (click)="createLobby()" mat-raised-button color="accent"> Start a Lobby! </button>
+</div>
