@@ -114,8 +114,8 @@ class User {
         this.username = username;
         this.hand = [];   
         this.score = 0;
+        this.czar;
     }
-    czar;
 }
 
 class Lobby { 
@@ -127,9 +127,8 @@ class Lobby {
         this.submittedCards = [];   //cards that have been submitted this round
         this.submittedUsers = [];   //sockets that have submitted; share index with card
         this.turn = 0;
-        
+        this.czar;
     }   
-    czar;
 }
 
 /**

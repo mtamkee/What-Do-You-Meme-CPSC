@@ -17,40 +17,49 @@ h1 {
 }
 
 .grid-container {
-    position: relative;
     display: grid;
-    grid-template-areas:
-      'top-section'
-      'card-section'
-      'footer';
-    grid-column-gap: 1%;
+    grid-template-columns: 33.3334% 33.3334% 33.3334%;
+    grid-template-rows: auto 16rem;
+    grid-column-gap: 1rem;
+    grid-row-gap: 2rem;
+    height: 100%;
+    width: 97%;
+    padding: 1rem 2rem 0 2rem;
 }
 
-.top-section {
-    position: relative;
-    display: grid;
-    grid-template-areas:
-      'headerl headerl headerm headerm headerr';
-     grid-column-gap: 1%;
-}
 
 @media (max-width: 900px) {
-    .top-section {
-      grid-template-areas: 
-        'headerl' 
-        'headerl'
-        'headerm' 
-        'headerm'
-        'headerr';
+    .grid-container {
+        grid-template-columns: 100%;
+        grid-template-rows: 90% 50% 50% 100%;
+    }
+    .headerl {
+        grid-row: 1 / 2 !important;
+        grid-column: auto !important;
+    }
+    .headerm {
+        grid-row: 2 / 3 !important;
+        grid-column: auto !important;
+    }
+    .headerr {
+        grid-row: 3 / 4 !important;
+        grid-column: auto !important;
+    }
+    .card-section {
+        grid-row: 4 / 5 !important;
+        grid-column: auto !important;
     }
 }
 
 .card-section {
+    grid-row: 2 / 3;
+    grid-column: 1 / 4;
     position: relative;
     display: grid;
     grid-template-areas:
       'left leftc middle rightc right';
-     grid-column-gap: 1%;
+    grid-column-gap: 1%;
+    width: 100%;
 }
 
 @media (max-width: 900px) {
@@ -65,94 +74,90 @@ h1 {
 }
 
 img {
-    max-width: 100%;
-    max-height: 400px;
+    max-width: 400px;
+    max-height: auto;
+}
+
+#refresh-button {
+    position: absolute;
+    top: 1.4rem;
+    left: 2.4rem;
 }
 
 .headerl {
-    grid-area: headerl;
-    width: 100%;
+    /* grid-area: headerl; */
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    /* width: 100%; */
     padding: 10px;
-    height: 450px;
-    float: left;
-    
+    /* height: 100%; */
+    /* float: left; */
+    background-color:#424242;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .headerm {
-    grid-area: headerm;
-    width: 100%;
+    /* grid-area: headerm; */
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+    /* width: 100%; */
     padding: 10px;
-    height: 450px;
-    float: right;
+    /* height: 100%; */
+    /* float: right; */
+    background-color: #EA80FC;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     
 }
 
 .headerr {
-    width: 100%;
-    height: 450px;
-    grid-area: headerr;
-    
+    grid-row: 1 / 2;
+    grid-column: 3 / 4;
+    /* width: 100%;
+    height: 100%; */
+    /* grid-area: headerr; */
+    background-color: #B9F6CA;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.submit-button {
+    align-self: flex-end;
+    margin-top: 1rem;
 }
 
 p {
     text-align: center;
     font-weight: bolder;
-    font-size: 50px;
+    font-size: 2rem;
     font-style: comic;
     font-family: "Comic Sans MS" ;
-    color: greenyellow;
+    line-height: 1.5em;
+    color: #424242;
+    margin-top: 1rem;
 }
-.headerl{
-    padding: 10px;
-    height: 100%;
-    
+
+.headerl > p {
+    color: #B9F6CA;
 }
-.left,
-.middle,
-.right,
-.rightc,
-.leftc {
-    padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
-    font-size: 30px;
-    color: black;
-    outline: 4px solid black;
-    outline-offset: -4px;
-    text-align: center;
-    line-height: 1.1;
-    cursor: pointer;
-    min-width: 100%;
-    width: 100%;
+
+.headerl > p > u {
+    text-decoration-color: #B9F6CA;
 }
-/* Style the left column */
-.left {
-    grid-area: left;
-    background-color: whitesmoke;
-    
-}
-.leftc {
-    grid-area: leftc;
-    background-color: whitesmoke;
-} 
-  /* Style the middle column */
-  .middle {
-    grid-area: middle;
-    background-color: whitesmoke;
-}
-  
-/* Style the right column */
-  .rightc {
-    grid-area: rightc;
-    background-color: whitesmoke;
-}
-  /* Style the right column */
-  .right {
-    grid-area: right;
-    background-color: whitesmoke;
-  }
+
 
   /* Style the footer */
 .footer {
+    /* grid-row: 3 / 4;
+    grid-column: 1 / 4; */
     grid-area: footer;
     background-color: #f1f1f1;
     padding: 10px;
@@ -186,7 +191,11 @@ h3 {
     font-size: 20px;
     margin-left: auto;
     margin-right: auto;
+<<<<<<< HEAD
     color: white;
+=======
+    color: #424242;
+>>>>>>> d83dc0f52684530cef3e01726c661e949511f0d7
 }
 
 h2{
@@ -195,18 +204,13 @@ h2{
 }
 u{
     text-decoration-line: underline;
-    text-decoration-color: black ;
+    text-decoration-color: #212121 ;
     text-align: center;
     font-weight: bolder;
     font-size: 50;
     font-style: comic;
     font-family: "Comic Sans MS" ;
 }
-
-  .highlight {
-    background-color: yellow;
-  }
-
 
 .roundOverlay {
     position: fixed;
@@ -234,7 +238,54 @@ u{
     border-radius: 40px;
 }
 
-.overlayText h1, p {
+.overlayText > h1, .overlayText > p {
     color: white;
     font-size: 1em;
+}
+
+::ng-deep .highlight > * {
+    background-color: #EA80FC !important;
+    color: #212121;
+}
+
+::ng-deep .highlight > mat-card > mat-card-content {
+    background-color: #EA80FC !important;
+}
+
+::ng-deep .highlight > mat-card > mat-card-content > * {
+    background-color: #EA80FC !important;
+}
+
+::ng-deep .highlight .mat-divider {
+    border-top-color: #616161;
+}
+
+img {
+    width: 400px;
+    height: auto;
+    margin: 1rem 0 0 0;
+}
+
+::ng-deep .mat-card {
+    padding-top: 6px !important;
+    height: 16rem;
+    width: 10rem;
+}
+
+.card-button {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.card-button :hover {
+    background-color: #757575;
+}
+
+
+.title {
+    color: #212121
 }

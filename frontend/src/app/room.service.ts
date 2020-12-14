@@ -95,8 +95,8 @@ export class RoomService {
       return this.socket.fromEvent('returnHost');
     }
     
-    chooseWinner(index, lobbyCode) {
-      this.socket.emit('chooseWinner', index, lobbyCode);
+    chooseWinner(username: string, lobbyCode: string) {
+      this.socket.emit('chooseWinner', username, lobbyCode);
     }
 
     addPoint() {
