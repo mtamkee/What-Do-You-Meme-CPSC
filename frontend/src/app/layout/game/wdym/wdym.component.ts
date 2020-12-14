@@ -37,6 +37,8 @@ export class WdymComponent implements OnInit {
   public showOverlay: boolean = false;
   public showWinnerOverlay: boolean = false;
   username;
+  hasPlayerSubmitted: boolean = false;
+  playerSubmittedCaption: string;
   
   ngOnInit(): void {   
     this.code = this.userStateService.getLobbyCode();
@@ -50,7 +52,6 @@ export class WdymComponent implements OnInit {
     
     this.roomService.receiveHand().subscribe((hand: string[]) => {
       this.hand = hand;
-      this.currentlyClickedCardIndex = null;
     });
 
     this.roomService.receiveScores().subscribe((scores) => {
@@ -67,10 +68,13 @@ export class WdymComponent implements OnInit {
     
     this.roomService.returnRoundWinner().subscribe((winner) => {
       this.roundWinner = winner;
+      this.currentlyClickedCardIndex = null;
       this.showOverlay = true;
       setTimeout(() => {  
         this.showOverlay=false; 
         this.getImage();
+        this.hasPlayerSubmitted = false;
+        this.playerSubmittedCaption = null;
       }, 7000); //show overlay for 7s
       console.log('winner is: ' + winner);
     });
@@ -154,15 +158,20 @@ export class WdymComponent implements OnInit {
 
   startTurn() {
     this.getImage();
+    this.hasPlayerSubmitted = false;
+    this.playerSubmittedCaption = null;
     return this.roomService.startTurn(this.code);
   }
 
   submitCard(index) {
     console.log("Submit card at index " + index);
     var card = this.hand[index];
-    console.log("Card from hand:")
-    console.log(card);
+    // console.log("Card from hand:")
+    // console.log(card);
     this.replaceCard(index);
+    this.hasPlayerSubmitted = true;
+    this.playerSubmittedCaption = card;
+    console.log("Has player submitted updated to: " + this.hasPlayerSubmitted);
     this.roomService.submitCard(this.code, card);
   }
 
