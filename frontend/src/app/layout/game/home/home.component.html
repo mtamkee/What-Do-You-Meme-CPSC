@@ -7,7 +7,7 @@
     </mat-form-field>
     <button id="join-button" (click)="joinLobby(code.value)" mat-raised-button color="primary"> Enter </button>
   </form>
-  <h2  #errorMessage> </h2> 
+  <p  *ngIf="errorMessage"> {{errorMessage}} </p> 
   <h2> or </h2>
   <button id="start-button" (click)="createLobby()" mat-raised-button color="accent"> Start a Lobby! </button>
 </div>

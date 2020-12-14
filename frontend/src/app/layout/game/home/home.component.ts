@@ -15,7 +15,6 @@ import { UserStateService } from 'src/app/user-state.service';
 export class HomeComponent implements OnInit {
 
 
-  @ViewChild('errorMessage') errorMessage: ElementRef;
 
   constructor(private route: ActivatedRoute, private router: Router, private roomService: RoomService,
     private userStateService: UserStateService) { }
@@ -25,6 +24,7 @@ export class HomeComponent implements OnInit {
   username: string; 
   id: string; 
   validLobby;
+  errorMessage: string;
 
   ngOnInit(): void {
     this.username =this.userStateService.getUsername();
@@ -69,13 +69,12 @@ export class HomeComponent implements OnInit {
   joinLobby(code: string) {
       if (code.length != 5) {
 
-        this.errorMessage.nativeElement.innerHTML = 'Error: Invalid Lobby Code. Try Again!';
+        this.errorMessage = 'Error: Invalid Lobby Code. Try Again!';
         return;
       };
       this.userStateService.setLobbyCode(code);
       this.roomService.sendAddUser(this.userStateService.getUsername(), code);
       this.navigateLobby(code, this.userStateService.getUsername(), this.userStateService.getUserId());
-      this.errorMessage.nativeElement.innerHTML = '';
 
   } 
 
