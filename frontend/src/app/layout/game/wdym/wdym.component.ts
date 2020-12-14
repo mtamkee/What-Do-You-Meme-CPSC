@@ -75,6 +75,10 @@ export class WdymComponent implements OnInit {
       console.log('winner is: ' + winner);
     });
 
+    this.roomService.returnRoundCaption().subscribe((caption) => {
+      this.winningCaption = caption;
+    });
+
     this.roomService.returnCzar().subscribe((e) => {
       this.userStateService.setSelfAsCzar();
       this.isCzar = true;
@@ -127,9 +131,9 @@ export class WdymComponent implements OnInit {
   chooseWinner(index) {
     console.log("Choosing index " + index + " as winner");
     var winningCaption = this.submittedCards[index];
-    this.winningCaption = winningCaption;
     //get User who submitted that card
     this.roomService.chooseWinner(index, this.code);
+    this.roomService.winCaption(winningCaption, this.code);
     this.roomService.getScores(this.code);
     this.endTurn();
     return winningCaption;

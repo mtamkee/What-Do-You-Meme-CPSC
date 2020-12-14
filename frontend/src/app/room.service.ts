@@ -99,12 +99,20 @@ export class RoomService {
       this.socket.emit('chooseWinner', username, lobbyCode);
     }
 
+    winCaption(caption: string, lobbyCode: string) {
+      this.socket.emit('winCaption', caption, lobbyCode);
+    }
+
     addPoint() {
       return this.socket.fromEvent('addPoint');
     }
 
     returnRoundWinner() {
       return this.socket.fromEvent('returnRoundWinner');
+    }
+
+    returnRoundCaption() {
+      return this.socket.fromEvent('returnRoundCaption');
     }
 
     getScores(lobbyCode) {
