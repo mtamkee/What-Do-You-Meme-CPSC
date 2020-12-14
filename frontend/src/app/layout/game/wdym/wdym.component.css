@@ -234,7 +234,7 @@ u{
     border-radius: 40px;
 }
 
-.overlayText h1, p {
+.overlayText > h1, .overlayText > p {
     color: white;
     font-size: 1em;
 }
@@ -270,10 +270,11 @@ img {
 
 .card-button {
     width: 100%;
-    height: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 
 .card-button :hover {

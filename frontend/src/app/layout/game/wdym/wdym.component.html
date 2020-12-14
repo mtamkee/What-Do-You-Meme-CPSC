@@ -38,7 +38,7 @@
         <div #card class="card-button"  *ngFor="let submittedCard of submittedCards; let i = index"
         [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
         (click)="setcurrentlyClickedCardIndex(i)">
-            <div class="card-button-child" [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
+            <div [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
                 <mat-card>
                     <mat-card-content>
                         <div>{{i+1}}</div>
@@ -54,7 +54,7 @@
         <div #card class="card-button" *ngFor="let card of hand; index as i"
         [ngClass]="{'highlight':checkIfCardIsClicked(i)}"
         (click)="setcurrentlyClickedCardIndex(i)">
-            <div class="card-button-child" [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
+            <div [ngClass]="{'highlight':checkIfCardIsClicked(i)}">
                 <mat-card>
                     <mat-card-content>
                         <div>{{i+1}}</div>
