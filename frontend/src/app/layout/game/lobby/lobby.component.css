@@ -12,18 +12,20 @@
 
 .container {
   margin-top: 10%;
+  margin-left: 13%;
   float: left;
-  width: 45%;
+  width: 40%;
   height: 100px;
 
 }
 
 .userbox { 
   margin-top: 10%;
+  margin-right: 10%;
   float: left;
-  width: 45%;
+  width: 30%;
   height: 50%;
-  border: solid 1px white;
+  border: solid 1px #757575;
   border-radius: 10px;
   overflow: auto;
 }
@@ -31,9 +33,16 @@
 h1 {
     color:#BA68C8;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     display: flex;
     justify-content: center;
+    cursor: default;
+}
+
+.code-text {
+  color: white;
+  padding-left: 1rem;
+  cursor: text;
 }
 
 h2 {
@@ -54,11 +63,10 @@ h2 {
 }
 
 h1 button {
-    width: 70%;
-    height: 10vh;
-    cursor: pointer;
-    font-size: 80%;
-    border-radius: 10px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  width: 9em;
+  height: 2.666666em;
 }
 
 
@@ -73,6 +81,7 @@ h1 button {
   }
 }
 
-#title {
+.title {
+  font-size: 2rem;
   padding-top: 1rem;
 }
